@@ -1,7 +1,7 @@
 # Claude Developer Context — Wadera Associates Data Intelligence Website
 
 > Read this at the start of every new session to restore full project context.
-> Last updated: March 2026 (images, 404 page, gitignore, docs)
+> Last updated: March 2026
 
 ---
 
@@ -9,8 +9,11 @@
 
 A full-stack **B2B data marketplace** where businesses can buy structured time-series datasets (energy prices, commodity rates, sector indices, etc.). Also has a free section for articles and PDFs. Built as a monorepo.
 
-**Partners / Team (from signed MOU):**
-- **Faizan** — Technology Manager (you're building this for him)
+**Live frontend:** https://wa-data-intel.netlify.app
+**GitHub:** https://github.com/MirFaizan06/Wadera-Associates-Data-Intelligence
+
+**Team (from MOU):**
+- **Faizan** — Technology Manager (building this)
 - **Hamid** — Product & Data Development Lead
 - **Rauf** — Finance, Compliance & Legal
 
@@ -21,85 +24,92 @@ A full-stack **B2B data marketplace** where businesses can buy structured time-s
 | Layer | Tech |
 |---|---|
 | Frontend | React 18, Vite, TypeScript, Tailwind CSS, React Router v6, React Hook Form + Zod, Recharts, Axios |
+| i18n | react-i18next + i18next-http-backend + i18next-browser-languagedetector (12 languages) |
 | Backend | Node.js, Express, TypeScript |
 | ORM | Prisma v5, MySQL |
-| Payments | Razorpay |
+| Payments | Razorpay (**currently disabled** — keys set to empty strings) |
 | Storage | AWS S3 (prod) / local `public/uploads/` (dev) |
-| Email | Nodemailer (SMTP) |
+| Email | Nodemailer (Gmail SMTP via App Password) |
 | Auth | JWT (httpOnly) + OTP email verification |
 | Testing | Jest (server only) |
 | Markdown | `marked` + `DOMPurify` (client-side rendering) |
+| SEO | react-helmet-async (per-page meta) + JSON-LD structured data |
 
 ---
 
 ## 3. Monorepo Structure
 
 ```
-/                          ← workspace root
-├── client/                ← React frontend (Vite)
-│   ├── src/
-│   │   ├── App.tsx        ← All routes defined here
-│   │   ├── pages/         ← All page components
-│   │   ├── components/
-│   │   │   ├── layout/    ← Navbar, Footer, PublicLayout, AdminLayout
-│   │   │   ├── ui/        ← Button, Input, Card, LoadingSpinner, UserAvatar
-│   │   │   ├── datasets/  ← DatasetCard
-│   │   │   └── payment/   ← PaymentModal
-│   │   ├── contexts/      ← AuthContext, CurrencyContext
-│   │   ├── lib/           ← api.ts (axios instance), utils.ts
-│   │   └── types/         ← index.ts (all shared TypeScript interfaces)
+/                          ← workspace root (npm workspaces)
+├── client/                ← React frontend (Vite, port 3000 dev)
 │   ├── public/
-│   │   ├── team_profile_pics/   ← Put faizan.jpg, hamid.jpg, rauf.jpg here
-│   │   └── SAMPLE DATA...xlsx  ← User's original sample (wrong format)
-│   └── tailwind.config.js ← Has CSS variable color mappings (important, see §9)
-│
-├── server/
-│   ├── prisma/
-│   │   └── schema.prisma  ← THE authoritative schema (Prisma CLI reads this)
+│   │   ├── locales/       ← i18n JSON files (en, zh, es, de, fr, pt, ru, ja, ar, hi, ko, id)
+│   │   ├── faq-data.json  ← FAQ questions/answers for FAQChatBubble
+│   │   ├── homepage_hero_imgs/  ← 5 hero slideshow images (1.png–5.png)
+│   │   ├── images/        ← Optimized WebP assets (logo, illustrations)
+│   │   ├── sitemap.xml    ← Static sitemap
+│   │   ├── robots.txt     ← Points to sitemap.xml
+│   │   └── _redirects     ← Netlify SPA redirect (/* /index.html 200)
 │   └── src/
-│       ├── prisma/
-│       │   └── schema.prisma ← KEEP IN SYNC with server/prisma/schema.prisma
-│       ├── config/env.ts   ← All env vars via envalid
-│       ├── controllers/    ← HTTP request handlers
-│       ├── services/       ← Business logic
+│       ├── App.tsx         ← All routes (React.lazy for every page)
+│       ├── i18n.ts         ← i18next config (12 langs, localStorage detection only)
+│       ├── pages/          ← All page components
+│       ├── components/
+│       │   ├── layout/     ← Navbar, Footer, PublicLayout, AdminLayout
+│       │   │               ← PublicLayout includes FAQChatBubble
+│       │   ├── ui/         ← Button, Input, Card, SettingsModal, FAQChatBubble, UserAvatar, LoadingSpinner
+│       │   ├── datasets/   ← DatasetCard
+│       │   └── payment/    ← PaymentModal
+│       ├── contexts/       ← AuthContext, CurrencyContext
+│       ├── lib/            ← api.ts (axios instance), utils.ts
+│       └── types/          ← index.ts (all shared TypeScript interfaces)
+│
+├── server/                 ← Express backend (port 5000 dev)
+│   ├── prisma/
+│   │   └── schema.prisma   ← THE authoritative Prisma schema
+│   └── src/
+│       ├── config/env.ts   ← All env vars validated via envalid
+│       ├── controllers/
+│       ├── services/
 │       ├── routes/
 │       │   ├── public.routes.ts
 │       │   ├── auth.routes.ts
 │       │   ├── user.routes.ts
-│       │   └── admin/
-│       │       ├── cms.routes.ts
-│       │       ├── data.routes.ts
-│       │       ├── dev.routes.ts
-│       │       ├── finance.routes.ts
-│       │       └── users.routes.ts
+│       │   └── admin/  (cms, data, dev, finance, users)
 │       ├── middleware/
-│       ├── jobs/           ← Cron jobs: exchange rates, clean OTPs, clean sessions
+│       ├── jobs/           ← Cron: exchange rates, OTP cleanup, session cleanup
 │       └── utils/
 │
-├── SETUP.md               ← Full project setup guide
-├── CLAUDE_CONTEXT.md      ← This file
-├── XLSX_IMPORT_FORMAT.txt ← Data import format spec
-├── SAMPLE_CORRECT_FORMAT.xlsx ← Working sample XLSX for import testing
-└── prompts.md             ← Gemini image generation prompts for all UI assets
+├── docs/CLAUDE.md          ← Old/legacy context (superseded by this file)
+├── BACKEND_DEPLOYMENT_GUIDE.md  ← Railway + Gmail SMTP + AWS S3 deploy steps
+├── SETUP.md                ← Full local developer setup guide
+├── TESTING.md              ← Testing strategy and test commands
+├── SAMPLE_CORRECT_FORMAT.xlsx   ← Correct XLSX format for dataset import
+└── CLAUDE_CONTEXT.md       ← This file
 ```
 
 ---
 
 ## 4. Database Schema (All Models)
 
-> **Both** `server/prisma/schema.prisma` AND `server/src/prisma/schema.prisma` must be kept in sync. Prisma CLI reads from `server/prisma/` but TypeScript imports reference `server/src/prisma/`.
+> Prisma CLI reads `server/prisma/schema.prisma`. TypeScript imports use `@prisma/client`.
+> There is also `server/src/prisma/schema.prisma` — **keep both identical**.
 
 ### Models at a glance:
 ```
-User               id, email, passwordHash, fullName, phone, profilePicture, roleId, isEmailVerified, isActive, deletedAt
+User               id, email, passwordHash, fullName, phone, profilePicture, roleId,
+                   isEmailVerified, isActive, deletedAt
 Session            id, userId, token, deviceInfo, ipAddress, lastActive, expiresAt
 OtpCode            id, userId, email, code, type (REGISTER|LOGIN|RESET_PASSWORD), isUsed, expiresAt
 Role               id, name (unique), permissions (Json)
 LicenseType        id, name, description, permissions (Json), maxDevices, validDays
 LicenseAssignment  id, userId, licenseTypeId, validFrom, validTo, isActive, revokedAt, datasetIds (Json)
-TimeSeries         id, slug, name, description, defaultUnit, priceINR, isVisible, isFeatured, category, tags (Json), source, region, metadata (Json), coverImage, createdById
+TimeSeries         id, slug, name, description, defaultUnit, priceINR, isVisible, isFeatured,
+                   category, tags (Json), source, region, metadata (Json), coverImage, createdById
 DataPoint          id, timeSeriesId, date, value, unitOverride, note
-Purchase           id, userId, guestEmail, timeSeriesId, amountINR, currency, amountDisplay, razorpayOrderId, razorpayPaymentId, razorpaySignature, status (PENDING|SUCCESS|FAILED|REFUNDED), downloadToken, downloadTokenExpiry
+Purchase           id, userId, guestEmail, timeSeriesId, amountINR, currency, amountDisplay,
+                   razorpayOrderId, razorpayPaymentId, razorpaySignature,
+                   status (PENDING|SUCCESS|FAILED|REFUNDED), downloadToken, downloadTokenExpiry
 DownloadLog        id, userId, guestEmail, timeSeriesId, format (XLSX|CSV|PDF|PNG), ipAddress
 EmailLog           id, type, recipient, subject, status (SENT|FAILED), error
 ContactMessage     id, name, email, subject, message, status (NEW|IN_PROGRESS|RESOLVED), adminNotes, ipAddress
@@ -108,112 +118,97 @@ UnitConversion     id, fromUnit, toUnit, factor, label
 BannedIP           id, ipAddress, reason, bannedBy
 EmailTemplate      id, type (unique), subject, htmlBody, isActive, updatedBy
 StaticPage         id, slug (unique), title, content (LongText HTML), metaTitle, metaDesc, updatedBy
-FreeResource       id, slug (unique), title, summary, type (ARTICLE|PDF), content (LongText Markdown), pdfUrl, category, tags (Json), author, coverImage, isPublished, createdById
+FreeResource       id, slug (unique), title, summary, type (ARTICLE|PDF), content (LongText Markdown),
+                   pdfUrl, category, tags (Json), author, coverImage, isPublished, createdById
 ```
-
-### Pending DB migration (run when MySQL is available):
-```bash
-cd server
-npx prisma migrate dev --name add_cover_image_free_resource
-```
-This will add `coverImage` to `TimeSeries` and create the `FreeResource` table.
-The `profilePicture` and `isActive` fields on `User` also need migration if not yet applied.
 
 ---
 
-## 5. Images & Assets
+## 5. i18n System
 
-All source PNGs live in `client/public/`. Optimized WebP versions (compressed 87–100% smaller) are in `client/public/images/`. **Always reference `/images/*.webp` in code, never the raw PNGs directly.**
-
-To regenerate WebP after adding new images:
-```bash
-node client/scripts/optimize-images.cjs
-# (script is at: client/scripts/optimize-images.cjs, reads workspace root node_modules/sharp)
-```
-
-| File | Used in |
-|---|---|
-| `logo.webp` | Navbar (replaces BarChart3 icon) |
-| `Homepage_Hero_Illustration.webp` | HomePage hero right column |
-| `Browse_and_Discover.webp` | HomePage "How It Works" step 1 |
-| `Purchase_Securely.webp` | HomePage "How It Works" step 2 |
-| `Download_and_Use.webp` | HomePage "How It Works" step 3 |
-| `About_Page_Hero_Illustration.webp` | AboutPage above team section |
-| `Contact_Page_Illustration.webp` | ContactPage left column |
-| `Free_Data_Section_Illustration.webp` | FreeDataPage hero right column |
-| `404_Page_Illustration.webp` | NotFoundPage |
-| `No_Results_Found.webp` | DatasetsPage empty state |
-| `No_Purchases_Yet.webp` | PurchasesPage empty state |
-| `Dataset_Placeholder.webp` | DatasetCard fallback thumbnail |
+- **12 languages:** en, zh, es, de, fr, pt, ru, ja, ar, hi, ko, id
+- **Translation files:** `client/public/locales/{lang}/translation.json`
+- **Detection:** `localStorage` only — browser language is never auto-detected. First visit always falls back to English.
+- **RTL languages:** `ar` only — handled via `RTL_LANGUAGES` array in `i18n.ts`
+- **All public pages** are fully translated (nav, hero, datasets, about, contact, free data, auth, profile, purchases, download, settings, FAQ, footer)
+- **Namespace:** `translation` (single namespace)
 
 ---
 
-## 5. All Implemented Features
+## 6. Key UI Components
 
-### Authentication
-- Email + password registration with OTP email verification
-- Login with JWT (stored in localStorage or cookie — check AuthContext)
-- Forgot password / reset password via OTP email
-- Profile page: update name, phone, profile picture (avatar upload)
-- `UserAvatar` component with image + initials fallback
+### SettingsModal (`client/src/components/ui/SettingsModal.tsx`)
+- Gear icon in Navbar (desktop right + mobile header)
+- Two sections: Language (12 options) + Currency (8 options)
+- Uses `Flag` component: `flagcdn.com` PNG images (NOT emoji — emoji don't render as flags on Windows)
+- `LANGUAGE_FLAG_CODES`: maps language code → ISO country code for flagcdn
+- `CURRENCY_META`: maps currency code → `{ flagCode, label }`
+- `SettingsTooltip`: first-visit tooltip (localStorage key `wa_settings_tooltip_shown`), appears 1.5s after load, auto-closes at 6.5s
+- `useFirstVisitTooltip()` hook manages tooltip visibility
+
+### FAQChatBubble (`client/src/components/ui/FAQChatBubble.tsx`)
+- Floating bottom-right chat bubble, loaded in `PublicLayout` (all public pages)
+- Loads `/faq-data.json` (20 questions with answers and optional page links)
+- Chat-style UI: list view → conversation view, typing indicator, `**bold**` markdown
+- Fullscreen mode, pulse ring animation when closed
+
+### CurrencyContext
+- Supports: INR, USD, EUR, GBP, PKR, SAR, AED, JPY (8 currencies)
+- Live exchange rates from backend; `formatAmount(price)` formats in selected currency
+- Persisted in localStorage
+
+### Hero Slideshow (HomePage)
+- 5 images: `client/public/homepage_hero_imgs/1.png–5.png`
+- 4.5s interval, 600ms crossfade, clickable progress dots
+- Dual dim overlay: `bg-brand-navy/75` + gradient for text readability
+
+---
+
+## 7. All Implemented Pages & Features
 
 ### Public Website
-- **Homepage** (`/`): Hero with CTA, featured datasets, how-it-works, stats
-- **Datasets** (`/datasets`): Paginated grid with search, category filter, sort. Each card shows cover image thumbnail (falls back to placeholder icon if no coverImage set)
-- **Dataset Detail** (`/datasets/:slug`): Full info, data preview chart, purchase button
-- **Free Data** (`/free-data`): Listing with type filter (ALL/ARTICLE/PDF) and category pills
-- **Free Data Detail** (`/free-data/:slug`): Markdown rendered to HTML (via `marked` + DOMPurify), PDF download banner for PDF type
-- **About** (`/about`): Full component — hero, mission, values, **About illustration**, **team section with 3 member cards**, structure, CTA
-- **Contact** (`/contact`): Two-column layout — illustration + contact info left, form right
-- **Privacy Policy** (`/pages/privacy-policy`): Full standalone React component (NOT fetched from DB)
-- **Terms of Service** (`/pages/terms-of-service`): Full standalone React component (NOT fetched from DB)
-- **Static Pages** (`/pages/:slug`): Generic CMS-managed pages fetched from DB (for other slugs)
-- **Purchases** (`/purchases`): User's purchase history with download links
-- **Download** (`/download/:token`): Token-based file download (for guests too)
+| Route | Component | Notes |
+|---|---|---|
+| `/` | HomePage | Hero slideshow, stats, How It Works, features, data coverage section, featured datasets, CTA |
+| `/datasets` | DatasetsPage | Paginated grid, search, category filter, sort |
+| `/datasets/:slug` | DatasetDetailPage | Chart (Recharts, lazy-loaded), purchase, data preview |
+| `/free-data` | FreeDataPage | Articles + PDFs, type filter, category pills |
+| `/free-data/:slug` | FreeDataDetailPage | Markdown rendered, PDF download |
+| `/about` | AboutPage | Standalone component (not DB-fetched) |
+| `/contact` | ContactPage | Two-column layout, form |
+| `/pages/privacy-policy` | PrivacyPolicyPage | Standalone (not DB) |
+| `/pages/terms-of-service` | TermsPage | Standalone (not DB) |
+| `/pages/:slug` | StaticPage | CMS-managed (DB) for other slugs |
+
+### Auth
+| Route | Notes |
+|---|---|
+| `/auth/login` | JWT login, redirect to `from` |
+| `/auth/register` | OTP email verification flow |
+| `/auth/verify-otp` | 6-digit OTP input |
+| `/auth/forgot-password` | Send reset OTP |
+| `/auth/reset-password` | Set new password via OTP |
+
+### Protected User Pages
+- `/profile` — ProfilePage (name, phone, avatar upload)
+- `/purchases` — PurchasesPage (download links)
+- `/download/:token` — DownloadPage (guests allowed)
 
 ### Admin Panel (`/admin/*`)
-Five role-based dashboards, all accessible via a single `AdminProfilePage`:
-
 | URL | Role | Dashboard |
 |---|---|---|
-| `/admin/dev` | Developer | DevDashboard — full system stats, user/role/license management, IP banning, exchange rates |
-| `/admin/finance` | FinancialManager | FinanceDashboard — purchases, revenue, refunds |
-| `/admin/data` | DataManager | DataDashboard — create datasets, import XLSX, append data points, **upload cover images** |
-| `/admin/users` | UserManager | UsersDashboard — manage users, activate/deactivate |
-| `/admin/cms` | CMSManager | CmsDashboard — 4 tabs: Static Pages, Email Templates, Contact Messages, **Free Resources** |
-| `/admin/profile` | Any admin | AdminProfilePage — shared profile editor |
+| `/admin/dev` | Developer | DevDashboard — system stats, users, roles, licenses, IPs, exchange rates |
+| `/admin/finance` | FinancialManager | FinanceDashboard — revenue, purchases, refunds |
+| `/admin/data` | DataManager | DataDashboard — datasets CRUD, XLSX import, cover images |
+| `/admin/users` | UserManager | UsersDashboard — user management |
+| `/admin/cms` | CMSManager | CmsDashboard — 4 tabs: Static Pages, Email Templates, Contact Messages, Free Resources |
+| `/admin/profile` | Any admin | AdminProfilePage |
 
-`AdminRoute` in `App.tsx` allows Developer role to access all admin routes.
-
-### Dataset Cover Images (Thumbnails)
-- Only for paid datasets (TimeSeries), not FreeResource
-- Upload via `POST /admin/data/datasets/:id/cover-image` (multipart, field name: `image`)
-- **Local dev**: saved to `server/public/uploads/datasets/{id}.{ext}`, served at `/uploads/datasets/`
-- **Production (S3)**: uploaded to `datasets/covers/{id}.{ext}`, URL stored as public S3 URL
-- Stored as `coverImage String?` on `TimeSeries`
-- DatasetCard shows thumbnail with hover zoom; fallback is a gradient box with BarChart2 icon
-- Admin table shows a small 32×32 thumbnail preview per row
-
-### Free Resources (CMS)
-- Two types: `ARTICLE` (markdown content) and `PDF` (pdfUrl field)
-- Markdown typed in admin textarea → rendered on frontend with `marked` + `DOMPurify`
-- Admin CMS tab: create, edit, publish/unpublish, delete
-- Public routes: `GET /public/free`, `GET /public/free/categories`, `GET /public/free/:slug`
-- Admin routes under `POST/PUT/DELETE /admin/cms/free-resources`
-
-### Payments
-- Razorpay integration: create order → Razorpay checkout → verify signature → issue download token
-- Guest purchases (no account needed) via email
-- Download tokens are single-use with expiry
-
-### Background Jobs (cron)
-- Exchange rate refresh (periodic)
-- OTP cleanup (expired codes)
-- Session cleanup (expired sessions)
+`AdminRoute` in App.tsx allows Developer role to bypass role-specific guards.
 
 ---
 
-## 6. API Route Map
+## 8. API Route Map
 
 ```
 POST   /api/auth/register
@@ -227,9 +222,8 @@ POST   /api/auth/resend-otp
 GET    /api/public/datasets
 GET    /api/public/datasets/featured
 GET    /api/public/datasets/categories
-GET    /api/public/datasets/:slug
+GET    /api/public/datasets/:slug          ← ?includeData=true returns dataPoints
 GET    /api/public/pages/:slug
-GET    /api/public/contact          ← not used; contact is POST
 POST   /api/public/contact
 GET    /api/public/free
 GET    /api/public/free/categories
@@ -237,12 +231,12 @@ GET    /api/public/free/:slug
 
 GET    /api/user/profile
 PUT    /api/user/profile
-POST   /api/user/profile/picture
+POST   /api/user/profile/picture           ← multipart, field: "avatar"
 GET    /api/user/purchases
 GET    /api/user/licenses
 POST   /api/user/purchases/:id/regenerate-token
 
-POST   /api/payment/create-order
+POST   /api/payment/create-order           ← disabled while Razorpay keys empty
 POST   /api/payment/verify
 GET    /api/download/:token
 
@@ -251,225 +245,217 @@ POST   /api/admin/data/datasets
 PUT    /api/admin/data/datasets/:id
 DELETE /api/admin/data/datasets/:id
 POST   /api/admin/data/datasets/:id/data-points
-POST   /api/admin/data/datasets/:id/import-xlsx   ← file field: "file"
-POST   /api/admin/data/datasets/:id/cover-image   ← file field: "image"
+POST   /api/admin/data/datasets/:id/import-xlsx      ← field: "file"
+POST   /api/admin/data/datasets/:id/cover-image      ← field: "image"
 GET    /api/admin/data/uom
 POST   /api/admin/data/uom
 
-GET/POST/PUT/DELETE /api/admin/cms/pages/:id
-GET/POST/PUT/DELETE /api/admin/cms/email-templates/:id
+GET/POST/PUT/DELETE /api/admin/cms/pages
+GET/POST/PUT/DELETE /api/admin/cms/email-templates
 GET/PUT             /api/admin/cms/contact/:id
-GET/POST/PUT/DELETE /api/admin/cms/free-resources/:id
+GET/POST/PUT/DELETE /api/admin/cms/free-resources
 
-GET/POST/PUT/DELETE /api/admin/dev/* ← users, roles, licenses, IPs, etc.
+GET/POST/PUT/DELETE /api/admin/dev/*       ← users, roles, licenses, IPs, exchange rates
 GET                 /api/admin/finance/*
 GET/PUT/DELETE      /api/admin/users/*
+
+GET /health                                ← returns DB ping, used by Railway
 ```
 
 ---
 
-## 7. Frontend Routes
+## 9. SEO Implementation
 
-```
-/                          HomePage
-/datasets                  DatasetsPage
-/datasets/:slug            DatasetDetailPage
-/free-data                 FreeDataPage
-/free-data/:slug           FreeDataDetailPage
-/about                     AboutPage             ← standalone component
-/contact                   ContactPage
-/pages/privacy-policy      PrivacyPolicyPage     ← standalone component, NOT from DB
-/pages/terms-of-service    TermsPage             ← standalone component, NOT from DB
-/pages/:slug               StaticPage            ← fetches from DB (other slugs)
+- **react-helmet-async** manages all per-page `<title>`, `<meta>`, canonical, OG, Twitter tags
+- **index.html** does NOT have a static `<meta name="description">` (removed to prevent duplicates)
+- **Canonical domain:** `https://wa-data-intel.netlify.app` across all pages
+- **Structured data (JSON-LD):** FAQPage + WebSite + Organization + DataCatalog (index.html) + Dataset (DatasetDetailPage)
+- **DatasetDetailPage:** auto-generates keywords from `dataset.name`, `dataset.slug`, `dataset.category`, `dataset.defaultUnit`
+- **Sitemap:** `client/public/sitemap.xml` (static, accessible at `/sitemap.xml`)
+- **robots.txt:** `client/public/robots.txt` (points to sitemap, blocks /auth, /admin, /api)
+- **recharts** is NOT in `manualChunks` — Vite auto-splits it only with DatasetDetailPage (lazy-loaded), never preloaded on homepage
 
-/auth/login
-/auth/register
-/auth/verify-otp
-/auth/forgot-password
-/auth/reset-password
+---
 
-/profile                   ProfilePage           (protected)
-/purchases                 PurchasesPage         (protected)
-/download/:token           DownloadPage          (token-based, guests allowed)
+## 10. Images & Assets
 
-/admin/dev                 DevDashboard          (Developer only)
-/admin/finance             FinanceDashboard      (FinancialManager | Developer)
-/admin/data                DataDashboard         (DataManager | Developer)
-/admin/users               UsersDashboard        (UserManager | Developer)
-/admin/cms                 CmsDashboard          (CMSManager | Developer)
-/admin/profile             AdminProfilePage      (any admin)
+All source images in `client/public/`. WebP-optimized versions in `client/public/images/`. **Always use `/images/*.webp` in code.**
+
+| File | Used in |
+|---|---|
+| `logo.webp` | Navbar, auth pages (h-16), favicon |
+| `Homepage_Hero_Illustration.webp` | Deprecated (hero now uses slideshow) |
+| `Browse_and_Discover.webp` | HomePage "How It Works" step 1 |
+| `Purchase_Securely.webp` | HomePage "How It Works" step 2 |
+| `Download_and_Use.webp` | HomePage "How It Works" step 3 |
+| `About_Page_Hero_Illustration.webp` | AboutPage |
+| `Contact_Page_Illustration.webp` | ContactPage |
+| `Free_Data_Section_Illustration.webp` | FreeDataPage |
+| `404_Page_Illustration.webp` | NotFoundPage |
+| `No_Results_Found.webp` | DatasetsPage empty state |
+| `No_Purchases_Yet.webp` | PurchasesPage empty state |
+| `Dataset_Placeholder.webp` | DatasetCard fallback |
+| `homepage_hero_imgs/1–5.png` | Hero slideshow (in `public/`, not `public/images/`) |
+
+Team profile pictures: `client/public/team_profile_pics/faizan.jpg`, `hamid.jpg`, `rauf.jpg`
+
+---
+
+## 11. Environment Variables
+
+All in `server/.env`. Validated at startup via `envalid` in `server/src/config/env.ts`.
+
+```env
+NODE_ENV=development
+PORT=5000
+DATABASE_URL=mysql://user:pass@localhost:3306/dbname
+JWT_SECRET=...
+JWT_EXPIRES_IN=7d
+RAZORPAY_KEY_ID=          # leave empty — payments disabled
+RAZORPAY_KEY_SECRET=      # leave empty
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=465
+SMTP_USER=youraddress@gmail.com
+SMTP_PASS=<16-char App Password>
+EMAIL_FROM=noreply@waderaassociates.com
+AWS_ACCESS_KEY_ID=...
+AWS_SECRET_ACCESS_KEY=...
+AWS_REGION=ap-south-1
+AWS_BUCKET_NAME=wadera-associates-uploads
+EXCHANGE_RATE_API_KEY=...
+EXCHANGE_RATE_API_URL=https://api.exchangerate-api.com/v4/latest/INR
+GEOLOCATION_API_KEY=...
+GEOLOCATION_API_URL=https://api.ipgeolocation.io/ipgeo
+FRONTEND_URL=http://localhost:3000
+REDIS_URL=redis://localhost:6379
+DEVELOPER_ADMIN_EMAIL=admin@waderaassociates.com
+DEVELOPER_ADMIN_PASSWORD=ChangeMe@123
+LOG_LEVEL=info
 ```
 
 ---
 
-## 8. Important Technical Gotchas
+## 12. Technical Gotchas
 
 ### Prisma v5
-- `$on('query', ...)` — event param type is `never` in v5. Must cast: `(prisma as any).$on('query', ...)`
+- `$on('query', ...)` — event param type is `never` in v5, cast: `(prisma as any).$on('query', ...)`
 - Nullable JSON fields require `Prisma.JsonNull` not `null`: `datasetIds: value ?? Prisma.JsonNull`
-- Run `prisma generate` from `server/` directory (not root, not `server/src/`)
+- Run `prisma generate` from `server/` (not root, not `server/src/`)
+- Binary targets for Railway/Linux: add `binaryTargets = ["native", "debian-openssl-3.0.x"]` in schema
 
 ### Two Schema Files
-`server/prisma/schema.prisma` is what Prisma CLI reads. `server/src/prisma/schema.prisma` is what TypeScript imports reference. **Always edit both.** They must be identical.
+`server/prisma/schema.prisma` is what Prisma CLI reads. `server/src/prisma/schema.prisma` is what TypeScript imports reference. **Always edit both. They must be identical.**
+
+### FLAG IMAGES — Do Not Use Emoji
+Flag emoji (`🇬🇧`, `🇨🇳` etc.) do not render as flag images on Windows browsers — they appear as letter pairs. The `Flag` component in SettingsModal uses `flagcdn.com` PNG images instead. Never replace with emoji.
 
 ### JWT `expiresIn` type
 `jsonwebtoken` newer types require `StringValue`. Workaround: `jwt.sign(payload, secret, { expiresIn: env.JWT_EXPIRES_IN as any })`
 
 ### React Hook Form + Zod
-Must type the form: `useForm<z.infer<typeof schema>>({ resolver: zodResolver(schema) })`. Without the generic, `errors.field.message` is typed as `unknown` causing TS errors.
+Must type the form: `useForm<z.infer<typeof schema>>({ resolver: zodResolver(schema) })`. Without the generic, `errors.field.message` is typed as `unknown`.
 
 ### Tailwind CSS variables
-`client/tailwind.config.js` has `extend.colors` with `border: 'hsl(var(--border))'` etc. These are required because `globals.css` uses `@apply border-border`. Removing them breaks the Vite build.
-
-### npm workspace hoisting
-`@types/react` hoists to root `node_modules`. If you see `@types/react` as an empty directory in `client/node_modules`, run `npm install --legacy-peer-deps` inside `client/`.
+`client/tailwind.config.js` has `extend.colors` with `border: 'hsl(var(--border))'` etc. Required because `globals.css` uses `@apply border-border`. Do not remove.
 
 ### exceljs buffer type
-`workbook.xlsx.load(buffer)` requires `buffer as any` due to `Buffer<ArrayBufferLike>` vs `Buffer` incompatibility in newer TypeScript.
+`workbook.xlsx.load(buffer)` requires `buffer as any` due to `Buffer<ArrayBufferLike>` vs `Buffer` incompatibility.
 
-### Static file serving (local dev)
-`server/src/app.ts` serves:
-- `server/public/uploads/` at `/uploads/` — for user avatars and dataset cover images
-Add more static paths here if needed.
+### PORT binding for Railway
+`app.listen(PORT, '0.0.0.0', ...)` — must bind to all interfaces. Railway's internal network is IPv6; binding only to localhost causes 502 errors.
+
+### Razorpay null-guard
+Razorpay instance should be null when keys are empty. Any payment route must check `if (!razorpay) return res.status(503)...` before calling SDK methods.
 
 ### XLSX Import Format
-Importer expects: Col A = YYYY-MM date, Col B = numeric value, Col C = optional note.
-The user's original sample file has 2 empty columns before data — it's in the wrong format.
-See `XLSX_IMPORT_FORMAT.txt` and `SAMPLE_CORRECT_FORMAT.xlsx` for the correct layout.
+Importer expects: Col A = `YYYY-MM` date, Col B = numeric value, Col C = optional note. See `SAMPLE_CORRECT_FORMAT.xlsx`.
 
 ---
 
-## 9. Seed Data
-
-Run seed (requires DB to be running):
-```bash
-cd server
-npx prisma db seed
-```
-
-Seeds:
-- 5 roles: Developer, FinancialManager, DataManager, UserManager, CMSManager
-- 1 admin user: `admin@waderaassociates.com` / `ChangeMe@123` (role: Developer)
-- 3 license types: Personal, Commercial, Enterprise
-- Static pages: about, privacy-policy, terms-of-service, contact
-  - Note: About/Privacy/Terms are now rendered as standalone React components.
-    The DB seed content still exists but is not used for those routes.
-    Only the `contact` slug is still used by StaticPage.
-- 3 default email templates: OTP, WELCOME, ORDER_CONFIRMATION
-
----
-
-## 10. Environment Variables
-
-All in `server/.env`. Key ones:
-```
-DATABASE_URL=mysql://...
-JWT_SECRET=...
-RAZORPAY_KEY_ID=...
-RAZORPAY_KEY_SECRET=...
-SMTP_HOST= / SMTP_PORT= / SMTP_USER= / SMTP_PASS=
-AWS_ACCESS_KEY_ID= / AWS_SECRET_ACCESS_KEY= / AWS_REGION= / AWS_BUCKET_NAME=
-EXCHANGE_RATE_API_KEY=
-FRONTEND_URL=http://localhost:5173  (or 3000)
-DEVELOPER_ADMIN_EMAIL=admin@waderaassociates.com
-DEVELOPER_ADMIN_PASSWORD=ChangeMe@123
-```
-See `SETUP.md` for full reference table.
-
----
-
-## 11. Running the Project
+## 13. Running the Project
 
 ```bash
-# From root — install all workspaces
+# Install all workspaces from root
 npm install --legacy-peer-deps
 
 # Start backend (port 5000)
 cd server && npm run dev
 
-# Start frontend (port 5173)
+# Start frontend (port 3000)
 cd client && npm run dev
+
+# TypeScript checks
+cd server && npx tsc --noEmit
+cd client && npx tsc --noEmit
+
+# Build frontend
+cd client && npm run build
 
 # Run server tests
 cd server && npm test
 cd server && npm run test:coverage
 
-# Build frontend
-cd client && npm run build
-
-# TypeScript check (no emit)
-cd server && npx tsc --noEmit -p tsconfig.json
-cd client && npx tsc --noEmit
+# Prisma
+cd server && npx prisma migrate dev --name <name>
+cd server && npx prisma migrate deploy          # production only
+cd server && npx prisma generate
+cd server && npm run seed
 ```
 
 ---
 
-## 12. Assets & Illustrations
+## 14. Seed Data
 
-`prompts.md` at root contains Gemini image generation prompts for:
-- Logo / brand mark (icon-only + wordmark variants)
-- Homepage hero illustration
-- "How It Works" 3-icon set
-- About page illustration
-- Contact page illustration
-- Free Data section illustration
-- Empty state illustrations (no results, no purchases)
-- 404 page illustration
-- Default dataset thumbnail placeholder
+```bash
+cd server && npx prisma db seed
+```
 
-Team profile pictures go in `client/public/team_profile_pics/`:
-- `faizan.jpg`, `hamid.jpg`, `rauf.jpg`
-- About page gracefully falls back to initial-letter avatar if files missing.
+Creates:
+- 5 roles: Developer, FinancialManager, DataManager, UserManager, CMSManager
+- 1 admin user: `admin@waderaassociates.com` / `ChangeMe@123` (Developer role)
+- 3 license types: Personal, Commercial, Enterprise
+- Default email templates: OTP, WELCOME, ORDER_CONFIRMATION
+- Static page slugs: about, privacy-policy, terms-of-service, contact
+  - Note: About/Privacy/Terms are standalone React components now — DB seed content unused for those routes
 
 ---
 
-## 13. Root-Level Documents
+## 15. Deployment
+
+### Frontend — Netlify
+- URL: https://wa-data-intel.netlify.app
+- Auto-deploys from `master` branch
+- `client/public/_redirects` handles SPA routing (`/* /index.html 200`)
+- Build command: `cd client && npm run build`
+- Publish directory: `client/dist`
+
+### Backend — Railway (not yet deployed, guide written)
+- See `BACKEND_DEPLOYMENT_GUIDE.md` for full steps
+- MySQL add-on via Railway, Gmail SMTP via App Password, AWS S3
+- Required code change before deploy: `app.listen(PORT, '0.0.0.0', ...)`
+- Required schema change: add `binaryTargets` for Debian in `schema.prisma`
+
+---
+
+## 16. Open Tasks
+
+1. **Deploy backend** on Railway — follow `BACKEND_DEPLOYMENT_GUIDE.md`
+   - Code changes needed: PORT binding, Prisma binaryTargets, Razorpay null-guard, `/health` endpoint
+   - Run `railway run npx prisma migrate deploy` after first deploy
+2. **Re-enable Razorpay** — add null-guard in payment routes, set keys in Railway env vars
+3. **Redis** — if used in production paths, add Redis service on Railway
+4. **Team profile pictures** — add `faizan.jpg`, `hamid.jpg`, `rauf.jpg` to `client/public/team_profile_pics/`
+5. **Custom domain** — update all canonical URLs from `wa-data-intel.netlify.app` to the real domain when purchased
+
+---
+
+## 17. Root-Level Documents
 
 | File | Purpose |
 |---|---|
-| `SETUP.md` | Full developer setup guide (prerequisites, env, DB, running) |
-| `CLAUDE_CONTEXT.md` | This file — developer context for new sessions |
-| `PLATFORM_OVERVIEW.md` | Non-technical client-facing platform explanation |
-| `XLSX_IMPORT_FORMAT.txt` | Data import format spec for the data manager |
-| `SAMPLE_CORRECT_FORMAT.xlsx` | Working sample XLSX for import testing |
-| `prompts.md` | Gemini image generation prompts for all UI assets |
-
----
-
-## 14. What Still Needs Doing (Open Tasks)
-
-1. **Run Prisma migration** when MySQL is online:
-   ```bash
-   cd server
-   npx prisma migrate dev --name add_cover_image_free_resource
-   ```
-   This creates the `FreeResource` table and adds `coverImage` to `TimeSeries`.
-   Also applies `profilePicture` and `isActive` to `User` if not yet done.
-
-2. **Add team profile pictures** to `client/public/team_profile_pics/` — `faizan.jpg`, `hamid.jpg`, `rauf.jpg`.
-
-3. **Generate and add illustrations** — use prompts in `prompts.md` with Gemini. Suggested placements once assets exist:
-   - Hero: replace/augment the current text-only hero section
-   - About page: add illustration above the team section
-   - Contact page: add beside the contact form
-
-4. **Configure external services** for production (see `SETUP.md`): Razorpay keys, SMTP credentials, AWS S3, ExchangeRate API key.
-
-5. **Reformat sample XLSX** if user wants to test the data importer — see `XLSX_IMPORT_FORMAT.txt`.
-
-6. **Footer links** — verify `Privacy Policy` and `Terms of Service` links in Footer point to `/pages/privacy-policy` and `/pages/terms-of-service`.
-
----
-
-## 14. File Decisions to Remember
-
-- **`AboutPage.tsx`** — Standalone React component, no DB fetch. Team hardcoded in `TEAM` array.
-- **`PrivacyPolicyPage.tsx`** — Standalone. Route: `/pages/privacy-policy`. Specific route defined before the generic `/pages/:slug` in App.tsx.
-- **`TermsPage.tsx`** — Standalone. Route: `/pages/terms-of-service`.
-- **`StaticPage.tsx`** — Still used for any other `/pages/:slug` routes managed via CMS.
-- **`DatasetCard.tsx`** — Shows `coverImage` thumbnail if present. Falls back to gradient placeholder with icon.
-- **`CmsDashboard.tsx`** — 4 tabs: Static Pages | Email Templates | Contact Messages | Free Resources. Markdown preview button in Free Resources tab.
-- **`DataDashboard.tsx`** — "Cover" button per dataset row opens an image upload panel. Tiny thumbnail shown in table.
-- **`AdminProfilePage.tsx`** — Single profile page for all 5 admin roles. Role detected from `user.role.name`.
-- **`freeResource.service.ts`** — Auto-generates slugs from title. `getPublishedBySlug` checks `isPublished: true`.
-- **`dataset.service.ts`** — `getPublicDatasets` select now includes `coverImage`. `updateCoverImage(id, url)` is a dedicated function.
+| `CLAUDE_CONTEXT.md` | This file — full session context |
+| `BACKEND_DEPLOYMENT_GUIDE.md` | Railway + Gmail SMTP + AWS S3 deployment steps |
+| `SETUP.md` | Local developer setup guide |
+| `TESTING.md` | Testing strategy and commands |
+| `SAMPLE_CORRECT_FORMAT.xlsx` | Correct XLSX format for dataset import |
+| `docs/CLAUDE.md` | Legacy context file (outdated, superseded by this file) |
