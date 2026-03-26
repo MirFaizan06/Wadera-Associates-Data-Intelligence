@@ -35,7 +35,9 @@ i18n
       loadPath: '/locales/{{lng}}/{{ns}}.json',
     },
     detection: {
-      order: ['localStorage', 'navigator', 'htmlTag'],
+      // Only use localStorage — never auto-detect from browser language.
+      // On first visit with no stored preference, fallbackLng ('en') applies.
+      order: ['localStorage'],
       caches: ['localStorage'],
       lookupLocalStorage: 'i18nextLng',
     },

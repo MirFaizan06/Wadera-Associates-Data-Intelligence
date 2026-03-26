@@ -109,6 +109,10 @@
       "subtitle": "Registrieren Sie sich kostenlos und durchsuchen Sie unseren vollständigen Katalog von Zeitreihendatensätzen.",
       "primaryBtn": "Kostenloses Konto erstellen",
       "secondaryBtn": "Ohne Anmeldung durchsuchen"
+    },
+    "coverage": {
+      "title": "Datenabdeckung in wichtigen Sektoren",
+      "body": "Wadera Associates veröffentlicht Zeitreihendatensätze für Energiemärkte, Öl- und Gaspreise, Stromtarife, Rohstoffindizes und Finanzmarktindikatoren. Unsere Datensätze umfassen Asien, den Nahen Osten und globale Märkte – als XLSX, CSV, PDF und PNG-Diagramme verfügbar."
     }
   },
   "datasets": {
@@ -397,6 +401,30 @@
     "privacyPolicy": "Datenschutzrichtlinie",
     "termsOfService": "Nutzungsbedingungen",
     "contactSection": "Kontakt",
-    "copyright": "© {{year}} Wadera Associates. Alle Rechte vorbehalten."
+    "copyright": "© {{year}} Wadera Associates. Alle Rechte vorbehalten.",
+    "sitemap": "Sitemap"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "close": "Schliessen",
+    "doneBtn": "Fertig",
+    "languageTitle": "Sprache",
+    "languageHint": "Waehlen Sie Ihre bevorzugte Anzeigesprache.",
+    "currencyTitle": "Waehrung",
+    "currencyHint": "Preise auf der Website werden sofort aktualisiert.",
+    "tooltipTitle": "Passen Sie Ihre Erfahrung an",
+    "tooltipBody": "Verwenden Sie Einstellungen, um Sprache und Waehrung zu aendern."
+  },
+  "faq": {
+    "open": "FAQ-Assistent oeffnen",
+    "close": "FAQ-Assistent schliessen",
+    "title": "FAQ-Assistent",
+    "subtitle": "Stellen Sie uns eine Frage",
+    "welcome": "Hallo! Ich bin der FAQ-Bot von Wadera Associates. Waehlen Sie eine Frage aus.",
+    "pickQuestion": "Haeufig gestellte Fragen",
+    "backToList": "Zurueck zu den Fragen",
+    "fullscreen": "Vollbild",
+    "exitFullscreen": "Vollbild beenden",
+    "footer": "Bereitgestellt von Wadera Associates"
   }
 }

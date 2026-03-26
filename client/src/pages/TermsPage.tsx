@@ -8,10 +8,10 @@ export default function TermsPage() {
       <Helmet>
         <title>Terms of Service - Wadera Associates</title>
         <meta name="description" content="Terms of Service governing use of the Wadera Associates Data Intelligence platform." />
-        <link rel="canonical" href="https://waderaassociates.com/pages/terms-of-service" />
+        <link rel="canonical" href="https://wa-data-intel.netlify.app/pages/terms-of-service" />
         <meta property="og:title" content="Terms of Service — Wadera Associates" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://waderaassociates.com/pages/terms-of-service" />
+        <meta property="og:url" content="https://wa-data-intel.netlify.app/pages/terms-of-service" />
         <meta property="og:site_name" content="Wadera Associates" />
       </Helmet>
 

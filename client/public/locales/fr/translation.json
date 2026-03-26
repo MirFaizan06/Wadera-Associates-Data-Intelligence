@@ -109,6 +109,10 @@
       "subtitle": "Inscrivez-vous gratuitement et parcourez notre catalogue complet de séries temporelles.",
       "primaryBtn": "Créer un Compte Gratuit",
       "secondaryBtn": "Parcourir sans S'inscrire"
+    },
+    "coverage": {
+      "title": "Couverture des données dans les secteurs clés",
+      "body": "Wadera Associates publie des séries temporelles couvrant les marchés de l'énergie, les prix du pétrole et du gaz, les tarifs d'électricité, les indices de matières premières et les indicateurs financiers. Nos données couvrent l'Asie, le Moyen-Orient et les marchés mondiaux — en XLSX, CSV, PDF et PNG."
     }
   },
   "datasets": {
@@ -397,6 +401,30 @@
     "privacyPolicy": "Politique de Confidentialité",
     "termsOfService": "Conditions d'Utilisation",
     "contactSection": "Contact",
-    "copyright": "© {{year}} Wadera Associates. Tous droits réservés."
+    "copyright": "© {{year}} Wadera Associates. Tous droits réservés.",
+    "sitemap": "Plan du site"
+  },
+  "settings": {
+    "title": "Parametres",
+    "close": "Fermer",
+    "doneBtn": "Termine",
+    "languageTitle": "Langue",
+    "languageHint": "Choisissez votre langue affichage preferee.",
+    "currencyTitle": "Devise",
+    "currencyHint": "Les prix du site se mettent a jour instantanement.",
+    "tooltipTitle": "Personnalisez votre experience",
+    "tooltipBody": "Utilisez Parametres pour changer la langue et la devise affichees."
+  },
+  "faq": {
+    "open": "Ouvrir assistant FAQ",
+    "close": "Fermer assistant FAQ",
+    "title": "Assistant FAQ",
+    "subtitle": "Posez-nous une question",
+    "welcome": "Bonjour! Je suis le bot FAQ de Wadera Associates. Choisissez une question.",
+    "pickQuestion": "Questions frequentes",
+    "backToList": "Retour aux questions",
+    "fullscreen": "Plein ecran",
+    "exitFullscreen": "Quitter le plein ecran",
+    "footer": "Fourni par Wadera Associates"
   }
 }

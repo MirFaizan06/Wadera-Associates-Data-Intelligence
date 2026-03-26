@@ -109,6 +109,10 @@
       "subtitle": "무료로 등록하고 시계열 데이터셋의 전체 카탈로그를 탐색하세요.",
       "primaryBtn": "무료 계정 만들기",
       "secondaryBtn": "로그인 없이 탐색"
+    },
+    "coverage": {
+      "title": "주요 섹터의 데이터 커버리지",
+      "body": "Wadera Associates는 에너지 시장, 석유 및 가스 가격, 전기 요금, 원자재 지수, 금융 시장 지표를 포함하는 시계열 데이터셋을 제공합니다. 아시아, 중동 및 글로벌 시장에 걸친 데이터를 XLSX, CSV, PDF, PNG 형식으로 제공합니다."
     }
   },
   "datasets": {
@@ -397,6 +401,30 @@
     "privacyPolicy": "개인정보 처리방침",
     "termsOfService": "이용약관",
     "contactSection": "문의",
-    "copyright": "© {{year}} Wadera Associates. All rights reserved."
+    "copyright": "© {{year}} Wadera Associates. All rights reserved.",
+    "sitemap": "사이트맵"
+  },
+  "settings": {
+    "title": "설정",
+    "close": "닫기",
+    "doneBtn": "완료",
+    "languageTitle": "언어",
+    "languageHint": "원하는 표시 언어를 선택하세요.",
+    "currencyTitle": "통화",
+    "currencyHint": "사이트 가격이 즉시 업데이트됩니다.",
+    "tooltipTitle": "경험을 맞춤화하세요",
+    "tooltipBody": "설정을 사용하여 언어와 통화를 변경하세요."
+  },
+  "faq": {
+    "open": "FAQ 어시스턴트 열기",
+    "close": "FAQ 어시스턴트 닫기",
+    "title": "FAQ 어시스턴트",
+    "subtitle": "무엇이든 물어보세요",
+    "welcome": "안녕하세요! Wadera Associates FAQ 봇입니다. 질문을 선택해 주세요.",
+    "pickQuestion": "자주 묻는 질문",
+    "backToList": "질문 목록으로 돌아가기",
+    "fullscreen": "전체 화면",
+    "exitFullscreen": "전체 화면 종료",
+    "footer": "Wadera Associates 제공"
   }
 }

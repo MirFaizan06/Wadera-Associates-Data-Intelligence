@@ -109,6 +109,10 @@
       "subtitle": "免费注册并浏览我们完整的时间序列数据集目录。",
       "primaryBtn": "创建免费账户",
       "secondaryBtn": "无需登录浏览"
+    },
+    "coverage": {
+      "title": "覆盖主要行业的数据",
+      "body": "Wadera Associates 发布时间序列数据集，涵盖能源市场、石油和天然气价格、电费、大宗商品指数以及金融市场指标。我们的数据集跨越亚洲、中东和全球市场，支持 XLSX、CSV、PDF 和 PNG 格式下载。"
     }
   },
   "datasets": {
@@ -397,6 +401,30 @@
     "privacyPolicy": "隐私政策",
     "termsOfService": "服务条款",
     "contactSection": "联系",
-    "copyright": "© {{year}} Wadera Associates. 保留所有权利。"
+    "copyright": "© {{year}} Wadera Associates. 保留所有权利。",
+    "sitemap": "网站地图"
+  },
+  "settings": {
+    "title": "设置",
+    "close": "关闭",
+    "doneBtn": "完成",
+    "languageTitle": "语言",
+    "languageHint": "选择您偏好的显示语言。",
+    "currencyTitle": "货币",
+    "currencyHint": "网站价格将即时更新。",
+    "tooltipTitle": "自定义您的体验",
+    "tooltipBody": "使用设置按钮更改网站显示的语言和货币。"
+  },
+  "faq": {
+    "open": "打开常见问题助手",
+    "close": "关闭常见问题助手",
+    "title": "常见问题助手",
+    "subtitle": "随时提问",
+    "welcome": "您好！我是 Wadera Associates 的常见问题机器人。请从下方选择一个问题，我会立即为您解答。",
+    "pickQuestion": "常见问题",
+    "backToList": "返回问题列表",
+    "fullscreen": "全屏",
+    "exitFullscreen": "退出全屏",
+    "footer": "由 Wadera Associates 提供支持"
   }
 }

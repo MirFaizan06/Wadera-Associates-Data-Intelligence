@@ -22,17 +22,17 @@ export default function AboutPage() {
       <Helmet>
         <title>{t('titles.about')}</title>
         <meta name="description" content="Wadera Associates is a data intelligence platform providing high-quality business, sector, and industry datasets to a global clientele." />
-        <link rel="canonical" href="https://waderaassociates.com/about" />
+        <link rel="canonical" href="https://wa-data-intel.netlify.app/about" />
         <meta property="og:title" content="About Wadera Associates — Data Intelligence" />
         <meta property="og:description" content="A data intelligence platform providing high-quality business, sector, and industry datasets to a global clientele." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://waderaassociates.com/about" />
+        <meta property="og:url" content="https://wa-data-intel.netlify.app/about" />
         <meta property="og:site_name" content="Wadera Associates" />
-        <meta property="og:image" content="https://waderaassociates.com/images/logo.webp" />
+        <meta property="og:image" content="https://wa-data-intel.netlify.app/images/logo.webp" />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content="About Wadera Associates — Data Intelligence" />
         <meta name="twitter:description" content="A data intelligence platform providing high-quality business, sector, and industry datasets to a global clientele." />
-        <meta name="twitter:image" content="https://waderaassociates.com/images/logo.webp" />
+        <meta name="twitter:image" content="https://wa-data-intel.netlify.app/images/logo.webp" />
       </Helmet>
 
       {/* Hero */}

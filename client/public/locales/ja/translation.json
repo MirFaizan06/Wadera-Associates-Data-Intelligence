@@ -109,6 +109,10 @@
       "subtitle": "無料登録して、時系列データセットの完全なカタログをご覧ください。",
       "primaryBtn": "無料アカウントを作成",
       "secondaryBtn": "登録なしで閲覧"
+    },
+    "coverage": {
+      "title": "主要セクターのデータカバレッジ",
+      "body": "Wadera Associatesは、エネルギー市場、石油・ガス価格、電力料金、コモディティ指数、金融市場指標をカバーする時系列データセットを公開しています。アジア、中東、グローバル市場にわたるデータをXLSX、CSV、PDF、PNGで提供しています。"
     }
   },
   "datasets": {
@@ -397,6 +401,30 @@
     "privacyPolicy": "プライバシーポリシー",
     "termsOfService": "利用規約",
     "contactSection": "お問い合わせ",
-    "copyright": "© {{year}} Wadera Associates. All rights reserved."
+    "copyright": "© {{year}} Wadera Associates. All rights reserved.",
+    "sitemap": "サイトマップ"
+  },
+  "settings": {
+    "title": "設定",
+    "close": "閉じる",
+    "doneBtn": "完了",
+    "languageTitle": "言語",
+    "languageHint": "表示言語を選択してください。",
+    "currencyTitle": "通貨",
+    "currencyHint": "サイト全体の価格が即座に更新されます。",
+    "tooltipTitle": "エクスペリエンスをカスタマイズ",
+    "tooltipBody": "設定から言語と通貨を変更できます。"
+  },
+  "faq": {
+    "open": "FAQアシスタントを開く",
+    "close": "FAQアシスタントを閉じる",
+    "title": "FAQアシスタント",
+    "subtitle": "何でも聞いてください",
+    "welcome": "こんにちは！Wadera AssociatesのFAQボットです。質問を選んでください。",
+    "pickQuestion": "よくある質問",
+    "backToList": "質問一覧に戻る",
+    "fullscreen": "全画面",
+    "exitFullscreen": "全画面を終了",
+    "footer": "Wadera Associatesが提供"
   }
 }

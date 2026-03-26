@@ -8,10 +8,10 @@ export default function PrivacyPolicyPage() {
       <Helmet>
         <title>Privacy Policy - Wadera Associates</title>
         <meta name="description" content="Privacy Policy for Wadera Associates Data Intelligence platform." />
-        <link rel="canonical" href="https://waderaassociates.com/pages/privacy-policy" />
+        <link rel="canonical" href="https://wa-data-intel.netlify.app/pages/privacy-policy" />
         <meta property="og:title" content="Privacy Policy — Wadera Associates" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://waderaassociates.com/pages/privacy-policy" />
+        <meta property="og:url" content="https://wa-data-intel.netlify.app/pages/privacy-policy" />
         <meta property="og:site_name" content="Wadera Associates" />
       </Helmet>
 

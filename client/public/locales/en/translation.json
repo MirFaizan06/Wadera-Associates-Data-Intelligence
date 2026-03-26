@@ -81,6 +81,10 @@
         { "title": "Live Prices", "desc": "Prices displayed in your local currency via live exchange rates." }
       ]
     },
+    "coverage": {
+      "title": "Data Coverage Across Key Sectors",
+      "body": "Wadera Associates publishes time-series datasets covering energy markets, oil and gas prices, electricity tariffs, commodity indices, and financial market indicators. Our datasets span Asia, the Middle East, and global markets — sourced, verified, and structured for immediate use in models, reports, and dashboards. Whether you are an analyst tracking crude oil prices, a consultant benchmarking electricity costs, or a researcher studying commodity trends, our platform provides the precise data you need. All datasets include monthly historical records, unit metadata, and are available for instant download in XLSX, CSV, PDF, and PNG chart formats."
+    },
     "featured": {
       "title": "Featured Datasets",
       "viewAll": "View All",
@@ -360,6 +364,29 @@
     "preparing": "Preparing...",
     "failed": "Download failed. Your access may have expired."
   },
+  "settings": {
+    "title": "Settings",
+    "close": "Close",
+    "doneBtn": "Done",
+    "languageTitle": "Language",
+    "languageHint": "Choose your preferred display language.",
+    "currencyTitle": "Currency",
+    "currencyHint": "Prices across the site update instantly.",
+    "tooltipTitle": "Customize your experience",
+    "tooltipBody": "Use Settings to change the language and currency displayed across the site."
+  },
+  "faq": {
+    "open": "Open FAQ assistant",
+    "close": "Close FAQ assistant",
+    "title": "FAQ Assistant",
+    "subtitle": "Ask us anything",
+    "welcome": "Hi! I'm the Wadera Associates FAQ bot. Pick a question below and I'll answer right away.",
+    "pickQuestion": "Frequently asked questions",
+    "backToList": "Back to questions",
+    "fullscreen": "Fullscreen",
+    "exitFullscreen": "Exit fullscreen",
+    "footer": "Powered by Wadera Associates"
+  },
   "footer": {
     "tagline": "Premium time-series datasets for energy, commodities, and financial markets.",
     "quickLinks": "Quick Links",
@@ -369,6 +396,7 @@
     "legal": "Legal",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
+    "sitemap": "Sitemap",
     "contactSection": "Contact",
     "copyright": "© {{year}} Wadera Associates. All rights reserved."
   }

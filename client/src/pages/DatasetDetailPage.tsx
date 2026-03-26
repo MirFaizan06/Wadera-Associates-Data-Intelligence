@@ -56,26 +56,40 @@ export default function DatasetDetailPage() {
   return (
     <>
       <Helmet>
-        <title>{dataset.name} - Wadera Associates</title>
-        <meta name="description" content={dataset.description || `Download ${dataset.name} time-series dataset.`} />
-        <link rel="canonical" href={`https://waderaassociates.com/datasets/${dataset.slug}`} />
+        <title>{dataset.name} – Buy & Download Time-Series Data | Wadera Associates</title>
+        <meta name="description" content={
+          dataset.description
+            ? `${dataset.description.slice(0, 140)} — Download as XLSX, CSV or PDF instantly.`
+            : `Buy and download the ${dataset.name} time-series dataset. Instant access in XLSX, CSV, and PDF formats. No subscription required.`
+        } />
+        <meta name="keywords" content={[
+          dataset.name,
+          dataset.slug?.replace(/-/g, ' '),
+          dataset.category,
+          dataset.defaultUnit,
+          'time series data',
+          'download dataset',
+          'XLSX CSV PDF',
+          'Wadera Associates',
+        ].filter(Boolean).join(', ')} />
+        <link rel="canonical" href={`https://wa-data-intel.netlify.app/datasets/${dataset.slug}`} />
         <meta property="og:title" content={`${dataset.name} — Wadera Associates`} />
         <meta property="og:description" content={dataset.description || `Download ${dataset.name} time-series dataset in XLSX, CSV, or PDF.`} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://waderaassociates.com/datasets/${dataset.slug}`} />
+        <meta property="og:url" content={`https://wa-data-intel.netlify.app/datasets/${dataset.slug}`} />
         <meta property="og:site_name" content="Wadera Associates" />
-        <meta property="og:image" content={dataset.coverImage || 'https://waderaassociates.com/images/logo.webp'} />
+        <meta property="og:image" content={dataset.coverImage || 'https://wa-data-intel.netlify.app/images/logo.webp'} />
         <meta name="twitter:card" content={dataset.coverImage ? 'summary_large_image' : 'summary'} />
         <meta name="twitter:title" content={`${dataset.name} — Wadera Associates`} />
         <meta name="twitter:description" content={dataset.description || `Download ${dataset.name} time-series dataset.`} />
-        <meta name="twitter:image" content={dataset.coverImage || 'https://waderaassociates.com/images/logo.webp'} />
+        <meta name="twitter:image" content={dataset.coverImage || 'https://wa-data-intel.netlify.app/images/logo.webp'} />
         <script type="application/ld+json">{JSON.stringify({
           '@context': 'https://schema.org',
           '@type': 'Dataset',
           name: dataset.name,
           description: dataset.description,
-          url: `https://waderaassociates.com/datasets/${dataset.slug}`,
-          creator: { '@type': 'Organization', name: 'Wadera Associates', url: 'https://waderaassociates.com' },
+          url: `https://wa-data-intel.netlify.app/datasets/${dataset.slug}`,
+          creator: { '@type': 'Organization', name: 'Wadera Associates', url: 'https://wa-data-intel.netlify.app' },
           variableMeasured: dataset.defaultUnit,
           ...(dataset.category && { keywords: [dataset.category] }),
           distribution: [

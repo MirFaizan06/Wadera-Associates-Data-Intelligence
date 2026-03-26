@@ -109,6 +109,10 @@
       "subtitle": "Daftar gratis dan jelajahi katalog lengkap dataset seri waktu kami.",
       "primaryBtn": "Buat Akun Gratis",
       "secondaryBtn": "Jelajahi Tanpa Mendaftar"
+    },
+    "coverage": {
+      "title": "Cakupan Data di Sektor Utama",
+      "body": "Wadera Associates menerbitkan dataset deret waktu yang mencakup pasar energi, harga minyak dan gas, tarif listrik, indeks komoditas, dan indikator pasar keuangan. Dataset kami mencakup Asia, Timur Tengah, dan pasar global — tersedia dalam format XLSX, CSV, PDF, dan PNG."
     }
   },
   "datasets": {
@@ -397,6 +401,30 @@
     "privacyPolicy": "Kebijakan Privasi",
     "termsOfService": "Syarat Layanan",
     "contactSection": "Kontak",
-    "copyright": "© {{year}} Wadera Associates. Hak cipta dilindungi."
+    "copyright": "© {{year}} Wadera Associates. Hak cipta dilindungi.",
+    "sitemap": "Peta Situs"
+  },
+  "settings": {
+    "title": "Pengaturan",
+    "close": "Tutup",
+    "doneBtn": "Selesai",
+    "languageTitle": "Bahasa",
+    "languageHint": "Pilih bahasa tampilan yang Anda inginkan.",
+    "currencyTitle": "Mata Uang",
+    "currencyHint": "Harga di seluruh situs diperbarui secara instan.",
+    "tooltipTitle": "Sesuaikan pengalaman Anda",
+    "tooltipBody": "Gunakan Pengaturan untuk mengubah bahasa dan mata uang yang ditampilkan di situs."
+  },
+  "faq": {
+    "open": "Buka Asisten FAQ",
+    "close": "Tutup Asisten FAQ",
+    "title": "Asisten FAQ",
+    "subtitle": "Tanyakan apa saja",
+    "welcome": "Halo! Saya adalah bot FAQ Wadera Associates. Pilih pertanyaan di bawah.",
+    "pickQuestion": "Pertanyaan yang sering diajukan",
+    "backToList": "Kembali ke pertanyaan",
+    "fullscreen": "Layar penuh",
+    "exitFullscreen": "Keluar dari layar penuh",
+    "footer": "Didukung oleh Wadera Associates"
   }
 }

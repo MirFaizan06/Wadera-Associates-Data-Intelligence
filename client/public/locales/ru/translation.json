@@ -109,6 +109,10 @@
       "subtitle": "Зарегистрируйтесь бесплатно и просмотрите наш полный каталог наборов данных временных рядов.",
       "primaryBtn": "Создать Бесплатный Аккаунт",
       "secondaryBtn": "Просмотр без Регистрации"
+    },
+    "coverage": {
+      "title": "Охват данных по ключевым секторам",
+      "body": "Wadera Associates публикует временные ряды, охватывающие энергетические рынки, цены на нефть и газ, электрические тарифы, товарные индексы и финансовые показатели. Данные охватывают Азию, Ближний Восток и мировые рынки — в форматах XLSX, CSV, PDF и PNG."
     }
   },
   "datasets": {
@@ -397,6 +401,30 @@
     "privacyPolicy": "Политика Конфиденциальности",
     "termsOfService": "Условия Использования",
     "contactSection": "Контакты",
-    "copyright": "© {{year}} Wadera Associates. Все права защищены."
+    "copyright": "© {{year}} Wadera Associates. Все права защищены.",
+    "sitemap": "Карта сайта"
+  },
+  "settings": {
+    "title": "Nastrojki",
+    "close": "Zakryt",
+    "doneBtn": "Gotovo",
+    "languageTitle": "Yazyk",
+    "languageHint": "Vyberte predpochtaemyj yazyk otobrazheniya.",
+    "currencyTitle": "Valyuta",
+    "currencyHint": "Tseny na sayte obnovlyayutsya mgnovenno.",
+    "tooltipTitle": "Nastroyte svoj opyt",
+    "tooltipBody": "Ispolzujte Nastrojki dlya izmeneniya yazyka i valyuty na sayte."
+  },
+  "faq": {
+    "open": "Otkryt pomoshchnik FAQ",
+    "close": "Zakryt pomoshchnik FAQ",
+    "title": "Pomoshchnik FAQ",
+    "subtitle": "Zadajte nam vopros",
+    "welcome": "Privet! Ya FAQ-bot Wadera Associates. Vyberte vopros i ya otvetu nemedlenno.",
+    "pickQuestion": "Chasto zadavaemye voprosy",
+    "backToList": "Vernutsya k voprosam",
+    "fullscreen": "Na ves ekran",
+    "exitFullscreen": "Vyjti iz polnogo ekrana",
+    "footer": "Rabotaet na Wadera Associates"
   }
 }

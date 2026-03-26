@@ -1,0 +1,122 @@
+[
+  {
+    "id": "what-datasets",
+    "question": "What kinds of datasets do you sell?",
+    "answer": "We offer premium time-series datasets covering **energy markets** (oil, gas, electricity prices), **commodity prices** (metals, agricultural goods), and **financial market indicators**. All datasets span multiple years of monthly data.",
+    "link": { "label": "Browse Datasets", "href": "/datasets" }
+  },
+  {
+    "id": "download-formats",
+    "question": "What formats can I download data in?",
+    "answer": "Every dataset is available in four formats: **XLSX** (Excel), **CSV** (universal), **PDF** (formatted report), and **PNG** (chart image). You get all formats with every purchase — no extras needed.",
+    "link": null
+  },
+  {
+    "id": "account-required",
+    "question": "Do I need an account to purchase?",
+    "answer": "Yes, a free account is required to complete a purchase and access your downloads. Registration takes under a minute — just email, name, and password.",
+    "link": { "label": "Create Free Account", "href": "/auth/register" }
+  },
+  {
+    "id": "pricing",
+    "question": "How much do datasets cost?",
+    "answer": "Each dataset has its own one-time price, typically ranging from a few hundred to a few thousand rupees depending on depth and coverage. Prices are shown in your selected currency with live exchange rates.",
+    "link": { "label": "See All Datasets", "href": "/datasets" }
+  },
+  {
+    "id": "currencies",
+    "question": "What currencies are supported?",
+    "answer": "We support **8 currencies**: INR, USD, EUR, GBP, PKR, SAR, AED, and JPY. Prices update automatically via live exchange rates. You can change your display currency from the ⚙️ Settings button in the top navigation.",
+    "link": null
+  },
+  {
+    "id": "subscription",
+    "question": "Is this a subscription service?",
+    "answer": "**No.** Wadera Associates uses a **one-time purchase** model. Pay once, download immediately, and keep lifetime access to your data. There are no recurring fees, no annual renewals.",
+    "link": null
+  },
+  {
+    "id": "access-after-purchase",
+    "question": "How do I access my purchases after buying?",
+    "answer": "After purchase, go to **My Purchases** in your account menu. Each purchased dataset will have a Download button — click it to choose your preferred format and download instantly.",
+    "link": { "label": "My Purchases", "href": "/purchases" }
+  },
+  {
+    "id": "data-freshness",
+    "question": "How frequently is data updated?",
+    "answer": "Data is updated on a **monthly basis** as new official data releases become available. When you purchase a dataset, you receive all updates to that dataset at no extra cost.",
+    "link": null
+  },
+  {
+    "id": "refunds",
+    "question": "Can I get a refund?",
+    "answer": "Since datasets are digital downloads, refunds are evaluated case-by-case. If you believe there is a data quality issue or a billing error, please contact us and we will resolve it promptly.",
+    "link": { "label": "Contact Us", "href": "/contact" }
+  },
+  {
+    "id": "sectors",
+    "question": "What sectors do you cover?",
+    "answer": "We currently cover **8+ sectors** including: oil & gas, electricity markets, coal, renewables, metals & mining, agricultural commodities, macro-economic indicators, and financial market data.",
+    "link": { "label": "Browse All Sectors", "href": "/datasets" }
+  },
+  {
+    "id": "free-data",
+    "question": "Are there any free resources?",
+    "answer": "Yes! Our **Free Data** section offers freely accessible articles, reports, and downloadable PDFs on energy markets, commodity pricing, and economic data — no account required.",
+    "link": { "label": "View Free Data", "href": "/free-data" }
+  },
+  {
+    "id": "how-to-download",
+    "question": "How do I download after purchasing?",
+    "answer": "After purchase is confirmed, a secure download link is generated immediately. You can access it from your **Purchases** page at any time — there is no expiry on your access.",
+    "link": { "label": "My Purchases", "href": "/purchases" }
+  },
+  {
+    "id": "payment-security",
+    "question": "Is my payment secure?",
+    "answer": "All payments are processed through **Razorpay**, a PCI DSS-compliant payment gateway used by thousands of Indian businesses. We do not store any card details on our servers.",
+    "link": null
+  },
+  {
+    "id": "about-us",
+    "question": "Who is Wadera Associates?",
+    "answer": "Wadera Associates is a data intelligence platform built to deliver high-quality business, sector, and industry datasets to professionals, researchers, and enterprises worldwide. Our team of three covers technology, data research, and finance.",
+    "link": { "label": "Learn About Us", "href": "/about" }
+  },
+  {
+    "id": "data-points",
+    "question": "How many data points do datasets have?",
+    "answer": "Each dataset shows its data point count on the catalog and detail pages. Most datasets contain **several years** worth of monthly observations. You can see a free 5-row preview on every dataset detail page before buying.",
+    "link": { "label": "Browse Datasets", "href": "/datasets" }
+  },
+  {
+    "id": "commercial-use",
+    "question": "Can I use the data commercially?",
+    "answer": "Yes, purchased datasets come with a **commercial license** for internal business use — reports, models, and dashboards. Redistribution or reselling of the raw data is not permitted. Full terms are in our Terms of Service.",
+    "link": { "label": "Terms of Service", "href": "/pages/terms-of-service" }
+  },
+  {
+    "id": "data-source",
+    "question": "Where does the data come from?",
+    "answer": "Our data is sourced from **official government publications, regulatory agencies, international organizations** (e.g., IEA, World Bank, OPEC), and verified industry benchmarks. Sources are cited in each dataset's detail page.",
+    "link": null
+  },
+  {
+    "id": "energy-data",
+    "question": "Do you have energy price data?",
+    "answer": "Yes — energy data is our primary focus. We have historical and current data on **crude oil prices, natural gas, electricity tariffs, coal prices, and renewable energy indicators** across multiple geographies.",
+    "link": { "label": "Browse Energy Datasets", "href": "/datasets?category=Energy" }
+  },
+  {
+    "id": "custom-dataset",
+    "question": "Can I request a custom dataset?",
+    "answer": "Absolutely. If you need a specific data series, geographic scope, or time range not currently in our catalog, reach out via our Contact page. We handle custom data research requests.",
+    "link": { "label": "Get in Touch", "href": "/contact" }
+  },
+  {
+    "id": "change-currency",
+    "question": "How do I change my display currency?",
+    "answer": "Click the ⚙️ **Settings** icon in the top navigation bar. A modal will open where you can choose from 8 currencies. Your selection is saved and prices across the site update instantly.",
+    "link": null
+  }
+]

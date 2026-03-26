@@ -71,18 +71,18 @@ export default function HomePage() {
     <>
       <Helmet>
         <title>{t('titles.home')}</title>
-        <meta name="description" content="Access premium time-series datasets for energy, commodities, and financial markets. Oil prices, electricity data, and more — instant downloads in XLSX, CSV, PDF." />
-        <link rel="canonical" href="https://waderaassociates.com" />
-        <meta property="og:title" content="Wadera Associates — Data Intelligence Platform" />
-        <meta property="og:description" content="Premium time-series datasets for energy, commodities and financial markets. Instant downloads in XLSX, CSV, PDF." />
+        <meta name="description" content="Buy time-series datasets for energy, commodities, and financial markets. Oil prices, electricity rates, commodity indices — instant XLSX, CSV &amp; PDF downloads. One-time purchase, no subscription." />
+        <link rel="canonical" href="https://wa-data-intel.netlify.app/" />
+        <meta property="og:title" content="Wadera Associates — Premium Data Intelligence Platform" />
+        <meta property="og:description" content="Buy time-series datasets for energy, commodities and financial markets. Instant XLSX, CSV &amp; PDF downloads. One-time purchase, no subscription." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://waderaassociates.com" />
+        <meta property="og:url" content="https://wa-data-intel.netlify.app/" />
         <meta property="og:site_name" content="Wadera Associates" />
-        <meta property="og:image" content="https://waderaassociates.com/images/logo.webp" />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="Wadera Associates — Data Intelligence Platform" />
-        <meta name="twitter:description" content="Premium time-series datasets for energy, commodities and financial markets." />
-        <meta name="twitter:image" content="https://waderaassociates.com/images/logo.webp" />
+        <meta property="og:image" content="https://wa-data-intel.netlify.app/images/logo.webp" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Wadera Associates — Premium Data Intelligence Platform" />
+        <meta name="twitter:description" content="Buy time-series datasets for energy, commodities and financial markets. Instant XLSX, CSV &amp; PDF downloads. No subscription." />
+        <meta name="twitter:image" content="https://wa-data-intel.netlify.app/images/logo.webp" />
         <script type="application/ld+json">{JSON.stringify({
           '@context': 'https://schema.org',
           '@type': 'FAQPage',
@@ -137,8 +137,9 @@ export default function HomePage() {
             aria-hidden
           />
         ))}
-        {/* Dark overlay so text stays legible over any image */}
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-navy/88 via-blue-900/80 to-blue-800/75" aria-hidden />
+        {/* Dark overlay — strong enough to keep text readable over any image */}
+        <div className="absolute inset-0 bg-brand-navy/75" aria-hidden />
+        <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-transparent to-black/30" aria-hidden />
         {/* Dot-grid texture */}
         <div
           className="absolute inset-0 opacity-[0.04]"
@@ -275,6 +276,14 @@ export default function HomePage() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* ── Data Coverage ── */}
+      <section className="py-14 bg-white border-t border-gray-100" aria-labelledby="coverage-heading">
+        <div className="container max-w-3xl text-center">
+          <h2 id="coverage-heading" className="text-2xl font-bold text-brand-navy mb-4">{t('home.coverage.title')}</h2>
+          <p className="text-gray-600 leading-relaxed text-sm sm:text-base">{t('home.coverage.body')}</p>
         </div>
       </section>
 

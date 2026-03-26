@@ -26,7 +26,7 @@ export default function StaticPage() {
       <Helmet>
         <title>{page.metaTitle || page.title} - Wadera Associates</title>
         {page.metaDesc && <meta name="description" content={page.metaDesc} />}
-        <link rel="canonical" href={`https://waderaassociates.com/pages/${slug}`} />
+        <link rel="canonical" href={`https://wa-data-intel.netlify.app/pages/${slug}`} />
       </Helmet>
       <div className="py-16 bg-gray-50 min-h-screen">
         <div className="container max-w-3xl">

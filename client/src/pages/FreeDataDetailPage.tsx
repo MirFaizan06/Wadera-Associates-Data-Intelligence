@@ -61,30 +61,30 @@ export default function FreeDataDetailPage() {
       <Helmet>
         <title>{resource.title} - Free Data | Wadera Associates</title>
         {resource.summary && <meta name="description" content={resource.summary} />}
-        <link rel="canonical" href={`https://waderaassociates.com/free-data/${resource.slug}`} />
+        <link rel="canonical" href={`https://wa-data-intel.netlify.app/free-data/${resource.slug}`} />
         <meta property="og:title" content={`${resource.title} — Wadera Associates`} />
         <meta property="og:description" content={resource.summary || resource.title} />
         <meta property="og:type" content={resource.type === 'ARTICLE' ? 'article' : 'website'} />
-        <meta property="og:url" content={`https://waderaassociates.com/free-data/${resource.slug}`} />
+        <meta property="og:url" content={`https://wa-data-intel.netlify.app/free-data/${resource.slug}`} />
         <meta property="og:site_name" content="Wadera Associates" />
-        <meta property="og:image" content={resource.coverImage || 'https://waderaassociates.com/images/logo.webp'} />
+        <meta property="og:image" content={resource.coverImage || 'https://wa-data-intel.netlify.app/images/logo.webp'} />
         <meta name="twitter:card" content={resource.coverImage ? 'summary_large_image' : 'summary'} />
         <meta name="twitter:title" content={`${resource.title} — Wadera Associates`} />
         <meta name="twitter:description" content={resource.summary || resource.title} />
-        <meta name="twitter:image" content={resource.coverImage || 'https://waderaassociates.com/images/logo.webp'} />
+        <meta name="twitter:image" content={resource.coverImage || 'https://wa-data-intel.netlify.app/images/logo.webp'} />
         {resource.type === 'ARTICLE' && (
           <script type="application/ld+json">{JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'Article',
             headline: resource.title,
             description: resource.summary,
-            url: `https://waderaassociates.com/free-data/${resource.slug}`,
+            url: `https://wa-data-intel.netlify.app/free-data/${resource.slug}`,
             datePublished: resource.createdAt,
             dateModified: resource.updatedAt,
             author: resource.author
               ? { '@type': 'Person', name: resource.author }
               : { '@type': 'Organization', name: 'Wadera Associates' },
-            publisher: { '@type': 'Organization', name: 'Wadera Associates', url: 'https://waderaassociates.com' },
+            publisher: { '@type': 'Organization', name: 'Wadera Associates', url: 'https://wa-data-intel.netlify.app' },
             ...(resource.coverImage && { image: resource.coverImage }),
           })}</script>
         )}

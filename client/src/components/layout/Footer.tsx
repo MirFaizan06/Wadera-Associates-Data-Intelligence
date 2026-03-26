@@ -31,6 +31,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm text-gray-400">
               <li><Link to="/pages/privacy-policy" className="hover:text-white transition-colors">{t('footer.privacyPolicy')}</Link></li>
               <li><Link to="/pages/terms-of-service" className="hover:text-white transition-colors">{t('footer.termsOfService')}</Link></li>
+              <li><a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">{t('footer.sitemap')}</a></li>
             </ul>
           </div>
           <div>
