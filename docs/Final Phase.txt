@@ -1,0 +1,191 @@
+## Phase 11: Final Cleanup & Remaining Features
+
+This phase covers all remaining mini‑features and polish to make the platform production‑ready. The tasks are grouped by functional area, with clear implementation guidelines (no code). Complete them in any order, but it’s recommended to follow the sequence below.
+
+---
+
+### 11.1 Currency Exchange & Geolocation Pricing
+
+**Goal**: Display dataset prices in the user’s local currency using live exchange rates (INR base). Use browser geolocation and IP fallback to determine the user’s country.
+
+- **Exchange Rate Service**  
+  - Create a cron job (e.g., runs every hour) that fetches latest rates from a free API (e.g., exchangerate-api.com, Open Exchange Rates).  
+  - Store rates in a new `ExchangeRate` table (as already outlined in the schema).  
+  - Provide an API endpoint `/api/v1/public/rates` to get latest rates for frontend use.  
+  - Allow admin to manually update rates or override them via a simple form in the Developer/CMS panel.
+
+- **Geolocation Detection**  
+  - On frontend, use browser’s Geolocation API (with user consent) to get latitude/longitude, then reverse‑geocode to country (using a free service like BigDataCloud or ipapi.co).  
+  - As fallback, call a server‑side endpoint `/api/v1/public/geo` that determines country from request IP (using `request-ip` and a geo‑IP database like `geoip-lite`).  
+  - Store the detected country code in a cookie or local storage to avoid repeated lookups.
+
+- **Price Display**  
+  - In dataset listing and detail pages, fetch exchange rates and convert the base INR price to the user’s local currency.  
+  - Add a currency dropdown (e.g., USD, EUR, GBP, INR) that lets the user manually override the detected currency.  
+  - Always show the original INR price alongside the converted amount (e.g., “₹1,000 ≈ $12.50”).
+
+---
+
+### 11.2 Unit of Measure (UOM) Conversion
+
+**Goal**: Allow users to view dataset values in different units (e.g., barrels → gallons). Admin can define conversion factors.
+
+- **Database**  
+  - Create a `UnitConversion` table (already in schema) with `fromUnit`, `toUnit`, `factor`.  
+  - Seed with common conversions (e.g., barrel→gallon, kWh→MJ) – can be extended by admin.
+
+- **Admin UI**  
+  - Add a section under **Developer** or **Data Manager** to manage UOM conversions (list, add, edit, delete).  
+  - Simple form with “From Unit”, “To Unit”, “Conversion Factor”.
+
+- **Frontend Integration**  
+  - In dataset detail page, add a unit selector next to the chart.  
+  - When user selects a target unit, fetch the conversion factor (from a new API endpoint `/api/v1/public/convert?from=barrel&to=gallon&value=...`) and adjust all displayed values.  
+  - Update chart data and table values dynamically.  
+  - For downloads, include an option to convert the entire dataset before generating the file.
+
+- **Backend API**  
+  - Endpoint `GET /api/v1/public/units` returns all available units (from `defaultUnit` of datasets + any custom).  
+  - Endpoint `POST /api/v1/public/convert` accepts `fromUnit`, `toUnit`, `value` and returns converted value.
+
+---
+
+### 11.3 Device‑Based Session Limiting
+
+**Goal**: Enforce maximum concurrent sessions per user, based on license type (e.g., “Download Enabled” allows 3 devices).
+
+- **Schema**  
+  - `LicenseType` already has `maxDevices` (nullable).  
+  - `Session` model tracks user sessions with `token`, `expiresAt`, `deviceInfo`.
+
+- **Middleware**  
+  - On login, after creating a new session, count active sessions for the user (where `expiresAt > now`).  
+  - If count exceeds the user’s license `maxDevices`, delete the oldest session (by `lastActive`) and invalidate its token.  
+  - Optionally, notify the user via email that a device was logged out.
+
+- **Admin Override**  
+  - In User Manager, allow viewing all active sessions for a user and forcibly revoking any session.
+
+---
+
+### 11.4 License Enforcement Middleware
+
+**Goal**: Protect dataset endpoints (view, download) by checking if the user has a valid license with the required permissions.
+
+- **Permissions**  
+  - License types define permissions (e.g., `VIEW`, `DOWNLOAD`).  
+  - Licenses can be global (all datasets) or restricted to specific datasets (via `datasetIds` field).
+
+- **Middleware**  
+  - Create `checkLicense(requiredPermission: string)` middleware.  
+  - It looks up the user’s active license assignments (`isActive = true`, `validFrom ≤ now ≤ validTo`).  
+  - If any license grants the required permission and either applies to all datasets or includes the requested dataset ID, allow access.  
+  - Otherwise, return 403.
+
+- **Apply to routes**  
+  - Public dataset detail page already has a simplified check. Replace with this middleware for `/api/v1/public/datasets/:id` (when requesting full data) and for download endpoints.  
+  - For download, require `DOWNLOAD` permission.
+
+---
+
+### 11.5 PDF/PNG Chart Generation
+
+**Goal**: Generate downloadable PDF and PNG files of dataset charts on demand.
+
+- **Library**: Use Puppeteer (headless Chrome) to render a chart as an image/PDF.  
+- **Approach**:  
+  - Create a dedicated endpoint `/api/v1/download/chart/:datasetId` that accepts `format=pdf|png` and optionally `unit`, `fromDate`, `toDate`.  
+  - Launch a headless browser, load a simple HTML page that uses the same charting library (Recharts) with the dataset data, and take a screenshot (PNG) or generate PDF.  
+  - Return the file as a download.
+
+- **Caching**: Store generated files in S3 for a limited time to avoid regenerating the same chart repeatedly.  
+- **Admin Option**: Allow admin to pre‑generate and store chart images for each dataset (e.g., on upload/update).
+
+---
+
+### 11.6 Email Template Integration
+
+**Goal**: Replace hardcoded email bodies with dynamic templates stored in the database, and provide a preview feature in CMS.
+
+- **Templating Engine**: Use Handlebars (or EJS) to compile templates with variables like `{{name}}`, `{{otp}}`, `{{link}}`.  
+- **Email Service**: Modify `email.service.ts` to fetch the appropriate template from the `EmailTemplate` table, compile it with the given data, and send.  
+- **Preview in CMS**:  
+  - In the email template edit form, add a “Preview” button that opens a modal showing the rendered template with sample data (e.g., a preview user).  
+  - Provide a way to send a test email to the admin’s address.
+
+- **Template Variables**: Document all available variables for each template type (e.g., `otp`, `name`, `datasetName`, `amount`, `link`).
+
+---
+
+### 11.7 Guest Account Merging
+
+**Goal**: When a guest who made a purchase later registers with the same email, link all guest purchases to the new user account.
+
+- **Registration Flow**  
+  - During registration, after creating the user, check the `Purchase` table for any records with `guestEmail` matching the new user’s email and `userId = null`.  
+  - Update those purchases to set `userId = newUserId`.  
+  - Also, if any download tokens were generated for the guest, they can be linked or expired.
+
+- **License Assignment**  
+  - For each linked purchase, assign a license to the user (if not already assigned via guest flow).  
+  - Send a welcome email acknowledging merged purchases.
+
+---
+
+### 11.8 IP Ban Middleware
+
+**Goal**: Globally block requests from banned IP addresses.
+
+- **Middleware**  
+  - Create a simple middleware that extracts the client IP (using `req.ip` or `req.connection.remoteAddress`).  
+  - Check against the `BannedIP` table (cached in memory for performance, refreshed every few minutes).  
+  - If IP is banned, return 403 Forbidden with a message.
+
+- **Apply to all routes** (or at least to sensitive ones). Use it after the CORS middleware but before authentication.
+
+- **Admin UI** already provides add/remove IPs (from Phase 8).
+
+---
+
+### 11.9 Admin Panel Enhancements
+
+- **Permission Checks**: Ensure every admin route uses the correct permission middleware. Review all controllers and add missing `authorize` calls.  
+- **Role Management**: In Developer panel, add a UI to create/edit roles and assign permissions dynamically (currently only seeded). Use the existing role CRUD APIs.  
+- **Audit Logs**: For critical actions (user deactivation, license revocation, IP ban), create an `AuditLog` table and log the action with admin ID, timestamp, and details.  
+- **UI Polish**:  
+  - Add loading skeletons, better error messages, and confirmation modals for destructive actions.  
+  - Ensure all tables are responsive and have proper pagination.  
+  - Use consistent colour scheme (from the spec).
+
+---
+
+### 11.10 Testing & Documentation
+
+- **Unit/Integration Tests**  
+  - Write tests for critical backend services (auth, license check, currency conversion).  
+  - Use Jest and Supertest.  
+  - Aim for at least 70% coverage.
+
+- **API Documentation**  
+  - Use Swagger/OpenAPI to document all endpoints.  
+  - Host the docs at `/api-docs` (or similar).
+
+- **README / Deployment Guide**  
+  - Update the project README with setup instructions, environment variables, and deployment steps.  
+  - Include a quick start guide for new developers.
+
+- **Environment Validation**  
+  - On server startup, validate that all required environment variables are set (using a library like `envalid`).
+
+---
+
+### 11.11 Deployment Readiness
+
+- **Docker (Optional)** – If you want containerization, create a `Dockerfile` for backend and frontend, plus a `docker-compose.yml` for local development.  
+- **Railway/Netlify Configuration** – Ensure build commands and start scripts are set correctly.  
+- **HTTPS** – Already enforced via deployment platform; ensure cookies are `Secure` and `HttpOnly`.  
+- **Log Rotation** – Winston already rotates logs hourly; verify it works in production.
+
+---
+
+By completing these tasks, the platform will meet all requirements from the initial overview and Q&A, and be robust enough for production. This final phase ties together every loose end, ensuring a professional, scalable, and feature‑complete data‑selling website.

@@ -1,0 +1,402 @@
+{
+  "titles": {
+    "home": "Wadera Associates - Platform Intelijen Data Premium",
+    "datasets": "Jelajahi Dataset - Wadera Associates",
+    "datasetDetail": "{{name}} - Wadera Associates",
+    "about": "Tentang Kami - Wadera Associates | Intelijen Data",
+    "contact": "Hubungi Kami - Wadera Associates",
+    "freeData": "Data & Sumber Daya Gratis - Wadera Associates",
+    "freeDataDetail": "{{name}} - Data Gratis | Wadera Associates",
+    "notFound": "Halaman Tidak Ditemukan - Wadera Associates",
+    "login": "Masuk - Wadera Associates",
+    "register": "Buat Akun - Wadera Associates",
+    "otp": "Verifikasi Email - Wadera Associates",
+    "forgotPassword": "Lupa Kata Sandi - Wadera Associates",
+    "resetPassword": "Reset Kata Sandi - Wadera Associates",
+    "profile": "Profil Saya - Wadera Associates",
+    "purchases": "Pembelian Saya - Wadera Associates",
+    "download": "Unduh Dataset - Wadera Associates"
+  },
+  "nav": {
+    "home": "Beranda",
+    "datasets": "Dataset",
+    "freeData": "Data Gratis",
+    "about": "Tentang",
+    "contact": "Kontak",
+    "signIn": "Masuk",
+    "getStarted": "Mulai",
+    "register": "Daftar",
+    "myProfile": "Profil",
+    "myPurchases": "Pembelian Saya",
+    "adminPanel": "Panel Admin",
+    "signOut": "Keluar"
+  },
+  "language": {
+    "select": "Bahasa"
+  },
+  "home": {
+    "hero": {
+      "badge": "Intelijen Data Premium",
+      "title1": "Data yang Mendorong",
+      "title2": "Keputusan Lebih Baik",
+      "typewriter": [
+        "Analis Energi",
+        "Trader Komoditas",
+        "Peneliti Pasar",
+        "Konsultan Strategi",
+        "Profesional Keuangan"
+      ],
+      "subtitle": "Dataset seri waktu untuk energi, komoditas, dan pasar keuangan. Telusuri, beli, dan unduh secara instan — tanpa langganan.",
+      "browseBtn": "Jelajahi Dataset",
+      "freeDataBtn": "Lihat Data Gratis"
+    },
+    "stats": {
+      "formatsLabel": "Format Unduhan",
+      "sectorsValue": "8+",
+      "sectorsLabel": "Sektor yang Dicakup",
+      "currenciesValue": "8",
+      "currenciesLabel": "Mata Uang Didukung",
+      "accessValue": "100%",
+      "accessLabel": "Akses Instan"
+    },
+    "howItWorks": {
+      "badge": "Proses Sederhana",
+      "title": "Cara Kerja",
+      "subtitle": "Dari penemuan hingga unduhan dalam tiga langkah mudah.",
+      "steps": [
+        {
+          "title": "Telusuri & Temukan",
+          "desc": "Cari katalog kami berdasarkan sektor, wilayah, atau kata kunci. Filter berdasarkan kategori dan pratinjau jumlah poin data sebelum membeli."
+        },
+        {
+          "title": "Beli dengan Aman",
+          "desc": "Bayar dengan Razorpay — kartu, UPI, atau perbankan online. Harga ditampilkan dalam mata uang lokal Anda. Tidak perlu berlangganan."
+        },
+        {
+          "title": "Unduh & Gunakan",
+          "desc": "Unduh secara instan dalam format XLSX, CSV, PDF, atau PNG. Gunakan data dalam model, laporan, atau dasbor Anda."
+        }
+      ]
+    },
+    "features": {
+      "title": "Mengapa Memilih Platform Kami",
+      "items": [
+        {
+          "title": "Grafik Interaktif",
+          "desc": "Visualisasikan tren dengan grafik seri waktu yang dinamis dan dapat diperbesar sebelum membeli."
+        },
+        {
+          "title": "Berbagai Format",
+          "desc": "Unduh dalam XLSX, CSV, PDF, atau PNG — mana pun yang sesuai dengan alur kerja Anda."
+        },
+        {
+          "title": "Data Berlisensi",
+          "desc": "Akses aman yang dikontrol lisensi dengan jejak audit lengkap dan ketentuan IP yang jelas."
+        },
+        {
+          "title": "Harga Langsung",
+          "desc": "Harga ditampilkan dalam mata uang lokal Anda melalui kurs tukar langsung."
+        }
+      ]
+    },
+    "featured": {
+      "title": "Dataset Unggulan",
+      "viewAll": "Lihat Semua",
+      "empty": "Belum ada dataset unggulan."
+    },
+    "cta": {
+      "title": "Siap mengakses data premium?",
+      "subtitle": "Daftar gratis dan jelajahi katalog lengkap dataset seri waktu kami.",
+      "primaryBtn": "Buat Akun Gratis",
+      "secondaryBtn": "Jelajahi Tanpa Mendaftar"
+    }
+  },
+  "datasets": {
+    "pageTitle": "Katalog Dataset",
+    "pageSubtitle": "Data seri waktu premium untuk para profesional",
+    "searchPlaceholder": "Cari dataset...",
+    "allCategories": "Semua Kategori",
+    "sort": {
+      "newest": "Terbaru Dulu",
+      "nameAZ": "Nama A–Z",
+      "priceLow": "Harga Terendah–Tertinggi"
+    },
+    "found": "{{count}} dataset ditemukan",
+    "noResults": {
+      "heading": "Tidak ada dataset yang ditemukan",
+      "sub": "Coba sesuaikan pencarian atau filter Anda"
+    },
+    "prev": "Sebelumnya",
+    "next": "Berikutnya"
+  },
+  "datasetDetail": {
+    "notFound": "Dataset tidak ditemukan.",
+    "sourceLabel": "Sumber:",
+    "unitLabel": "Satuan:",
+    "chart": {
+      "title": "Riwayat Harga (60 Bulan Terakhir)",
+      "noData": "Belum ada data tersedia"
+    },
+    "preview": {
+      "title": "Pratinjau Data (5 Baris Pertama)",
+      "dateCol": "Tanggal",
+      "valueCol": "Nilai",
+      "unitCol": "Satuan",
+      "purchaseNote": "Beli untuk mengakses semua {{count}} poin data"
+    },
+    "purchase": {
+      "lifetime": "Pembelian sekali · Akses seumur hidup",
+      "downloads": "Unduhan XLSX, CSV, PDF, PNG",
+      "dataPoints": "{{count}} poin data bulanan",
+      "btn": "Beli Dataset",
+      "secure": "Pembayaran aman melalui Razorpay"
+    }
+  },
+  "datasetCard": {
+    "dataPoints": "{{count}} poin data",
+    "view": "Lihat →"
+  },
+  "about": {
+    "heroTitle1": "Mendorong Keputusan dengan",
+    "heroTitle2": "Data yang Andal",
+    "heroSubtitle": "Wadera Associates adalah platform intelijen data yang dibangun untuk memberikan dataset bisnis, sektor, dan industri berkualitas tinggi kepada para profesional, peneliti, dan perusahaan di seluruh dunia.",
+    "mission": {
+      "badge": "Misi Kami",
+      "title": "Membuat data berkualitas dapat diakses oleh setiap bisnis",
+      "body": "Data tingkat profesional secara historis terkunci di balik langganan mahal dan lisensi yang tidak transparan. Kami percaya bahwa data yang akurat, terstruktur, dan berharga wajar harus dapat diakses oleh bisnis dari semua ukuran — dari konsultan independen hingga perusahaan besar di seluruh dunia."
+    },
+    "offer": {
+      "badge": "Apa yang Kami Tawarkan",
+      "title": "Dibangun untuk Pengambil Keputusan",
+      "values": [
+        {
+          "title": "Akurasi Data",
+          "desc": "Setiap dataset melalui proses verifikasi yang ketat sebelum dipublikasikan. Kami mengutip sumber kami dan menandai ketidakpastian dengan jelas."
+        },
+        {
+          "title": "Jangkauan Global",
+          "desc": "Kami mencakup sektor dan industri di Asia, Timur Tengah, dan pasar global — dengan penetapan harga multi-mata uang untuk pembeli internasional."
+        },
+        {
+          "title": "Aman & Patuh",
+          "desc": "Pembayaran diproses dengan aman melalui Razorpay. Kami mematuhi regulasi perlindungan data yang berlaku dan menerbitkan ketentuan hukum yang transparan."
+        },
+        {
+          "title": "Intelijen yang Dapat Ditindaklanjuti",
+          "desc": "Kami tidak hanya memberikan angka mentah. Produk kami terstruktur untuk mendukung keputusan bisnis, benchmarking, dan penelitian sektor."
+        }
+      ]
+    },
+    "teamIllustrationAlt": "Tim Wadera Associates berkolaborasi di sekitar data",
+    "team": {
+      "badge": "Orang-Orang di Baliknya",
+      "title": "Tim Kami",
+      "subtitle": "Tim yang kompak dengan keahlian komplementer di bidang teknologi, penelitian data, dan keuangan.",
+      "members": [
+        {
+          "name": "Faizan",
+          "role": "Manajer Teknologi",
+          "bio": "Memimpin semua pengembangan teknologi — arsitektur platform, rekayasa frontend dan backend, infrastruktur server, integrasi pembayaran, dan pengiriman fitur berkelanjutan."
+        },
+        {
+          "name": "Hamid",
+          "role": "Pemimpin Produk & Data",
+          "bio": "Mendorong pembuatan dataset bisnis berkualitas tinggi dan laporan industri. Bertanggung jawab atas penelitian, penataan konten, akurasi data, dan pengembangan produk."
+        },
+        {
+          "name": "Rauf",
+          "role": "Keuangan, Kepatuhan & Hukum",
+          "bio": "Mengawasi semua operasi keuangan, kepatuhan pajak dan regulasi di berbagai yurisdiksi, dokumentasi hukum, kekayaan intelektual, dan manajemen pendapatan."
+        }
+      ]
+    },
+    "structure": {
+      "badge": "Struktur",
+      "title": "Cara Kami Beroperasi",
+      "p1": "Wadera Associates berfungsi sebagai vertikal intelijen data di bawah perusahaan induknya. Semua keputusan strategis — termasuk penetapan harga, kemitraan, dan arah teknologi — dibuat dengan konsensus di antara mitra pendiri, memastikan akuntabilitas di setiap tingkat.",
+      "p2": "Tanggung jawab operasional didistribusikan dengan jelas: teknologi dimiliki dari awal hingga akhir oleh Faizan, pengembangan produk data oleh Hamid, dan urusan keuangan dan hukum oleh Rauf. Struktur ini menjaga siklus pengambilan keputusan tetap singkat dan eksekusi tetap tajam.",
+      "p3": "Semua dataset, laporan, kode platform, dan kekayaan intelektual yang dikembangkan di bawah usaha ini dimiliki bersama. Kami serius dalam perlindungan IP dan menegakkan ketentuan lisensi kami untuk melindungi pekerjaan kami dan hak pelanggan kami."
+    },
+    "cta": {
+      "title": "Ingin bekerja sama dengan kami?",
+      "subtitle": "Apakah Anda membutuhkan dataset kustom, kemitraan penelitian, atau memiliki pertanyaan tentang produk kami — kami senang mendengar dari Anda.",
+      "btn": "Hubungi Kami"
+    }
+  },
+  "contact": {
+    "badge": "Hubungi Kami",
+    "title": "Hubungi Kami",
+    "subtitle": "Pertanyaan tentang dataset, proposal kemitraan, atau sekadar menyapa — kirim pesan kepada kami dan kami akan segera merespons.",
+    "emailLabel": "Email",
+    "responseLabel": "Waktu Respons",
+    "responseTime": "Kami biasanya merespons dalam 1-2 hari kerja.",
+    "form": {
+      "fullName": "Nama Lengkap",
+      "namePlaceholder": "Nama Anda",
+      "email": "Alamat Email",
+      "emailPlaceholder": "anda@email.com",
+      "subject": "Subjek (opsional)",
+      "subjectPlaceholder": "Tentang apa ini?",
+      "message": "Pesan",
+      "messagePlaceholder": "Pesan Anda...",
+      "sendBtn": "Kirim Pesan"
+    },
+    "success": {
+      "title": "Pesan Terkirim!",
+      "body": "Kami telah menerima pesan Anda dan akan membalas segera."
+    }
+  },
+  "freeData": {
+    "badge": "Tidak Perlu Akun",
+    "title": "Data & Sumber Daya Gratis",
+    "subtitle": "Artikel, laporan, dan PDF yang dapat diunduh secara gratis tentang pasar energi, harga komoditas, dan data ekonomi.",
+    "typeAll": "Semua",
+    "typeArticles": "Artikel",
+    "typePDFs": "PDF",
+    "categoryLabel": "Kategori:",
+    "resourceCount_one": "{{count}} sumber daya",
+    "resourceCount_other": "{{count}} sumber daya",
+    "noResources": {
+      "title": "Belum ada sumber daya yang diterbitkan",
+      "sub": "Periksa kembali segera."
+    },
+    "card": {
+      "pdfBadge": "Unduhan PDF",
+      "articleBadge": "Artikel",
+      "downloadPDF": "Unduh PDF",
+      "read": "Baca"
+    }
+  },
+  "freeDataDetail": {
+    "back": "Kembali ke Data Gratis",
+    "notFound": "Sumber daya tidak ditemukan.",
+    "pdfBadge": "Unduhan PDF",
+    "articleBadge": "Artikel",
+    "pdfDesc": "Sumber daya ini tersedia sebagai dokumen PDF.",
+    "downloadPDF": "Unduh PDF"
+  },
+  "notFound": {
+    "title": "Halaman Tidak Ditemukan",
+    "subtitle": "Halaman yang Anda cari tidak ada atau telah dipindahkan.",
+    "homeBtn": "Ke Beranda",
+    "browseBtn": "Jelajahi Dataset"
+  },
+  "auth": {
+    "login": {
+      "title": "Selamat datang kembali",
+      "subtitle": "Masuk ke akun Anda",
+      "emailLabel": "Alamat Email",
+      "emailPlaceholder": "anda@email.com",
+      "passwordLabel": "Kata Sandi",
+      "passwordPlaceholder": "••••••••",
+      "signInBtn": "Masuk",
+      "forgotPassword": "Lupa kata sandi?",
+      "noAccount": "Belum punya akun?",
+      "createOne": "Buat satu",
+      "backToWebsite": "Kembali ke situs utama",
+      "failed": "Login gagal"
+    },
+    "register": {
+      "title": "Buat akun Anda",
+      "subtitle": "Dapatkan akses ke dataset premium",
+      "avatarHint": "Foto profil (opsional)",
+      "fullNameLabel": "Nama Lengkap",
+      "fullNamePlaceholder": "Budi Santoso",
+      "emailLabel": "Alamat Email",
+      "emailPlaceholder": "anda@email.com",
+      "passwordLabel": "Kata Sandi",
+      "passwordPlaceholder": "Min 8 karakter, besar+kecil+angka",
+      "confirmLabel": "Konfirmasi Kata Sandi",
+      "confirmPlaceholder": "Ulangi kata sandi",
+      "createBtn": "Buat Akun",
+      "alreadyHave": "Sudah punya akun?",
+      "signIn": "Masuk",
+      "backToWebsite": "Kembali ke situs utama",
+      "failed": "Pendaftaran gagal"
+    },
+    "otp": {
+      "title": "Verifikasi Email Anda",
+      "subtitle": "Masukkan kode 6 digit yang dikirim ke",
+      "digitLabel": "Digit {{n}}",
+      "enterAll": "Masukkan semua 6 digit",
+      "verifyBtn": "Verifikasi Kode",
+      "resend": "Kirim Ulang Kode",
+      "resendAlert": "OTP baru dikirim ke email Anda",
+      "invalidOtp": "OTP tidak valid"
+    },
+    "forgotPassword": {
+      "title": "Reset Kata Sandi",
+      "emailLabel": "Alamat Email",
+      "sendBtn": "Kirim Tautan Reset",
+      "sent": "Jika email itu ada, tautan reset telah dikirim.",
+      "backToLogin": "Kembali ke Login"
+    },
+    "resetPassword": {
+      "title": "Tetapkan Kata Sandi Baru",
+      "newPasswordLabel": "Kata Sandi Baru",
+      "confirmLabel": "Konfirmasi Kata Sandi",
+      "resetBtn": "Reset Kata Sandi",
+      "failed": "Reset gagal. Tautan mungkin sudah kedaluwarsa."
+    }
+  },
+  "profile": {
+    "title": "Profil Saya",
+    "picture": {
+      "cardTitle": "Foto Profil",
+      "changePhoto": "Ganti Foto",
+      "uploading": "Mengunggah…",
+      "hint": "JPG, PNG, GIF — maks 5 MB",
+      "tooLarge": "Gambar harus kurang dari 5 MB",
+      "uploadFailed": "Unggah gagal. Silakan coba lagi."
+    },
+    "details": {
+      "cardTitle": "Detail Akun",
+      "emailLabel": "Email",
+      "fullNameLabel": "Nama Lengkap",
+      "phoneLabel": "Telepon",
+      "saved": "Profil disimpan!",
+      "saveBtn": "Simpan Perubahan"
+    }
+  },
+  "purchases": {
+    "title": "Pembelian Saya",
+    "empty": {
+      "title": "Belum ada pembelian",
+      "subtitle": "Jelajahi katalog kami dan dapatkan dataset pertama Anda.",
+      "browseBtn": "Jelajahi Dataset"
+    },
+    "downloadBtn": "Unduh"
+  },
+  "download": {
+    "title": "Unduh Dataset Anda",
+    "subtitle": "Pilih format yang Anda inginkan di bawah ini",
+    "formats": {
+      "xlsx": {
+        "label": "Excel (XLSX)",
+        "desc": "Dataset lengkap dengan format"
+      },
+      "csv": {
+        "label": "CSV",
+        "desc": "Data mentah, kompatibilitas universal"
+      },
+      "pdf": {
+        "label": "Laporan PDF",
+        "desc": "Laporan terformat dengan grafik"
+      }
+    },
+    "preparing": "Mempersiapkan...",
+    "failed": "Unduhan gagal. Akses Anda mungkin telah kedaluwarsa."
+  },
+  "footer": {
+    "tagline": "Dataset seri waktu premium untuk energi, komoditas, dan pasar keuangan.",
+    "quickLinks": "Tautan Cepat",
+    "browseDatasets": "Jelajahi Dataset",
+    "aboutUs": "Tentang Kami",
+    "contact": "Kontak",
+    "legal": "Hukum",
+    "privacyPolicy": "Kebijakan Privasi",
+    "termsOfService": "Syarat Layanan",
+    "contactSection": "Kontak",
+    "copyright": "© {{year}} Wadera Associates. Hak cipta dilindungi."
+  }
+}

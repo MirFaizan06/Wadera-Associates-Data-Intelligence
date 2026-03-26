@@ -1,0 +1,402 @@
+{
+  "titles": {
+    "home": "Wadera Associates - 高级数据智能平台",
+    "datasets": "浏览数据集 - Wadera Associates",
+    "datasetDetail": "{{name}} - Wadera Associates",
+    "about": "关于我们 - Wadera Associates | 数据智能",
+    "contact": "联系我们 - Wadera Associates",
+    "freeData": "免费数据与资源 - Wadera Associates",
+    "freeDataDetail": "{{name}} - 免费数据 | Wadera Associates",
+    "notFound": "页面未找到 - Wadera Associates",
+    "login": "登录 - Wadera Associates",
+    "register": "创建账户 - Wadera Associates",
+    "otp": "验证邮箱 - Wadera Associates",
+    "forgotPassword": "忘记密码 - Wadera Associates",
+    "resetPassword": "重置密码 - Wadera Associates",
+    "profile": "我的个人资料 - Wadera Associates",
+    "purchases": "我的购买 - Wadera Associates",
+    "download": "下载数据集 - Wadera Associates"
+  },
+  "nav": {
+    "home": "首页",
+    "datasets": "数据集",
+    "freeData": "免费数据",
+    "about": "关于",
+    "contact": "联系",
+    "signIn": "登录",
+    "getStarted": "开始使用",
+    "register": "注册",
+    "myProfile": "个人资料",
+    "myPurchases": "我的购买",
+    "adminPanel": "管理面板",
+    "signOut": "退出登录"
+  },
+  "language": {
+    "select": "语言"
+  },
+  "home": {
+    "hero": {
+      "badge": "高级数据智能",
+      "title1": "数据驱动",
+      "title2": "更明智的决策",
+      "typewriter": [
+        "能源分析师",
+        "大宗商品交易员",
+        "市场研究员",
+        "战略顾问",
+        "金融专业人士"
+      ],
+      "subtitle": "能源、大宗商品和金融市场的时间序列数据集。即时浏览、购买和下载 — 无需订阅。",
+      "browseBtn": "浏览数据集",
+      "freeDataBtn": "查看免费数据"
+    },
+    "stats": {
+      "formatsLabel": "下载格式",
+      "sectorsValue": "8+",
+      "sectorsLabel": "覆盖行业",
+      "currenciesValue": "8",
+      "currenciesLabel": "支持货币",
+      "accessValue": "100%",
+      "accessLabel": "即时访问"
+    },
+    "howItWorks": {
+      "badge": "简单流程",
+      "title": "使用方法",
+      "subtitle": "三个简单步骤，从发现到下载。",
+      "steps": [
+        {
+          "title": "浏览与发现",
+          "desc": "按行业、地区或关键词搜索我们的目录。在购买前按类别筛选并预览数据点数量。"
+        },
+        {
+          "title": "安全购买",
+          "desc": "通过 Razorpay 结账 — 支持银行卡、UPI 或网上银行。以本地货币显示价格。无需订阅。"
+        },
+        {
+          "title": "下载使用",
+          "desc": "即时下载 XLSX、CSV、PDF 或 PNG 图表格式。在您的模型、报告或仪表板中使用数据。"
+        }
+      ]
+    },
+    "features": {
+      "title": "为什么选择我们的平台",
+      "items": [
+        {
+          "title": "交互式图表",
+          "desc": "在购买前通过动态可缩放的时间序列图表可视化趋势。"
+        },
+        {
+          "title": "多种格式",
+          "desc": "以 XLSX、CSV、PDF 或 PNG 图表格式下载 — 适合您的工作流程。"
+        },
+        {
+          "title": "授权数据",
+          "desc": "安全的许可控制访问，完整的审计记录和清晰的知识产权条款。"
+        },
+        {
+          "title": "实时价格",
+          "desc": "通过实时汇率以本地货币显示价格。"
+        }
+      ]
+    },
+    "featured": {
+      "title": "精选数据集",
+      "viewAll": "查看全部",
+      "empty": "暂无精选数据集。"
+    },
+    "cta": {
+      "title": "准备好访问高级数据了吗？",
+      "subtitle": "免费注册并浏览我们完整的时间序列数据集目录。",
+      "primaryBtn": "创建免费账户",
+      "secondaryBtn": "无需登录浏览"
+    }
+  },
+  "datasets": {
+    "pageTitle": "数据集目录",
+    "pageSubtitle": "面向专业人士的高级时间序列数据",
+    "searchPlaceholder": "搜索数据集...",
+    "allCategories": "所有类别",
+    "sort": {
+      "newest": "最新优先",
+      "nameAZ": "名称 A–Z",
+      "priceLow": "价格从低到高"
+    },
+    "found": "找到 {{count}} 个数据集",
+    "noResults": {
+      "heading": "未找到数据集",
+      "sub": "尝试调整搜索或筛选条件"
+    },
+    "prev": "上一页",
+    "next": "下一页"
+  },
+  "datasetDetail": {
+    "notFound": "数据集未找到。",
+    "sourceLabel": "来源：",
+    "unitLabel": "单位：",
+    "chart": {
+      "title": "价格历史（近60个月）",
+      "noData": "暂无数据"
+    },
+    "preview": {
+      "title": "数据预览（前5行）",
+      "dateCol": "日期",
+      "valueCol": "值",
+      "unitCol": "单位",
+      "purchaseNote": "购买以访问全部 {{count}} 个数据点"
+    },
+    "purchase": {
+      "lifetime": "一次性购买 · 终身访问",
+      "downloads": "XLSX、CSV、PDF、PNG 下载",
+      "dataPoints": "{{count}} 个月度数据点",
+      "btn": "购买数据集",
+      "secure": "通过 Razorpay 安全支付"
+    }
+  },
+  "datasetCard": {
+    "dataPoints": "{{count}} 个数据点",
+    "view": "查看 →"
+  },
+  "about": {
+    "heroTitle1": "以可靠数据",
+    "heroTitle2": "赋能决策",
+    "heroSubtitle": "Wadera Associates 是一个数据智能平台，致力于为全球专业人士、研究人员和企业提供高质量的商业、行业和产业数据集。",
+    "mission": {
+      "badge": "我们的使命",
+      "title": "让每个企业都能获得高质量数据",
+      "body": "专业级数据长期以来被昂贵的订阅和不透明的许可所束缚。我们认为，准确、结构化且价格合理的数据应该对各种规模的企业开放 — 从独立顾问到全球大型企业。"
+    },
+    "offer": {
+      "badge": "我们提供什么",
+      "title": "为决策者而建",
+      "values": [
+        {
+          "title": "数据准确性",
+          "desc": "每个数据集在发布前都经过严格的验证过程。我们引用来源并清晰标注不确定性。"
+        },
+        {
+          "title": "全球覆盖",
+          "desc": "我们覆盖亚洲、中东和全球市场的行业和产业 — 为国际买家提供多货币定价。"
+        },
+        {
+          "title": "安全合规",
+          "desc": "付款通过 Razorpay 安全处理。我们遵守适用的数据保护法规并发布透明的法律条款。"
+        },
+        {
+          "title": "可执行的情报",
+          "desc": "我们不仅仅提供原始数字。我们的产品经过结构化处理，以支持商业决策、基准测试和行业研究。"
+        }
+      ]
+    },
+    "teamIllustrationAlt": "Wadera Associates 团队围绕数据进行协作",
+    "team": {
+      "badge": "幕后团队",
+      "title": "我们的团队",
+      "subtitle": "一支在技术、数据研究和金融领域拥有互补专业知识的精简团队。",
+      "members": [
+        {
+          "name": "Faizan",
+          "role": "技术经理",
+          "bio": "负责所有技术开发 — 平台架构、前端和后端工程、服务器基础设施、支付集成和持续功能交付。"
+        },
+        {
+          "name": "Hamid",
+          "role": "产品与数据负责人",
+          "bio": "推动高质量商业数据集和行业报告的创建。负责研究、内容结构、数据准确性和产品开发。"
+        },
+        {
+          "name": "Rauf",
+          "role": "财务、合规与法律",
+          "bio": "监督所有财务运营、跨司法管辖区的税务和监管合规、法律文件、知识产权和收入管理。"
+        }
+      ]
+    },
+    "structure": {
+      "badge": "结构",
+      "title": "我们如何运营",
+      "p1": "Wadera Associates 作为其母公司下的数据智能业务运营。所有战略决策 — 包括定价、合作伙伴关系和技术方向 — 由创始合伙人共同做出，确保各层面的问责制。",
+      "p2": "运营职责明确分配：技术由 Faizan 端到端负责，数据产品开发由 Hamid 负责，财务和法律事务由 Rauf 负责。这种结构使决策周期短暂、执行高效。",
+      "p3": "在合资企业下开发的所有数据集、报告、平台代码和知识产权均为共同所有。我们认真对待知识产权保护，并执行我们的许可条款以保护我们的工作和客户的权益。"
+    },
+    "cta": {
+      "title": "想与我们合作？",
+      "subtitle": "无论您需要定制数据集、研究合作，还是对我们的产品有疑问 — 我们很乐意听取您的意见。",
+      "btn": "联系我们"
+    }
+  },
+  "contact": {
+    "badge": "联系我们",
+    "title": "联系我们",
+    "subtitle": "关于数据集的问题、合作提案，或只是想打个招呼 — 发送消息给我们，我们将及时回复。",
+    "emailLabel": "邮箱",
+    "responseLabel": "响应时间",
+    "responseTime": "我们通常在1-2个工作日内回复。",
+    "form": {
+      "fullName": "全名",
+      "namePlaceholder": "您的姓名",
+      "email": "邮箱地址",
+      "emailPlaceholder": "your@email.com",
+      "subject": "主题（可选）",
+      "subjectPlaceholder": "这是关于什么的？",
+      "message": "消息",
+      "messagePlaceholder": "您的消息...",
+      "sendBtn": "发送消息"
+    },
+    "success": {
+      "title": "消息已发送！",
+      "body": "我们已收到您的消息，将尽快回复。"
+    }
+  },
+  "freeData": {
+    "badge": "无需账户",
+    "title": "免费数据与资源",
+    "subtitle": "关于能源市场、大宗商品定价和经济数据的免费文章、报告和可下载PDF。",
+    "typeAll": "全部",
+    "typeArticles": "文章",
+    "typePDFs": "PDF",
+    "categoryLabel": "类别：",
+    "resourceCount_one": "{{count}} 个资源",
+    "resourceCount_other": "{{count}} 个资源",
+    "noResources": {
+      "title": "暂无发布的资源",
+      "sub": "请稍后再查看。"
+    },
+    "card": {
+      "pdfBadge": "PDF下载",
+      "articleBadge": "文章",
+      "downloadPDF": "下载PDF",
+      "read": "阅读"
+    }
+  },
+  "freeDataDetail": {
+    "back": "返回免费数据",
+    "notFound": "未找到资源。",
+    "pdfBadge": "PDF下载",
+    "articleBadge": "文章",
+    "pdfDesc": "此资源以PDF文档形式提供。",
+    "downloadPDF": "下载PDF"
+  },
+  "notFound": {
+    "title": "页面未找到",
+    "subtitle": "您查找的页面不存在或已被移动。",
+    "homeBtn": "前往首页",
+    "browseBtn": "浏览数据集"
+  },
+  "auth": {
+    "login": {
+      "title": "欢迎回来",
+      "subtitle": "登录您的账户",
+      "emailLabel": "邮箱地址",
+      "emailPlaceholder": "your@email.com",
+      "passwordLabel": "密码",
+      "passwordPlaceholder": "••••••••",
+      "signInBtn": "登录",
+      "forgotPassword": "忘记密码？",
+      "noAccount": "没有账户？",
+      "createOne": "创建一个",
+      "backToWebsite": "返回主网站",
+      "failed": "登录失败"
+    },
+    "register": {
+      "title": "创建您的账户",
+      "subtitle": "获取高级数据集访问权限",
+      "avatarHint": "个人头像（可选）",
+      "fullNameLabel": "全名",
+      "fullNamePlaceholder": "张三",
+      "emailLabel": "邮箱地址",
+      "emailPlaceholder": "your@email.com",
+      "passwordLabel": "密码",
+      "passwordPlaceholder": "最少8位，包含大小写字母和数字",
+      "confirmLabel": "确认密码",
+      "confirmPlaceholder": "重复密码",
+      "createBtn": "创建账户",
+      "alreadyHave": "已有账户？",
+      "signIn": "登录",
+      "backToWebsite": "返回主网站",
+      "failed": "注册失败"
+    },
+    "otp": {
+      "title": "验证您的邮箱",
+      "subtitle": "输入发送至以下地址的6位验证码",
+      "digitLabel": "第{{n}}位",
+      "enterAll": "请输入全部6位数字",
+      "verifyBtn": "验证代码",
+      "resend": "重新发送代码",
+      "resendAlert": "新验证码已发送至您的邮箱",
+      "invalidOtp": "验证码无效"
+    },
+    "forgotPassword": {
+      "title": "重置密码",
+      "emailLabel": "邮箱地址",
+      "sendBtn": "发送重置链接",
+      "sent": "如果该邮箱存在，重置链接已发送。",
+      "backToLogin": "返回登录"
+    },
+    "resetPassword": {
+      "title": "设置新密码",
+      "newPasswordLabel": "新密码",
+      "confirmLabel": "确认密码",
+      "resetBtn": "重置密码",
+      "failed": "重置失败。链接可能已过期。"
+    }
+  },
+  "profile": {
+    "title": "我的个人资料",
+    "picture": {
+      "cardTitle": "个人头像",
+      "changePhoto": "更换照片",
+      "uploading": "上传中…",
+      "hint": "JPG、PNG、GIF — 最大5MB",
+      "tooLarge": "图片必须小于5MB",
+      "uploadFailed": "上传失败。请重试。"
+    },
+    "details": {
+      "cardTitle": "账户详情",
+      "emailLabel": "邮箱",
+      "fullNameLabel": "全名",
+      "phoneLabel": "电话",
+      "saved": "个人资料已保存！",
+      "saveBtn": "保存更改"
+    }
+  },
+  "purchases": {
+    "title": "我的购买",
+    "empty": {
+      "title": "暂无购买记录",
+      "subtitle": "浏览我们的目录并获取您的第一个数据集。",
+      "browseBtn": "浏览数据集"
+    },
+    "downloadBtn": "下载"
+  },
+  "download": {
+    "title": "下载您的数据集",
+    "subtitle": "在下方选择您偏好的格式",
+    "formats": {
+      "xlsx": {
+        "label": "Excel (XLSX)",
+        "desc": "带格式的完整数据集"
+      },
+      "csv": {
+        "label": "CSV",
+        "desc": "原始数据，通用兼容性"
+      },
+      "pdf": {
+        "label": "PDF报告",
+        "desc": "带图表的格式化报告"
+      }
+    },
+    "preparing": "准备中...",
+    "failed": "下载失败。您的访问权限可能已过期。"
+  },
+  "footer": {
+    "tagline": "面向能源、大宗商品和金融市场的高级时间序列数据集。",
+    "quickLinks": "快速链接",
+    "browseDatasets": "浏览数据集",
+    "aboutUs": "关于我们",
+    "contact": "联系",
+    "legal": "法律",
+    "privacyPolicy": "隐私政策",
+    "termsOfService": "服务条款",
+    "contactSection": "联系",
+    "copyright": "© {{year}} Wadera Associates. 保留所有权利。"
+  }
+}

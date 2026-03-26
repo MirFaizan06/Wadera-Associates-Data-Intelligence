@@ -1,0 +1,31 @@
+module.exports = {
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  roots: ['<rootDir>/src'],
+  testMatch: ['**/__tests__/**/*.ts', '**/*.test.ts'],
+  setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts'],
+  testPathIgnorePatterns: ['/node_modules/', '/src/__tests__/setup.ts'],
+  setupFiles: ['dotenv/config'],
+  coverageThreshold: {
+    global: {
+      branches: 50,
+      functions: 50,
+      lines: 50,
+      statements: 50,
+    },
+  },
+  collectCoverageFrom: [
+    'src/services/**/*.ts',
+    'src/utils/**/*.ts',
+    '!src/**/__tests__/**',
+    '!src/index.ts',
+    '!src/prisma/seed.ts',
+    '!src/services/fileGeneration.service.ts',
+    '!src/services/payment.service.ts',
+    '!src/services/dataset.service.ts',
+    '!src/utils/email.ts',
+    '!src/utils/storage.ts',
+    '!src/utils/prisma.ts',
+    '!src/utils/uom.ts',
+  ],
+};

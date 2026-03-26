@@ -1,0 +1,576 @@
+## Phase 4: Dataset Management (Admin)
+
+Note: The code written in this Phase file is only dummy and placeholder. You write your own logic, and especially styles and structure. we are using custom css, not tailwind.
+
+In this phase, we build the backend APIs for Data Managers to create and manage datasets, upload historical data via XLSX, append new monthly data, and edit individual data points. We'll also prepare for later file generation (PDF/PNG) by storing the original uploaded XLSX files.
+
+---
+
+### Step 4.1: Install Required Packages
+
+We need Multer for file uploads and ExcelJS for parsing XLSX.
+
+```bash
+cd server
+npm install multer exceljs
+npm install -D @types/multer
+```
+
+### Step 4.2: Update Prisma Schema (if needed)
+
+Ensure your `TimeSeries` and `DataPoint` models include all fields we need. From our `CLAUDE.md` schema, they should already be present. If not, add them now:
+
+```prisma
+model TimeSeries {
+  id               String        @id @default(cuid())
+  name             String
+  description      String?
+  defaultUnit      String        // e.g., "barrel", "kWh"
+  priceINR         Float
+  isVisible        Boolean       @default(true)
+  createdById      String
+  createdBy        User          @relation("DatasetCreator", fields: [createdById], references: [id])
+  dataPoints       DataPoint[]
+  purchases        Purchase[]
+  metadata         Json?         // additional info (source, region, etc.)
+  originalFileKey  String?       // S3 key of uploaded XLSX (optional, for reference)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+}
+
+model DataPoint {
+  id             String     @id @default(cuid())
+  timeSeriesId   String
+  timeSeries     TimeSeries @relation(fields: [timeSeriesId], references: [id])
+  date           DateTime   // month/year
+  value          Float
+  unitOverride   String?    // if different from default unit
+  note           String?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  @@unique([timeSeriesId, date])
+}
+```
+
+If you added `originalFileKey`, run a migration:
+
+```bash
+npx prisma migrate dev --name add_original_file_key
+```
+
+### Step 4.3: Create Multer Configuration for File Upload
+
+Create `server/src/middleware/upload.middleware.ts`:
+
+```typescript
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
+
+// Ensure uploads directory exists
+const uploadDir = path.join(__dirname, '../../uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+// Configure storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+  },
+});
+
+// File filter – only allow XLSX
+const fileFilter = (req: any, file: any, cb: any) => {
+  const allowedMimes = [
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
+    'application/vnd.ms-excel', // .xls (optional)
+  ];
+  if (allowedMimes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error('Invalid file type. Only XLSX files are allowed.'));
+  }
+};
+
+export const upload = multer({
+  storage,
+  fileFilter,
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB max
+});
+```
+
+### Step 4.4: Create Dataset Controller
+
+Create `server/src/controllers/dataset.controller.ts`. This is a large file – we'll implement step by step. I'll provide the full content with all methods.
+
+```typescript
+import { Request, Response } from 'express';
+import { PrismaClient } from '@prisma/client';
+import ExcelJS from 'exceljs';
+import path from 'path';
+import fs from 'fs';
+import { upload } from '../middleware/upload.middleware';
+
+const prisma = new PrismaClient();
+
+// Helper to parse date from Excel serial or string
+const parseExcelDate = (value: any): Date => {
+  if (typeof value === 'number') {
+    // Excel serial date (days since 1900-01-01)
+    return new Date((value - 25569) * 86400 * 1000); // crude but works
+  }
+  return new Date(value);
+};
+
+// ------------------------------------------------------------------
+// 1. Create a new dataset (metadata only)
+// ------------------------------------------------------------------
+export const createDataset = async (req: Request, res: Response) => {
+  try {
+    const { name, description, defaultUnit, priceINR, metadata } = req.body;
+    const userId = req.user!.id;
+
+    if (!name || !defaultUnit || priceINR === undefined) {
+      return res.status(400).json({ success: false, error: 'Missing required fields' });
+    }
+
+    const dataset = await prisma.timeSeries.create({
+      data: {
+        name,
+        description,
+        defaultUnit,
+        priceINR: parseFloat(priceINR),
+        metadata: metadata ? JSON.parse(metadata) : {},
+        createdById: userId,
+      },
+    });
+
+    res.status(201).json({ success: true, data: dataset });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// ------------------------------------------------------------------
+// 2. Upload initial XLSX for a dataset (first time)
+// ------------------------------------------------------------------
+export const uploadInitialXlsx = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params; // dataset ID
+    if (!req.file) {
+      return res.status(400).json({ success: false, error: 'No file uploaded' });
+    }
+
+    const dataset = await prisma.timeSeries.findUnique({ where: { id } });
+    if (!dataset) {
+      // Delete uploaded file
+      fs.unlinkSync(req.file.path);
+      return res.status(404).json({ success: false, error: 'Dataset not found' });
+    }
+
+    // Parse Excel file
+    const workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.readFile(req.file.path);
+    const worksheet = workbook.worksheets[0]; // assume first sheet
+
+    // Expected columns: Date, Value (and optionally UnitOverride, Note)
+    // We'll assume first row is header
+    const rows = worksheet.getRows(2, worksheet.rowCount - 1) ?? [];
+
+    const dataPoints = [];
+    for (const row of rows) {
+      const dateCell = row.getCell(1);
+      const valueCell = row.getCell(2);
+      const unitCell = row.getCell(3);
+      const noteCell = row.getCell(4);
+
+      if (!dateCell.value || !valueCell.value) continue;
+
+      const date = parseExcelDate(dateCell.value);
+      const value = parseFloat(valueCell.value.toString());
+      const unitOverride = unitCell.value?.toString() || null;
+      const note = noteCell.value?.toString() || null;
+
+      dataPoints.push({
+        timeSeriesId: id,
+        date,
+        value,
+        unitOverride,
+        note,
+      });
+    }
+
+    // Insert data points (ignore duplicates for initial upload, but we can use createMany with skipDuplicates)
+    // Prisma does not support skipDuplicates on MySQL with createMany? Actually it does.
+    await prisma.dataPoint.createMany({
+      data: dataPoints,
+      skipDuplicates: true, // avoids error if some dates already exist
+    });
+
+    // Optionally store the file in S3 (future)
+    // For now, we can keep local path or delete it
+    // Let's delete after processing to save space
+    fs.unlinkSync(req.file.path);
+
+    res.json({ success: true, message: 'File processed', count: dataPoints.length });
+  } catch (error) {
+    console.error(error);
+    // Clean up file if it exists
+    if (req.file && fs.existsSync(req.file.path)) {
+      fs.unlinkSync(req.file.path);
+    }
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// ------------------------------------------------------------------
+// 3. Append new month data via XLSX (or single entry)
+// ------------------------------------------------------------------
+export const appendXlsx = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    if (!req.file) {
+      return res.status(400).json({ success: false, error: 'No file uploaded' });
+    }
+
+    const dataset = await prisma.timeSeries.findUnique({ where: { id } });
+    if (!dataset) {
+      fs.unlinkSync(req.file.path);
+      return res.status(404).json({ success: false, error: 'Dataset not found' });
+    }
+
+    const workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.readFile(req.file.path);
+    const worksheet = workbook.worksheets[0];
+    const rows = worksheet.getRows(2, worksheet.rowCount - 1) ?? [];
+
+    const dataPoints = [];
+    for (const row of rows) {
+      const dateCell = row.getCell(1);
+      const valueCell = row.getCell(2);
+      const unitCell = row.getCell(3);
+      const noteCell = row.getCell(4);
+
+      if (!dateCell.value || !valueCell.value) continue;
+
+      const date = parseExcelDate(dateCell.value);
+      const value = parseFloat(valueCell.value.toString());
+      const unitOverride = unitCell.value?.toString() || null;
+      const note = noteCell.value?.toString() || null;
+
+      dataPoints.push({
+        timeSeriesId: id,
+        date,
+        value,
+        unitOverride,
+        note,
+      });
+    }
+
+    // Use createMany with skipDuplicates – this will insert only new dates
+    const result = await prisma.dataPoint.createMany({
+      data: dataPoints,
+      skipDuplicates: true,
+    });
+
+    fs.unlinkSync(req.file.path);
+
+    res.json({ success: true, message: 'Append completed', inserted: result.count });
+  } catch (error) {
+    console.error(error);
+    if (req.file && fs.existsSync(req.file.path)) {
+      fs.unlinkSync(req.file.path);
+    }
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// ------------------------------------------------------------------
+// 4. Get all datasets (with pagination, filter by visibility)
+// ------------------------------------------------------------------
+export const getDatasets = async (req: Request, res: Response) => {
+  try {
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 20;
+    const skip = (page - 1) * limit;
+    const isVisible = req.query.isVisible === 'true' ? true : req.query.isVisible === 'false' ? false : undefined;
+
+    const where: any = {};
+    if (isVisible !== undefined) where.isVisible = isVisible;
+
+    const datasets = await prisma.timeSeries.findMany({
+      where,
+      skip,
+      take: limit,
+      orderBy: { createdAt: 'desc' },
+      include: {
+        createdBy: { select: { id: true, email: true, fullName: true } },
+        _count: { select: { dataPoints: true } },
+      },
+    });
+
+    const total = await prisma.timeSeries.count({ where });
+
+    res.json({
+      success: true,
+      data: datasets,
+      pagination: { page, limit, total, pages: Math.ceil(total / limit) },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// ------------------------------------------------------------------
+// 5. Get single dataset with its data points (paginated)
+// ------------------------------------------------------------------
+export const getDatasetById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 50;
+    const skip = (page - 1) * limit;
+
+    const dataset = await prisma.timeSeries.findUnique({
+      where: { id },
+      include: {
+        createdBy: { select: { id: true, email: true, fullName: true } },
+        dataPoints: {
+          orderBy: { date: 'desc' },
+          skip,
+          take: limit,
+        },
+        _count: { select: { dataPoints: true } },
+      },
+    });
+
+    if (!dataset) {
+      return res.status(404).json({ success: false, error: 'Dataset not found' });
+    }
+
+    res.json({
+      success: true,
+      data: {
+        ...dataset,
+        dataPoints: dataset.dataPoints,
+        totalDataPoints: dataset._count.dataPoints,
+        page,
+        limit,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// ------------------------------------------------------------------
+// 6. Update dataset metadata
+// ------------------------------------------------------------------
+export const updateDataset = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { name, description, defaultUnit, priceINR, isVisible, metadata } = req.body;
+
+    const dataset = await prisma.timeSeries.findUnique({ where: { id } });
+    if (!dataset) {
+      return res.status(404).json({ success: false, error: 'Dataset not found' });
+    }
+
+    const updated = await prisma.timeSeries.update({
+      where: { id },
+      data: {
+        name: name ?? dataset.name,
+        description: description ?? dataset.description,
+        defaultUnit: defaultUnit ?? dataset.defaultUnit,
+        priceINR: priceINR !== undefined ? parseFloat(priceINR) : dataset.priceINR,
+        isVisible: isVisible !== undefined ? isVisible : dataset.isVisible,
+        metadata: metadata ? JSON.parse(metadata) : dataset.metadata,
+      },
+    });
+
+    res.json({ success: true, data: updated });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// ------------------------------------------------------------------
+// 7. Delete dataset (soft delete? We'll just hide or actually delete)
+// We'll implement a hard delete (cascade) but careful: data points will be deleted.
+// Better to just hide (set isVisible = false). We'll do that.
+// ------------------------------------------------------------------
+export const deleteDataset = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    await prisma.timeSeries.update({
+      where: { id },
+      data: { isVisible: false },
+    });
+    res.json({ success: true, message: 'Dataset hidden (soft delete)' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// ------------------------------------------------------------------
+// 8. Edit a single data point
+// ------------------------------------------------------------------
+export const updateDataPoint = async (req: Request, res: Response) => {
+  try {
+    const { pointId } = req.params;
+    const { value, unitOverride, note, date } = req.body;
+
+    const dataPoint = await prisma.dataPoint.findUnique({ where: { id: pointId } });
+    if (!dataPoint) {
+      return res.status(404).json({ success: false, error: 'Data point not found' });
+    }
+
+    const updated = await prisma.dataPoint.update({
+      where: { id: pointId },
+      data: {
+        value: value !== undefined ? parseFloat(value) : dataPoint.value,
+        unitOverride: unitOverride ?? dataPoint.unitOverride,
+        note: note ?? dataPoint.note,
+        date: date ? new Date(date) : dataPoint.date,
+      },
+    });
+
+    res.json({ success: true, data: updated });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// ------------------------------------------------------------------
+// 9. Delete a data point
+// ------------------------------------------------------------------
+export const deleteDataPoint = async (req: Request, res: Response) => {
+  try {
+    const { pointId } = req.params;
+    await prisma.dataPoint.delete({ where: { id: pointId } });
+    res.json({ success: true, message: 'Data point deleted' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+```
+
+### Step 4.5: Create Dataset Routes
+
+Create `server/src/routes/dataset.routes.ts`:
+
+```typescript
+import { Router } from 'express';
+import { protect } from '../middleware/auth.middleware';
+import { authorize } from '../middleware/permission.middleware';
+import { upload } from '../middleware/upload.middleware';
+import {
+  createDataset,
+  uploadInitialXlsx,
+  appendXlsx,
+  getDatasets,
+  getDatasetById,
+  updateDataset,
+  deleteDataset,
+  updateDataPoint,
+  deleteDataPoint,
+} from '../controllers/dataset.controller';
+
+const router = Router();
+
+// All dataset management routes require authentication and appropriate permissions
+router.use(protect);
+router.use(authorize('CREATE_DATASET', 'EDIT_DATASET', 'VIEW_DATASETS')); // at least one of these
+
+// Dataset CRUD
+router.post('/', authorize('CREATE_DATASET'), createDataset);
+router.get('/', getDatasets);
+router.get('/:id', getDatasetById);
+router.put('/:id', authorize('EDIT_DATASET'), updateDataset);
+router.delete('/:id', authorize('DELETE_DATASET'), deleteDataset);
+
+// File uploads
+router.post('/:id/upload-initial', authorize('EDIT_DATASET'), upload.single('file'), uploadInitialXlsx);
+router.post('/:id/append', authorize('EDIT_DATASET'), upload.single('file'), appendXlsx);
+
+// Data point operations
+router.put('/data-points/:pointId', authorize('EDIT_DATASET'), updateDataPoint);
+router.delete('/data-points/:pointId', authorize('EDIT_DATASET'), deleteDataPoint);
+
+export default router;
+```
+
+### Step 4.6: Mount Dataset Routes in Main App
+
+Add to `server/src/index.ts`:
+
+```typescript
+import datasetRoutes from './routes/dataset.routes';
+
+app.use('/api/v1/admin/datasets', datasetRoutes);
+```
+
+### Step 4.7: Update Permissions Constants (if using)
+
+In `server/src/constants/permissions.ts`, ensure you have the dataset-related permissions:
+
+```typescript
+export const PERMISSIONS = {
+  // ... existing
+  CREATE_DATASET: 'CREATE_DATASET',
+  EDIT_DATASET: 'EDIT_DATASET',
+  DELETE_DATASET: 'DELETE_DATASET',
+  VIEW_DATASETS: 'VIEW_DATASETS',
+} as const;
+```
+
+And update seed if needed.
+
+### Step 4.8: Test the APIs
+
+Use a Data Manager or Developer user.
+
+1. **Create dataset**: POST `/api/v1/admin/datasets`
+   ```json
+   {
+     "name": "Oil Prices",
+     "description": "Monthly Brent crude oil prices",
+     "defaultUnit": "barrel",
+     "priceINR": 5000,
+     "metadata": "{\"source\": \"EIA\"}"
+   }
+   ```
+   Save the returned `id`.
+
+2. **Upload initial XLSX**: POST `/api/v1/admin/datasets/{id}/upload-initial` with form-data field `file` containing an XLSX file with columns: Date, Value, (optional UnitOverride, Note). The first row can be header.
+
+3. **Get dataset with data points**: GET `/api/v1/admin/datasets/{id}?page=1&limit=10` – should show data points.
+
+4. **Append more data**: POST `/api/v1/admin/datasets/{id}/append` with new XLSX (can contain multiple rows, only new dates inserted).
+
+5. **Update a data point**: PUT `/api/v1/admin/datasets/data-points/{pointId}` with body `{ "value": 75.5 }`.
+
+6. **Hide dataset**: DELETE `/api/v1/admin/datasets/{id}` (soft delete).
+
+### Step 4.9: Error Handling & Validation
+
+We should add validation middleware (e.g., using Zod) but can be added later. For now, basic checks are in place.
+
+### Step 4.10: Commit Phase 4
+
+```bash
+git add .
+git commit -m "Phase 4: Dataset management APIs with XLSX upload and data point CRUD"
+```

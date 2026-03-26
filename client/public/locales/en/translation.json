@@ -1,0 +1,375 @@
+{
+  "titles": {
+    "home": "Wadera Associates - Premium Data Intelligence Platform",
+    "datasets": "Browse Datasets - Wadera Associates",
+    "datasetDetail": "{{name}} - Wadera Associates",
+    "about": "About Us - Wadera Associates | Data Intelligence",
+    "contact": "Contact Us - Wadera Associates",
+    "freeData": "Free Data & Resources - Wadera Associates",
+    "freeDataDetail": "{{name}} - Free Data | Wadera Associates",
+    "notFound": "Page Not Found - Wadera Associates",
+    "login": "Sign In - Wadera Associates",
+    "register": "Create Account - Wadera Associates",
+    "otp": "Verify Email - Wadera Associates",
+    "forgotPassword": "Forgot Password - Wadera Associates",
+    "resetPassword": "Reset Password - Wadera Associates",
+    "profile": "My Profile - Wadera Associates",
+    "purchases": "My Purchases - Wadera Associates",
+    "download": "Download Dataset - Wadera Associates"
+  },
+  "nav": {
+    "home": "Home",
+    "datasets": "Datasets",
+    "freeData": "Free Data",
+    "about": "About",
+    "contact": "Contact",
+    "signIn": "Sign In",
+    "getStarted": "Get Started",
+    "register": "Register",
+    "myProfile": "Profile",
+    "myPurchases": "My Purchases",
+    "adminPanel": "Admin Panel",
+    "signOut": "Sign Out"
+  },
+  "language": {
+    "select": "Language"
+  },
+  "home": {
+    "hero": {
+      "badge": "Premium Data Intelligence",
+      "title1": "Data That Drives",
+      "title2": "Better Decisions",
+      "typewriter": ["Energy Analysts", "Commodity Traders", "Market Researchers", "Strategy Consultants", "Financial Professionals"],
+      "subtitle": "Time-series datasets for energy, commodities, and financial markets. Browse, purchase, and download instantly — no subscription needed.",
+      "browseBtn": "Browse Datasets",
+      "freeDataBtn": "View Free Data"
+    },
+    "stats": {
+      "formatsLabel": "Download Formats",
+      "sectorsValue": "8+",
+      "sectorsLabel": "Sectors Covered",
+      "currenciesValue": "8",
+      "currenciesLabel": "Currencies Supported",
+      "accessValue": "100%",
+      "accessLabel": "Instant Access"
+    },
+    "howItWorks": {
+      "badge": "Simple Process",
+      "title": "How It Works",
+      "subtitle": "From discovery to download in three straightforward steps.",
+      "steps": [
+        {
+          "title": "Browse & Discover",
+          "desc": "Search our catalog by sector, region, or keyword. Filter by category and preview data point counts before purchasing."
+        },
+        {
+          "title": "Purchase Securely",
+          "desc": "Check out with Razorpay — card, UPI, or net banking. Prices shown in your local currency. No subscription required."
+        },
+        {
+          "title": "Download & Use",
+          "desc": "Instantly download in XLSX, CSV, PDF, or PNG chart format. Use the data in your models, reports, or dashboards."
+        }
+      ]
+    },
+    "features": {
+      "title": "Why Choose Our Platform",
+      "items": [
+        { "title": "Interactive Charts", "desc": "Visualize trends with dynamic, zoomable time-series charts before you buy." },
+        { "title": "Multiple Formats", "desc": "Download in XLSX, CSV, PDF, or PNG chart format — whichever fits your workflow." },
+        { "title": "Licensed Data", "desc": "Secure, license-controlled access with full audit trail and clear IP terms." },
+        { "title": "Live Prices", "desc": "Prices displayed in your local currency via live exchange rates." }
+      ]
+    },
+    "featured": {
+      "title": "Featured Datasets",
+      "viewAll": "View All",
+      "empty": "No featured datasets yet."
+    },
+    "cta": {
+      "title": "Ready to access premium data?",
+      "subtitle": "Register for free and browse our full catalog of time-series datasets.",
+      "primaryBtn": "Create Free Account",
+      "secondaryBtn": "Browse Without Signing Up"
+    }
+  },
+  "datasets": {
+    "pageTitle": "Dataset Catalog",
+    "pageSubtitle": "Premium time-series data for professionals",
+    "searchPlaceholder": "Search datasets...",
+    "allCategories": "All Categories",
+    "sort": {
+      "newest": "Newest First",
+      "nameAZ": "Name A–Z",
+      "priceLow": "Price Low–High"
+    },
+    "found": "{{count}} datasets found",
+    "noResults": {
+      "heading": "No datasets found",
+      "sub": "Try adjusting your search or filters"
+    },
+    "prev": "Previous",
+    "next": "Next"
+  },
+  "datasetDetail": {
+    "notFound": "Dataset not found.",
+    "sourceLabel": "Source:",
+    "unitLabel": "Unit:",
+    "chart": {
+      "title": "Price History (Last 60 Months)",
+      "noData": "No data available yet"
+    },
+    "preview": {
+      "title": "Data Preview (First 5 Rows)",
+      "dateCol": "Date",
+      "valueCol": "Value",
+      "unitCol": "Unit",
+      "purchaseNote": "Purchase to access all {{count}} data points"
+    },
+    "purchase": {
+      "lifetime": "One-time purchase · Lifetime access",
+      "downloads": "XLSX, CSV, PDF, PNG downloads",
+      "dataPoints": "{{count}} monthly data points",
+      "btn": "Purchase Dataset",
+      "secure": "Secure payment via Razorpay"
+    }
+  },
+  "datasetCard": {
+    "dataPoints": "{{count}} data points",
+    "view": "View →"
+  },
+  "about": {
+    "heroTitle1": "Powering Decisions with",
+    "heroTitle2": "Reliable Data",
+    "heroSubtitle": "Wadera Associates is a data intelligence platform built to deliver high-quality business, sector, and industry datasets to professionals, researchers, and enterprises worldwide.",
+    "mission": {
+      "badge": "Our Mission",
+      "title": "Making quality data accessible to every business",
+      "body": "Professional-grade data has historically been locked behind expensive subscriptions and opaque licensing. We believe that accurate, structured, and fairly priced data should be accessible to businesses of all sizes — from independent consultants to large enterprises across the globe."
+    },
+    "offer": {
+      "badge": "What We Offer",
+      "title": "Built for Decision Makers",
+      "values": [
+        {
+          "title": "Data Accuracy",
+          "desc": "Every dataset goes through a rigorous verification process before publication. We cite our sources and flag uncertainties clearly."
+        },
+        {
+          "title": "Global Reach",
+          "desc": "We cover sectors and industries across Asia, the Middle East, and global markets — with multi-currency pricing for international buyers."
+        },
+        {
+          "title": "Secure & Compliant",
+          "desc": "Payments are processed securely via Razorpay. We comply with applicable data protection regulations and publish transparent legal terms."
+        },
+        {
+          "title": "Actionable Intelligence",
+          "desc": "We do not just deliver raw numbers. Our products are structured to support business decisions, benchmarking, and sector research."
+        }
+      ]
+    },
+    "teamIllustrationAlt": "The Wadera Associates team collaborating around data",
+    "team": {
+      "badge": "The People Behind It",
+      "title": "Our Team",
+      "subtitle": "A compact team with complementary expertise across technology, data research, and finance.",
+      "members": [
+        {
+          "name": "Faizan",
+          "role": "Technology Manager",
+          "bio": "Leads all technology development — platform architecture, frontend and backend engineering, server infrastructure, payment integration, and continuous feature delivery."
+        },
+        {
+          "name": "Hamid",
+          "role": "Product & Data Lead",
+          "bio": "Drives the creation of high-quality business datasets and industry reports. Responsible for research, content structuring, data accuracy, and product development."
+        },
+        {
+          "name": "Rauf",
+          "role": "Finance, Compliance & Legal",
+          "bio": "Oversees all financial operations, tax and regulatory compliance across jurisdictions, legal documentation, intellectual property, and revenue management."
+        }
+      ]
+    },
+    "structure": {
+      "badge": "Structure",
+      "title": "How We Operate",
+      "p1": "Wadera Associates functions as a data intelligence vertical under its parent company. All strategic decisions — including pricing, partnerships, and technology direction — are made by consensus among the founding partners, ensuring accountability at every level.",
+      "p2": "Operational responsibilities are clearly distributed: technology is owned end-to-end by Faizan, data product development by Hamid, and financial and legal affairs by Rauf. This structure keeps decision cycles short and execution sharp.",
+      "p3": "All datasets, reports, platform code, and intellectual property developed under the venture are jointly owned. We take IP protection seriously and enforce our licensing terms to protect both our work and our customers' rights."
+    },
+    "cta": {
+      "title": "Want to work with us?",
+      "subtitle": "Whether you need a custom dataset, a research partnership, or have a question about our products — we would love to hear from you.",
+      "btn": "Get in Touch"
+    }
+  },
+  "contact": {
+    "badge": "Get in Touch",
+    "title": "Contact Us",
+    "subtitle": "Questions about a dataset, a partnership proposal, or just want to say hello — send us a message and we will get back to you promptly.",
+    "emailLabel": "Email",
+    "responseLabel": "Response Time",
+    "responseTime": "We typically respond within 1–2 business days.",
+    "form": {
+      "fullName": "Full Name",
+      "namePlaceholder": "Your name",
+      "email": "Email Address",
+      "emailPlaceholder": "your@email.com",
+      "subject": "Subject (optional)",
+      "subjectPlaceholder": "What's this about?",
+      "message": "Message",
+      "messagePlaceholder": "Your message...",
+      "sendBtn": "Send Message"
+    },
+    "success": {
+      "title": "Message Sent!",
+      "body": "We've received your message and will reply shortly."
+    }
+  },
+  "freeData": {
+    "badge": "No Account Required",
+    "title": "Free Data & Resources",
+    "subtitle": "Freely accessible articles, reports and downloadable PDFs on energy markets, commodity pricing and economic data.",
+    "typeAll": "All",
+    "typeArticles": "Articles",
+    "typePDFs": "PDFs",
+    "categoryLabel": "Category:",
+    "resourceCount_one": "{{count}} resource",
+    "resourceCount_other": "{{count}} resources",
+    "noResources": {
+      "title": "No resources published yet",
+      "sub": "Check back soon."
+    },
+    "card": {
+      "pdfBadge": "PDF Download",
+      "articleBadge": "Article",
+      "downloadPDF": "Download PDF",
+      "read": "Read"
+    }
+  },
+  "freeDataDetail": {
+    "back": "Back to Free Data",
+    "notFound": "Resource not found.",
+    "pdfBadge": "PDF Download",
+    "articleBadge": "Article",
+    "pdfDesc": "This resource is available as a PDF document.",
+    "downloadPDF": "Download PDF"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "subtitle": "The page you're looking for doesn't exist or has been moved.",
+    "homeBtn": "Go to Homepage",
+    "browseBtn": "Browse Datasets"
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to your account",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "your@email.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "signInBtn": "Sign In",
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account?",
+      "createOne": "Create one",
+      "backToWebsite": "Back to main website",
+      "failed": "Login failed"
+    },
+    "register": {
+      "title": "Create your account",
+      "subtitle": "Get access to premium datasets",
+      "avatarHint": "Profile photo (optional)",
+      "fullNameLabel": "Full Name",
+      "fullNamePlaceholder": "John Doe",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "your@email.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Min 8 chars, upper+lower+number",
+      "confirmLabel": "Confirm Password",
+      "confirmPlaceholder": "Repeat password",
+      "createBtn": "Create Account",
+      "alreadyHave": "Already have an account?",
+      "signIn": "Sign in",
+      "backToWebsite": "Back to main website",
+      "failed": "Registration failed"
+    },
+    "otp": {
+      "title": "Verify Your Email",
+      "subtitle": "Enter the 6-digit code sent to",
+      "digitLabel": "Digit {{n}}",
+      "enterAll": "Enter all 6 digits",
+      "verifyBtn": "Verify Code",
+      "resend": "Resend Code",
+      "resendAlert": "New OTP sent to your email",
+      "invalidOtp": "Invalid OTP"
+    },
+    "forgotPassword": {
+      "title": "Reset Password",
+      "emailLabel": "Email Address",
+      "sendBtn": "Send Reset Link",
+      "sent": "If that email exists, a reset link has been sent.",
+      "backToLogin": "Back to Login"
+    },
+    "resetPassword": {
+      "title": "Set New Password",
+      "newPasswordLabel": "New Password",
+      "confirmLabel": "Confirm Password",
+      "resetBtn": "Reset Password",
+      "failed": "Reset failed. Link may be expired."
+    }
+  },
+  "profile": {
+    "title": "My Profile",
+    "picture": {
+      "cardTitle": "Profile Picture",
+      "changePhoto": "Change Photo",
+      "uploading": "Uploading…",
+      "hint": "JPG, PNG, GIF — max 5 MB",
+      "tooLarge": "Image must be under 5 MB",
+      "uploadFailed": "Upload failed. Please try again."
+    },
+    "details": {
+      "cardTitle": "Account Details",
+      "emailLabel": "Email",
+      "fullNameLabel": "Full Name",
+      "phoneLabel": "Phone",
+      "saved": "Profile saved!",
+      "saveBtn": "Save Changes"
+    }
+  },
+  "purchases": {
+    "title": "My Purchases",
+    "empty": {
+      "title": "No purchases yet",
+      "subtitle": "Browse our catalog and get your first dataset.",
+      "browseBtn": "Browse Datasets"
+    },
+    "downloadBtn": "Download"
+  },
+  "download": {
+    "title": "Download Your Dataset",
+    "subtitle": "Choose your preferred format below",
+    "formats": {
+      "xlsx": { "label": "Excel (XLSX)", "desc": "Full dataset with formatting" },
+      "csv": { "label": "CSV", "desc": "Raw data, universal compatibility" },
+      "pdf": { "label": "PDF Report", "desc": "Formatted report with chart" }
+    },
+    "preparing": "Preparing...",
+    "failed": "Download failed. Your access may have expired."
+  },
+  "footer": {
+    "tagline": "Premium time-series datasets for energy, commodities, and financial markets.",
+    "quickLinks": "Quick Links",
+    "browseDatasets": "Browse Datasets",
+    "aboutUs": "About Us",
+    "contact": "Contact",
+    "legal": "Legal",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "contactSection": "Contact",
+    "copyright": "© {{year}} Wadera Associates. All rights reserved."
+  }
+}

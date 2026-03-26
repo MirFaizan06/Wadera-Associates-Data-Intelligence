@@ -1,0 +1,1 @@
+These are the current dataset categories we have: energy, materials, human resources, selected commodities, lease  costs, Market Intelligence

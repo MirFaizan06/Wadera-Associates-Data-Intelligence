@@ -1,0 +1,402 @@
+{
+  "titles": {
+    "home": "Wadera Associates - Premium Datenintelligenz-Plattform",
+    "datasets": "Datensätze durchsuchen - Wadera Associates",
+    "datasetDetail": "{{name}} - Wadera Associates",
+    "about": "Über uns - Wadera Associates | Datenintelligenz",
+    "contact": "Kontakt - Wadera Associates",
+    "freeData": "Kostenlose Daten & Ressourcen - Wadera Associates",
+    "freeDataDetail": "{{name}} - Kostenlose Daten | Wadera Associates",
+    "notFound": "Seite nicht gefunden - Wadera Associates",
+    "login": "Anmelden - Wadera Associates",
+    "register": "Konto erstellen - Wadera Associates",
+    "otp": "E-Mail verifizieren - Wadera Associates",
+    "forgotPassword": "Passwort vergessen - Wadera Associates",
+    "resetPassword": "Passwort zurücksetzen - Wadera Associates",
+    "profile": "Mein Profil - Wadera Associates",
+    "purchases": "Meine Käufe - Wadera Associates",
+    "download": "Datensatz herunterladen - Wadera Associates"
+  },
+  "nav": {
+    "home": "Startseite",
+    "datasets": "Datensätze",
+    "freeData": "Kostenlose Daten",
+    "about": "Über uns",
+    "contact": "Kontakt",
+    "signIn": "Anmelden",
+    "getStarted": "Loslegen",
+    "register": "Registrieren",
+    "myProfile": "Profil",
+    "myPurchases": "Meine Käufe",
+    "adminPanel": "Admin-Panel",
+    "signOut": "Abmelden"
+  },
+  "language": {
+    "select": "Sprache"
+  },
+  "home": {
+    "hero": {
+      "badge": "Premium Datenintelligenz",
+      "title1": "Daten, die bessere",
+      "title2": "Entscheidungen antreiben",
+      "typewriter": [
+        "Energieanalysten",
+        "Rohstoffhändler",
+        "Marktforscher",
+        "Strategieberater",
+        "Finanzprofis"
+      ],
+      "subtitle": "Zeitreihendatensätze für Energie, Rohstoffe und Finanzmärkte. Durchsuchen, kaufen und sofort herunterladen — kein Abonnement erforderlich.",
+      "browseBtn": "Datensätze durchsuchen",
+      "freeDataBtn": "Kostenlose Daten ansehen"
+    },
+    "stats": {
+      "formatsLabel": "Download-Formate",
+      "sectorsValue": "8+",
+      "sectorsLabel": "Abgedeckte Sektoren",
+      "currenciesValue": "8",
+      "currenciesLabel": "Unterstützte Währungen",
+      "accessValue": "100%",
+      "accessLabel": "Sofortzugriff"
+    },
+    "howItWorks": {
+      "badge": "Einfacher Prozess",
+      "title": "So funktioniert es",
+      "subtitle": "Von der Entdeckung bis zum Download in drei einfachen Schritten.",
+      "steps": [
+        {
+          "title": "Durchsuchen & Entdecken",
+          "desc": "Durchsuchen Sie unseren Katalog nach Sektor, Region oder Stichwort. Filtern Sie nach Kategorie und sehen Sie sich die Datenpunktanzahl vor dem Kauf an."
+        },
+        {
+          "title": "Sicher kaufen",
+          "desc": "Bezahlen Sie mit Razorpay — Karte, UPI oder Online-Banking. Preise in Ihrer lokalen Währung. Kein Abonnement erforderlich."
+        },
+        {
+          "title": "Herunterladen & Verwenden",
+          "desc": "Sofort im Format XLSX, CSV, PDF oder PNG herunterladen. Verwenden Sie die Daten in Ihren Modellen, Berichten oder Dashboards."
+        }
+      ]
+    },
+    "features": {
+      "title": "Warum unsere Plattform wählen",
+      "items": [
+        {
+          "title": "Interaktive Diagramme",
+          "desc": "Visualisieren Sie Trends mit dynamischen, zoombaren Zeitreihendiagrammen vor dem Kauf."
+        },
+        {
+          "title": "Mehrere Formate",
+          "desc": "Herunterladen in XLSX, CSV, PDF oder PNG — was auch immer zu Ihrem Arbeitsablauf passt."
+        },
+        {
+          "title": "Lizenzierte Daten",
+          "desc": "Sicherer, lizenzgesteuerter Zugriff mit vollständiger Prüfspur und klaren IP-Bedingungen."
+        },
+        {
+          "title": "Live-Preise",
+          "desc": "Preise in Ihrer lokalen Währung über Live-Wechselkurse angezeigt."
+        }
+      ]
+    },
+    "featured": {
+      "title": "Ausgewählte Datensätze",
+      "viewAll": "Alle anzeigen",
+      "empty": "Noch keine ausgewählten Datensätze."
+    },
+    "cta": {
+      "title": "Bereit für Premium-Daten?",
+      "subtitle": "Registrieren Sie sich kostenlos und durchsuchen Sie unseren vollständigen Katalog von Zeitreihendatensätzen.",
+      "primaryBtn": "Kostenloses Konto erstellen",
+      "secondaryBtn": "Ohne Anmeldung durchsuchen"
+    }
+  },
+  "datasets": {
+    "pageTitle": "Datensatz-Katalog",
+    "pageSubtitle": "Premium-Zeitreihendaten für Profis",
+    "searchPlaceholder": "Datensätze suchen...",
+    "allCategories": "Alle Kategorien",
+    "sort": {
+      "newest": "Neueste zuerst",
+      "nameAZ": "Name A–Z",
+      "priceLow": "Preis aufsteigend"
+    },
+    "found": "{{count}} Datensätze gefunden",
+    "noResults": {
+      "heading": "Keine Datensätze gefunden",
+      "sub": "Versuchen Sie, Ihre Suche oder Filter anzupassen"
+    },
+    "prev": "Zurück",
+    "next": "Weiter"
+  },
+  "datasetDetail": {
+    "notFound": "Datensatz nicht gefunden.",
+    "sourceLabel": "Quelle:",
+    "unitLabel": "Einheit:",
+    "chart": {
+      "title": "Preisverlauf (Letzte 60 Monate)",
+      "noData": "Noch keine Daten verfügbar"
+    },
+    "preview": {
+      "title": "Datenvorschau (Erste 5 Zeilen)",
+      "dateCol": "Datum",
+      "valueCol": "Wert",
+      "unitCol": "Einheit",
+      "purchaseNote": "Kaufen Sie, um auf alle {{count}} Datenpunkte zuzugreifen"
+    },
+    "purchase": {
+      "lifetime": "Einmaliger Kauf · Lebenslanger Zugriff",
+      "downloads": "XLSX, CSV, PDF, PNG Downloads",
+      "dataPoints": "{{count}} monatliche Datenpunkte",
+      "btn": "Datensatz kaufen",
+      "secure": "Sichere Zahlung über Razorpay"
+    }
+  },
+  "datasetCard": {
+    "dataPoints": "{{count}} Datenpunkte",
+    "view": "Ansehen →"
+  },
+  "about": {
+    "heroTitle1": "Entscheidungen stärken mit",
+    "heroTitle2": "Zuverlässigen Daten",
+    "heroSubtitle": "Wadera Associates ist eine Datenintelligenz-Plattform, die hochwertige Geschäfts-, Sektor- und Branchendatensätze für Fachleute, Forscher und Unternehmen weltweit bereitstellt.",
+    "mission": {
+      "badge": "Unsere Mission",
+      "title": "Qualitätsdaten für jedes Unternehmen zugänglich machen",
+      "body": "Daten auf professionellem Niveau waren historisch hinter teuren Abonnements und undurchsichtigen Lizenzen gesperrt. Wir glauben, dass genaue, strukturierte und fair bepreiste Daten für Unternehmen aller Größen zugänglich sein sollten — von unabhängigen Beratern bis hin zu großen Unternehmen weltweit."
+    },
+    "offer": {
+      "badge": "Was wir anbieten",
+      "title": "Für Entscheidungsträger gebaut",
+      "values": [
+        {
+          "title": "Datengenauigkeit",
+          "desc": "Jeder Datensatz durchläuft vor der Veröffentlichung einen strengen Verifizierungsprozess. Wir zitieren unsere Quellen und kennzeichnen Unsicherheiten klar."
+        },
+        {
+          "title": "Globale Reichweite",
+          "desc": "Wir decken Sektoren und Industrien in Asien, dem Nahen Osten und globalen Märkten ab — mit Mehrwährungspreisen für internationale Käufer."
+        },
+        {
+          "title": "Sicher & Konform",
+          "desc": "Zahlungen werden sicher über Razorpay verarbeitet. Wir halten geltende Datenschutzbestimmungen ein und veröffentlichen transparente Rechtsbedingungen."
+        },
+        {
+          "title": "Umsetzbare Erkenntnisse",
+          "desc": "Wir liefern nicht nur rohe Zahlen. Unsere Produkte sind strukturiert, um Geschäftsentscheidungen, Benchmarking und Branchenforschung zu unterstützen."
+        }
+      ]
+    },
+    "teamIllustrationAlt": "Das Wadera Associates Team arbeitet gemeinsam an Daten",
+    "team": {
+      "badge": "Die Menschen dahinter",
+      "title": "Unser Team",
+      "subtitle": "Ein kompaktes Team mit ergänzenden Kenntnissen in Technologie, Datenforschung und Finanzen.",
+      "members": [
+        {
+          "name": "Faizan",
+          "role": "Technologiemanager",
+          "bio": "Leitet die gesamte technologische Entwicklung — Plattformarchitektur, Frontend- und Backend-Engineering, Serverinfrastruktur, Zahlungsintegration und kontinuierliche Funktionsbereitstellung."
+        },
+        {
+          "name": "Hamid",
+          "role": "Produkt- und Datenchef",
+          "bio": "Treibt die Erstellung hochwertiger Geschäftsdatensätze und Branchenberichte voran. Verantwortlich für Forschung, Inhaltsstrukturierung, Datengenauigkeit und Produktentwicklung."
+        },
+        {
+          "name": "Rauf",
+          "role": "Finanzen, Compliance & Recht",
+          "bio": "Überwacht alle Finanzoperationen, Steuer- und Regulierungskonformität in verschiedenen Rechtssystemen, rechtliche Dokumentation, geistiges Eigentum und Ertragsmanagement."
+        }
+      ]
+    },
+    "structure": {
+      "badge": "Struktur",
+      "title": "Wie wir arbeiten",
+      "p1": "Wadera Associates fungiert als Datenintelligenz-Bereich unter seinem Mutterunternehmen. Alle strategischen Entscheidungen — einschließlich Preisgestaltung, Partnerschaften und Technologierichtung — werden im Konsens zwischen den Gründungspartnern getroffen, um Rechenschaftspflicht auf jeder Ebene sicherzustellen.",
+      "p2": "Betriebliche Verantwortlichkeiten sind klar verteilt: Technologie wird von Faizan von Anfang bis Ende verantwortet, Datenproduktentwicklung von Hamid und Finanz- und Rechtsangelegenheiten von Rauf. Diese Struktur hält Entscheidungszyklen kurz und die Ausführung präzise.",
+      "p3": "Alle unter dem Unternehmen entwickelten Datensätze, Berichte, Plattformcode und geistiges Eigentum sind gemeinsames Eigentum. Wir nehmen den IP-Schutz ernst und setzen unsere Lizenzbedingungen durch, um sowohl unsere Arbeit als auch die Rechte unserer Kunden zu schützen."
+    },
+    "cta": {
+      "title": "Möchten Sie mit uns zusammenarbeiten?",
+      "subtitle": "Ob Sie einen benutzerdefinierten Datensatz, eine Forschungspartnerschaft benötigen oder eine Frage zu unseren Produkten haben — wir würden gerne von Ihnen hören.",
+      "btn": "Kontakt aufnehmen"
+    }
+  },
+  "contact": {
+    "badge": "Kontakt aufnehmen",
+    "title": "Kontaktieren Sie uns",
+    "subtitle": "Fragen zu einem Datensatz, ein Partnerschaftsvorschlag oder einfach Hallo sagen — senden Sie uns eine Nachricht und wir antworten Ihnen umgehend.",
+    "emailLabel": "E-Mail",
+    "responseLabel": "Antwortzeit",
+    "responseTime": "Wir antworten in der Regel innerhalb von 1–2 Werktagen.",
+    "form": {
+      "fullName": "Vollständiger Name",
+      "namePlaceholder": "Ihr Name",
+      "email": "E-Mail-Adresse",
+      "emailPlaceholder": "ihre@email.com",
+      "subject": "Betreff (optional)",
+      "subjectPlaceholder": "Worum geht es?",
+      "message": "Nachricht",
+      "messagePlaceholder": "Ihre Nachricht...",
+      "sendBtn": "Nachricht senden"
+    },
+    "success": {
+      "title": "Nachricht gesendet!",
+      "body": "Wir haben Ihre Nachricht erhalten und werden in Kürze antworten."
+    }
+  },
+  "freeData": {
+    "badge": "Kein Konto erforderlich",
+    "title": "Kostenlose Daten & Ressourcen",
+    "subtitle": "Frei zugängliche Artikel, Berichte und herunterladbare PDFs zu Energiemärkten, Rohstoffpreisen und Wirtschaftsdaten.",
+    "typeAll": "Alle",
+    "typeArticles": "Artikel",
+    "typePDFs": "PDFs",
+    "categoryLabel": "Kategorie:",
+    "resourceCount_one": "{{count}} Ressource",
+    "resourceCount_other": "{{count}} Ressourcen",
+    "noResources": {
+      "title": "Noch keine Ressourcen veröffentlicht",
+      "sub": "Schauen Sie bald wieder vorbei."
+    },
+    "card": {
+      "pdfBadge": "PDF-Download",
+      "articleBadge": "Artikel",
+      "downloadPDF": "PDF herunterladen",
+      "read": "Lesen"
+    }
+  },
+  "freeDataDetail": {
+    "back": "Zurück zu kostenlosen Daten",
+    "notFound": "Ressource nicht gefunden.",
+    "pdfBadge": "PDF-Download",
+    "articleBadge": "Artikel",
+    "pdfDesc": "Diese Ressource ist als PDF-Dokument verfügbar.",
+    "downloadPDF": "PDF herunterladen"
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "subtitle": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+    "homeBtn": "Zur Startseite",
+    "browseBtn": "Datensätze durchsuchen"
+  },
+  "auth": {
+    "login": {
+      "title": "Willkommen zurück",
+      "subtitle": "Melden Sie sich bei Ihrem Konto an",
+      "emailLabel": "E-Mail-Adresse",
+      "emailPlaceholder": "ihre@email.com",
+      "passwordLabel": "Passwort",
+      "passwordPlaceholder": "••••••••",
+      "signInBtn": "Anmelden",
+      "forgotPassword": "Passwort vergessen?",
+      "noAccount": "Kein Konto?",
+      "createOne": "Erstellen Sie eines",
+      "backToWebsite": "Zurück zur Hauptwebsite",
+      "failed": "Anmeldung fehlgeschlagen"
+    },
+    "register": {
+      "title": "Erstellen Sie Ihr Konto",
+      "subtitle": "Zugang zu Premium-Datensätzen erhalten",
+      "avatarHint": "Profilfoto (optional)",
+      "fullNameLabel": "Vollständiger Name",
+      "fullNamePlaceholder": "Max Mustermann",
+      "emailLabel": "E-Mail-Adresse",
+      "emailPlaceholder": "ihre@email.com",
+      "passwordLabel": "Passwort",
+      "passwordPlaceholder": "Mind. 8 Zeichen, Groß+Klein+Zahl",
+      "confirmLabel": "Passwort bestätigen",
+      "confirmPlaceholder": "Passwort wiederholen",
+      "createBtn": "Konto erstellen",
+      "alreadyHave": "Haben Sie bereits ein Konto?",
+      "signIn": "Anmelden",
+      "backToWebsite": "Zurück zur Hauptwebsite",
+      "failed": "Registrierung fehlgeschlagen"
+    },
+    "otp": {
+      "title": "E-Mail verifizieren",
+      "subtitle": "Geben Sie den 6-stelligen Code ein, der gesendet wurde an",
+      "digitLabel": "Ziffer {{n}}",
+      "enterAll": "Geben Sie alle 6 Ziffern ein",
+      "verifyBtn": "Code verifizieren",
+      "resend": "Code erneut senden",
+      "resendAlert": "Neues OTP an Ihre E-Mail gesendet",
+      "invalidOtp": "Ungültiges OTP"
+    },
+    "forgotPassword": {
+      "title": "Passwort zurücksetzen",
+      "emailLabel": "E-Mail-Adresse",
+      "sendBtn": "Zurücksetzungslink senden",
+      "sent": "Wenn diese E-Mail existiert, wurde ein Zurücksetzungslink gesendet.",
+      "backToLogin": "Zurück zur Anmeldung"
+    },
+    "resetPassword": {
+      "title": "Neues Passwort festlegen",
+      "newPasswordLabel": "Neues Passwort",
+      "confirmLabel": "Passwort bestätigen",
+      "resetBtn": "Passwort zurücksetzen",
+      "failed": "Zurücksetzen fehlgeschlagen. Link ist möglicherweise abgelaufen."
+    }
+  },
+  "profile": {
+    "title": "Mein Profil",
+    "picture": {
+      "cardTitle": "Profilbild",
+      "changePhoto": "Foto ändern",
+      "uploading": "Wird hochgeladen…",
+      "hint": "JPG, PNG, GIF — max. 5 MB",
+      "tooLarge": "Bild muss kleiner als 5 MB sein",
+      "uploadFailed": "Hochladen fehlgeschlagen. Bitte versuchen Sie es erneut."
+    },
+    "details": {
+      "cardTitle": "Kontodetails",
+      "emailLabel": "E-Mail",
+      "fullNameLabel": "Vollständiger Name",
+      "phoneLabel": "Telefon",
+      "saved": "Profil gespeichert!",
+      "saveBtn": "Änderungen speichern"
+    }
+  },
+  "purchases": {
+    "title": "Meine Käufe",
+    "empty": {
+      "title": "Noch keine Käufe",
+      "subtitle": "Durchsuchen Sie unseren Katalog und holen Sie sich Ihren ersten Datensatz.",
+      "browseBtn": "Datensätze durchsuchen"
+    },
+    "downloadBtn": "Herunterladen"
+  },
+  "download": {
+    "title": "Laden Sie Ihren Datensatz herunter",
+    "subtitle": "Wählen Sie unten Ihr bevorzugtes Format",
+    "formats": {
+      "xlsx": {
+        "label": "Excel (XLSX)",
+        "desc": "Vollständiger Datensatz mit Formatierung"
+      },
+      "csv": {
+        "label": "CSV",
+        "desc": "Rohdaten, universelle Kompatibilität"
+      },
+      "pdf": {
+        "label": "PDF-Bericht",
+        "desc": "Formatierter Bericht mit Diagramm"
+      }
+    },
+    "preparing": "Wird vorbereitet...",
+    "failed": "Download fehlgeschlagen. Ihr Zugriff ist möglicherweise abgelaufen."
+  },
+  "footer": {
+    "tagline": "Premium-Zeitreihendatensätze für Energie, Rohstoffe und Finanzmärkte.",
+    "quickLinks": "Schnelllinks",
+    "browseDatasets": "Datensätze durchsuchen",
+    "aboutUs": "Über uns",
+    "contact": "Kontakt",
+    "legal": "Rechtliches",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "termsOfService": "Nutzungsbedingungen",
+    "contactSection": "Kontakt",
+    "copyright": "© {{year}} Wadera Associates. Alle Rechte vorbehalten."
+  }
+}

@@ -1,0 +1,65 @@
+# ── Dependencies ──────────────────────────────────────────────────────────────
+node_modules/
+
+# ── Build outputs ─────────────────────────────────────────────────────────────
+dist/
+build/
+client/dist/
+server/dist/
+
+# ── Environment / secrets ─────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+server/.env
+client/.env
+*.pem
+*.key
+*.cert
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+*.log
+logs/
+server/logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ── OS / editor ───────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/settings.json
+.idea/
+
+# ── Test / coverage ───────────────────────────────────────────────────────────
+coverage/
+server/coverage/
+.nyc_output/
+
+# ── Uploads (user-generated, served from server/public/uploads/) ──────────────
+server/public/uploads/
+# Keep the directory itself tracked via .gitkeep:
+!server/public/uploads/.gitkeep
+!server/public/
+
+# ── Downloads (generated on-the-fly) ─────────────────────────────────────────
+public/downloads/
+server/public/downloads/
+
+# ── Misc temp ─────────────────────────────────────────────────────────────────
+*.tmp
+*.swp
+*.swo
+.cache/
+.turbo/
+
+# ── Prisma generated client (regenerated via prisma generate) ─────────────────
+# server/node_modules/.prisma/ is inside node_modules, already ignored above
+
+# ── Team profile pictures (add real photos, keep placeholder) ─────────────────
+client/public/team_profile_pics/*.jpg
+client/public/team_profile_pics/*.jpeg
+client/public/team_profile_pics/*.png
+client/public/team_profile_pics/*.webp
+# Keep README:
+!client/public/team_profile_pics/README.txt

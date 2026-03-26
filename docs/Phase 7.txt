@@ -1,0 +1,471 @@
+## Phase 7: Financial Manager Dashboard
+
+Note: The code written in this Phase file is only dummy and placeholder. You write your own logic, and especially styles and structure. we are using custom css, not tailwind.
+
+In this phase, we build the admin panel for the Financial Manager role. This includes:
+
+- Viewing all orders (successful and failed) with filtering (by date, dataset, user).
+- Revenue reports (daily, monthly, yearly, by dataset).
+- Payment logs (Razorpay responses, errors).
+- Export reports to CSV/PDF.
+- Permission enforcement: only users with `VIEW_REVENUE` and `VIEW_ORDERS` permissions can access.
+
+---
+
+### Step 7.1: Backend – Order & Payment APIs
+
+Create `server/src/controllers/finance.controller.ts`:
+
+```typescript
+import { Request, Response } from 'express';
+import { PrismaClient } from '@prisma/client';
+import { startOfDay, endOfDay, startOfMonth, endOfMonth, startOfYear, endOfYear } from 'date-fns';
+
+const prisma = new PrismaClient();
+
+// Get orders with pagination and filters
+export const getOrders = async (req: Request, res: Response) => {
+  try {
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 20;
+    const skip = (page - 1) * limit;
+    const { startDate, endDate, datasetId, status } = req.query;
+
+    const where: any = {};
+    if (startDate) where.purchasedAt = { gte: new Date(startDate as string) };
+    if (endDate) where.purchasedAt = { ...where.purchasedAt, lte: new Date(endDate as string) };
+    if (datasetId) where.timeSeriesId = datasetId as string;
+    if (status) where.status = status as string;
+
+    const orders = await prisma.purchase.findMany({
+      where,
+      include: {
+        user: { select: { id: true, email: true, fullName: true } },
+        timeSeries: { select: { id: true, name: true } },
+      },
+      skip,
+      take: limit,
+      orderBy: { purchasedAt: 'desc' },
+    });
+
+    const total = await prisma.purchase.count({ where });
+
+    res.json({
+      success: true,
+      data: orders,
+      pagination: { page, limit, total, pages: Math.ceil(total / limit) },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// Get revenue summary (today, this month, this year, total)
+export const getRevenueSummary = async (req: Request, res: Response) => {
+  try {
+    const now = new Date();
+
+    const todayStart = startOfDay(now);
+    const todayEnd = endOfDay(now);
+    const monthStart = startOfMonth(now);
+    const monthEnd = endOfMonth(now);
+    const yearStart = startOfYear(now);
+    const yearEnd = endOfYear(now);
+
+    const [
+      todayRevenue,
+      monthRevenue,
+      yearRevenue,
+      totalRevenue,
+      revenueByDataset,
+    ] = await Promise.all([
+      // Today
+      prisma.purchase.aggregate({
+        where: { status: 'SUCCESS', purchasedAt: { gte: todayStart, lte: todayEnd } },
+        _sum: { amountINR: true },
+      }),
+      // This month
+      prisma.purchase.aggregate({
+        where: { status: 'SUCCESS', purchasedAt: { gte: monthStart, lte: monthEnd } },
+        _sum: { amountINR: true },
+      }),
+      // This year
+      prisma.purchase.aggregate({
+        where: { status: 'SUCCESS', purchasedAt: { gte: yearStart, lte: yearEnd } },
+        _sum: { amountINR: true },
+      }),
+      // All time
+      prisma.purchase.aggregate({
+        where: { status: 'SUCCESS' },
+        _sum: { amountINR: true },
+      }),
+      // Revenue by dataset (last 12 months)
+      prisma.$queryRaw`
+        SELECT 
+          ts.id, 
+          ts.name, 
+          SUM(p.amountINR) as total
+        FROM Purchase p
+        JOIN TimeSeries ts ON p.timeSeriesId = ts.id
+        WHERE p.status = 'SUCCESS' 
+          AND p.purchasedAt >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
+        GROUP BY ts.id, ts.name
+        ORDER BY total DESC
+      `,
+    ]);
+
+    res.json({
+      success: true,
+      data: {
+        today: todayRevenue._sum.amountINR || 0,
+        month: monthRevenue._sum.amountINR || 0,
+        year: yearRevenue._sum.amountINR || 0,
+        total: totalRevenue._sum.amountINR || 0,
+        byDataset: revenueByDataset,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// Get payment logs (optional – if we store Razorpay responses)
+// For now we can just rely on purchase table.
+```
+
+Create routes in `server/src/routes/finance.routes.ts`:
+
+```typescript
+import { Router } from 'express';
+import { protect } from '../middleware/auth.middleware';
+import { authorize } from '../middleware/permission.middleware';
+import { getOrders, getRevenueSummary } from '../controllers/finance.controller';
+
+const router = Router();
+
+router.use(protect);
+router.use(authorize('VIEW_REVENUE', 'VIEW_ORDERS')); // at least one of these
+
+router.get('/orders', authorize('VIEW_ORDERS'), getOrders);
+router.get('/revenue', authorize('VIEW_REVENUE'), getRevenueSummary);
+
+export default router;
+```
+
+Mount in `index.ts`:
+
+```typescript
+import financeRoutes from './routes/finance.routes';
+app.use('/api/v1/admin/finance', financeRoutes);
+```
+
+### Step 7.2: Update Permissions Constants
+
+Add to `server/src/constants/permissions.ts`:
+
+```typescript
+export const PERMISSIONS = {
+  // ... existing
+  VIEW_REVENUE: 'VIEW_REVENUE',
+  VIEW_ORDERS: 'VIEW_ORDERS',
+} as const;
+```
+
+### Step 7.3: Frontend – Financial Manager Dashboard
+
+Create `client/src/pages/admin/FinanceDashboard.tsx`:
+
+```tsx
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
+import api from '../../services/api';
+import { format } from 'date-fns';
+import toast from 'react-hot-toast';
+import { CurrencyRupeeIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
+
+interface RevenueSummary {
+  today: number;
+  month: number;
+  year: number;
+  total: number;
+  byDataset: Array<{ id: string; name: string; total: number }>;
+}
+
+interface Order {
+  id: string;
+  amountINR: number;
+  status: string;
+  purchasedAt: string;
+  user: { email: string; fullName: string | null } | null;
+  guestEmail: string | null;
+  timeSeries: { name: string };
+  razorpayPaymentId: string | null;
+}
+
+export default function FinanceDashboard() {
+  const { user } = useAuth();
+  const [summary, setSummary] = useState<RevenueSummary | null>(null);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [ordersPage, setOrdersPage] = useState(1);
+  const [ordersTotalPages, setOrdersTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [filters, setFilters] = useState({
+    startDate: '',
+    endDate: '',
+    status: '',
+  });
+
+  const fetchSummary = async () => {
+    try {
+      const res = await api.get('/admin/finance/revenue');
+      setSummary(res.data.data);
+    } catch (error) {
+      toast.error('Failed to load revenue summary');
+    }
+  };
+
+  const fetchOrders = async () => {
+    setLoading(true);
+    try {
+      const params: any = { page: ordersPage, limit: 20 };
+      if (filters.startDate) params.startDate = filters.startDate;
+      if (filters.endDate) params.endDate = filters.endDate;
+      if (filters.status) params.status = filters.status;
+
+      const res = await api.get('/admin/finance/orders', { params });
+      setOrders(res.data.data);
+      setOrdersTotalPages(res.data.pagination.pages);
+    } catch (error) {
+      toast.error('Failed to load orders');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSummary();
+  }, []);
+
+  useEffect(() => {
+    fetchOrders();
+  }, [ordersPage, filters]);
+
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFilters({ ...filters, [e.target.name]: e.target.value });
+    setOrdersPage(1);
+  };
+
+  const exportCSV = () => {
+    // Convert orders to CSV and download
+    const headers = ['Date', 'Dataset', 'Customer', 'Amount (INR)', 'Status', 'Payment ID'];
+    const rows = orders.map(o => [
+      format(new Date(o.purchasedAt), 'yyyy-MM-dd HH:mm'),
+      o.timeSeries.name,
+      o.user ? o.user.email : (o.guestEmail || 'Guest'),
+      o.amountINR,
+      o.status,
+      o.razorpayPaymentId || '',
+    ]);
+    const csv = [headers, ...rows].map(row => row.join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `orders_${format(new Date(), 'yyyyMMdd')}.csv`;
+    a.click();
+  };
+
+  return (
+    <div>
+      <h1 className="text-2xl font-bold text-[#723E31] mb-6">Financial Dashboard</h1>
+
+      {/* Revenue Cards */}
+      {summary && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="bg-white p-6 rounded-lg shadow">
+            <p className="text-sm text-gray-500">Today</p>
+            <p className="text-2xl font-bold">₹{summary.today.toFixed(2)}</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow">
+            <p className="text-sm text-gray-500">This Month</p>
+            <p className="text-2xl font-bold">₹{summary.month.toFixed(2)}</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow">
+            <p className="text-sm text-gray-500">This Year</p>
+            <p className="text-2xl font-bold">₹{summary.year.toFixed(2)}</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow">
+            <p className="text-sm text-gray-500">All Time</p>
+            <p className="text-2xl font-bold">₹{summary.total.toFixed(2)}</p>
+          </div>
+        </div>
+      )}
+
+      {/* Revenue by Dataset Chart (simple table for now) */}
+      {summary && summary.byDataset.length > 0 && (
+        <div className="bg-white p-6 rounded-lg shadow mb-8">
+          <h2 className="text-lg font-semibold mb-4">Revenue by Dataset (Last 12 Months)</h2>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead>
+                <tr>
+                  <th className="px-4 py-2 text-left">Dataset</th>
+                  <th className="px-4 py-2 text-left">Revenue (INR)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {summary.byDataset.map((item) => (
+                  <tr key={item.id}>
+                    <td className="px-4 py-2">{item.name}</td>
+                    <td className="px-4 py-2">₹{Number(item.total).toFixed(2)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* Orders List */}
+      <div className="bg-white p-6 rounded-lg shadow">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-semibold">Orders</h2>
+          <button
+            onClick={exportCSV}
+            className="bg-[#A67564] text-white px-3 py-1 rounded text-sm hover:bg-[#723E31] flex items-center"
+          >
+            <DocumentTextIcon className="h-4 w-4 mr-1" />
+            Export CSV
+          </button>
+        </div>
+
+        {/* Filters */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+          <input
+            type="date"
+            name="startDate"
+            value={filters.startDate}
+            onChange={handleFilterChange}
+            className="border rounded px-3 py-2"
+            placeholder="Start Date"
+          />
+          <input
+            type="date"
+            name="endDate"
+            value={filters.endDate}
+            onChange={handleFilterChange}
+            className="border rounded px-3 py-2"
+            placeholder="End Date"
+          />
+          <select
+            name="status"
+            value={filters.status}
+            onChange={handleFilterChange}
+            className="border rounded px-3 py-2"
+          >
+            <option value="">All Status</option>
+            <option value="SUCCESS">Success</option>
+            <option value="PENDING">Pending</option>
+            <option value="FAILED">Failed</option>
+          </select>
+        </div>
+
+        {loading && <div>Loading...</div>}
+
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dataset</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment ID</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {orders.map((order) => (
+                <tr key={order.id}>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    {format(new Date(order.purchasedAt), 'yyyy-MM-dd HH:mm')}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">{order.timeSeries.name}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    {order.user ? order.user.email : (order.guestEmail || 'Guest')}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">₹{order.amountINR}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      order.status === 'SUCCESS' ? 'bg-green-100 text-green-800' :
+                      order.status === 'PENDING' ? 'bg-yellow-100 text-yellow-800' :
+                      'bg-red-100 text-red-800'
+                    }`}>
+                      {order.status}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">{order.razorpayPaymentId || '-'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Pagination */}
+        {ordersTotalPages > 1 && (
+          <div className="flex justify-center mt-4 space-x-2">
+            <button
+              onClick={() => setOrdersPage(p => Math.max(1, p-1))}
+              disabled={ordersPage === 1}
+              className="px-3 py-1 border rounded disabled:opacity-50"
+            >
+              Previous
+            </button>
+            <span className="px-3 py-1">Page {ordersPage} of {ordersTotalPages}</span>
+            <button
+              onClick={() => setOrdersPage(p => Math.min(ordersTotalPages, p+1))}
+              disabled={ordersPage === ordersTotalPages}
+              className="px-3 py-1 border rounded disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+```
+
+### Step 7.4: Update Admin Layout Navigation
+
+In `client/src/layouts/AdminLayout.tsx`, add "Financial Manager" to the navigation array:
+
+```typescript
+const navigation = [
+  { name: 'Data Manager', href: '/admin/data', roles: ['Developer', 'DataManager'] },
+  { name: 'Financial Manager', href: '/admin/finance', roles: ['Developer', 'FinancialManager'] },
+  { name: 'User Manager', href: '/admin/users', roles: ['Developer', 'UserManager'] },
+  { name: 'CMS Manager', href: '/admin/cms', roles: ['Developer', 'CMSManager'] },
+  { name: 'Developer', href: '/admin/dev', roles: ['Developer'] },
+];
+```
+
+### Step 7.5: Add Route for Finance Dashboard
+
+In `client/src/App.tsx`, add route inside admin layout:
+
+```tsx
+<Route path="finance" element={<FinanceDashboard />} />
+```
+
+Make sure to import `FinanceDashboard`.
+
+### Step 7.6: Test
+
+- Log in as a user with FinancialManager role (or Developer).
+- Navigate to `/admin/finance`.
+- Check that revenue cards load and orders table appears.
+- Test filters and export.

@@ -1,0 +1,1100 @@
+## Phase 8: User Manager Dashboard
+Note: The code written in this Phase file is only dummy and placeholder. You write your own logic, and especially styles and structure. we are using custom css, not tailwind.
+
+In this phase, we build the admin panel for the User Manager role. This includes:
+
+- Viewing all users with search and pagination.
+- User details page showing profile, purchase history, assigned licenses, and download logs.
+- Creating/editing users (optionally).
+- Assigning/revoking licenses.
+- Suspending/activating user accounts.
+- IP ban management (global ban list).
+- Permission enforcement: users with `MANAGE_USERS`, `ASSIGN_LICENSES`, `BAN_IP`.
+
+---
+
+### Step 8.1: Update Prisma Schema (if needed)
+
+Add `BannedIP` model and `isActive` to `User` (if not already present). Also ensure `User` has `deletedAt` for soft delete.
+
+In `server/prisma/schema.prisma`, add:
+
+```prisma
+model User {
+  // ... existing fields
+  isActive      Boolean   @default(true)   // for suspension
+  bannedIPs     BannedIP[] // optional relation if needed
+}
+
+model BannedIP {
+  id        String   @id @default(cuid())
+  ipAddress String   @unique
+  reason    String?
+  bannedAt  DateTime @default(now())
+  bannedBy  String?  // userId who banned
+}
+```
+
+If you added these, run migration:
+
+```bash
+cd server
+npx prisma migrate dev --name add_banned_ip
+```
+
+### Step 8.2: Backend – User Management Controller
+
+Create `server/src/controllers/user.controller.ts`:
+
+```typescript
+import { Request, Response } from 'express';
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
+
+const prisma = new PrismaClient();
+
+// Get all users with pagination, search, filter
+export const getUsers = async (req: Request, res: Response) => {
+  try {
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 20;
+    const skip = (page - 1) * limit;
+    const search = req.query.search as string || '';
+    const role = req.query.role as string;
+    const isActive = req.query.isActive === 'true' ? true : req.query.isActive === 'false' ? false : undefined;
+
+    const where: any = {};
+    if (search) {
+      where.OR = [
+        { email: { contains: search } },
+        { fullName: { contains: search } },
+      ];
+    }
+    if (role) where.roleId = role;
+    if (isActive !== undefined) where.isActive = isActive;
+
+    const users = await prisma.user.findMany({
+      where,
+      select: {
+        id: true,
+        email: true,
+        fullName: true,
+        roleId: true,
+        isActive: true,
+        emailVerified: true,
+        createdAt: true,
+        role: { select: { id: true, name: true } },
+        _count: { select: { purchases: true, licenses: true } },
+      },
+      skip,
+      take: limit,
+      orderBy: { createdAt: 'desc' },
+    });
+
+    const total = await prisma.user.count({ where });
+
+    res.json({
+      success: true,
+      data: users,
+      pagination: { page, limit, total, pages: Math.ceil(total / limit) },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// Get single user by ID (with full details)
+export const getUserById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const user = await prisma.user.findUnique({
+      where: { id },
+      include: {
+        role: true,
+        purchases: {
+          include: { timeSeries: true },
+          orderBy: { purchasedAt: 'desc' },
+        },
+        licenses: {
+          include: { licenseType: true },
+          orderBy: { validFrom: 'desc' },
+        },
+        downloads: {
+          include: { timeSeries: true },
+          orderBy: { downloadedAt: 'desc' },
+          take: 50,
+        },
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({ success: false, error: 'User not found' });
+    }
+
+    res.json({ success: true, data: user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// Create a new user (admin)
+export const createUser = async (req: Request, res: Response) => {
+  try {
+    const { email, password, fullName, roleId, isActive } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ success: false, error: 'Email and password required' });
+    }
+
+    const existing = await prisma.user.findUnique({ where: { email } });
+    if (existing) {
+      return res.status(400).json({ success: false, error: 'Email already exists' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await prisma.user.create({
+      data: {
+        email,
+        passwordHash: hashedPassword,
+        fullName,
+        roleId,
+        isActive: isActive ?? true,
+        emailVerified: true, // admin-created users are pre-verified
+      },
+      select: { id: true, email: true, fullName: true, roleId: true, isActive: true },
+    });
+
+    res.status(201).json({ success: true, data: user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// Update user (role, isActive, fullName)
+export const updateUser = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { fullName, roleId, isActive } = req.body;
+
+    const user = await prisma.user.findUnique({ where: { id } });
+    if (!user) {
+      return res.status(404).json({ success: false, error: 'User not found' });
+    }
+
+    const updated = await prisma.user.update({
+      where: { id },
+      data: { fullName, roleId, isActive },
+      select: { id: true, email: true, fullName: true, roleId: true, isActive: true },
+    });
+
+    res.json({ success: true, data: updated });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// Reset user password (admin sets a new one)
+export const resetPassword = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { newPassword } = req.body;
+
+    if (!newPassword) {
+      return res.status(400).json({ success: false, error: 'New password required' });
+    }
+
+    const user = await prisma.user.findUnique({ where: { id } });
+    if (!user) {
+      return res.status(404).json({ success: false, error: 'User not found' });
+    }
+
+    const hashed = await bcrypt.hash(newPassword, 10);
+    await prisma.user.update({
+      where: { id },
+      data: { passwordHash: hashed },
+    });
+
+    res.json({ success: true, message: 'Password reset successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// Soft delete (deactivate) user – set isActive to false
+export const deactivateUser = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    await prisma.user.update({
+      where: { id },
+      data: { isActive: false },
+    });
+    res.json({ success: true, message: 'User deactivated' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// Activate user
+export const activateUser = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    await prisma.user.update({
+      where: { id },
+      data: { isActive: true },
+    });
+    res.json({ success: true, message: 'User activated' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// ========== License Assignment ==========
+
+// Get all license types
+export const getLicenseTypes = async (req: Request, res: Response) => {
+  try {
+    const types = await prisma.licenseType.findMany();
+    res.json({ success: true, data: types });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// Assign license to user
+export const assignLicense = async (req: Request, res: Response) => {
+  try {
+    const { userId, licenseTypeId, validFrom, validTo, datasetIds } = req.body;
+
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      return res.status(404).json({ success: false, error: 'User not found' });
+    }
+
+    const licenseType = await prisma.licenseType.findUnique({ where: { id: licenseTypeId } });
+    if (!licenseType) {
+      return res.status(404).json({ success: false, error: 'License type not found' });
+    }
+
+    const assignment = await prisma.licenseAssignment.create({
+      data: {
+        userId,
+        licenseTypeId,
+        validFrom: new Date(validFrom),
+        validTo: validTo ? new Date(validTo) : null,
+        datasetIds: datasetIds || [],
+        isActive: true,
+      },
+    });
+
+    res.status(201).json({ success: true, data: assignment });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// Revoke license (soft delete – set isActive false)
+export const revokeLicense = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params; // license assignment id
+    const { reason } = req.body;
+
+    await prisma.licenseAssignment.update({
+      where: { id },
+      data: { isActive: false, revokedAt: new Date(), revokedReason: reason },
+    });
+
+    res.json({ success: true, message: 'License revoked' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// Get user's licenses
+export const getUserLicenses = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const licenses = await prisma.licenseAssignment.findMany({
+      where: { userId },
+      include: { licenseType: true },
+      orderBy: { validFrom: 'desc' },
+    });
+    res.json({ success: true, data: licenses });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// ========== IP Ban Management ==========
+
+// Get all banned IPs
+export const getBannedIPs = async (req: Request, res: Response) => {
+  try {
+    const ips = await prisma.bannedIP.findMany({
+      orderBy: { bannedAt: 'desc' },
+    });
+    res.json({ success: true, data: ips });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// Ban an IP
+export const banIP = async (req: Request, res: Response) => {
+  try {
+    const { ipAddress, reason } = req.body;
+    const adminId = (req as any).user.id;
+
+    if (!ipAddress) {
+      return res.status(400).json({ success: false, error: 'IP address required' });
+    }
+
+    const existing = await prisma.bannedIP.findUnique({ where: { ipAddress } });
+    if (existing) {
+      return res.status(400).json({ success: false, error: 'IP already banned' });
+    }
+
+    const banned = await prisma.bannedIP.create({
+      data: { ipAddress, reason, bannedBy: adminId },
+    });
+
+    res.status(201).json({ success: true, data: banned });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// Unban IP
+export const unbanIP = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    await prisma.bannedIP.delete({ where: { id } });
+    res.json({ success: true, message: 'IP unblocked' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+```
+
+### Step 8.3: Create User Routes
+
+Create `server/src/routes/user.routes.ts`:
+
+```typescript
+import { Router } from 'express';
+import { protect } from '../middleware/auth.middleware';
+import { authorize } from '../middleware/permission.middleware';
+import {
+  getUsers,
+  getUserById,
+  createUser,
+  updateUser,
+  resetPassword,
+  deactivateUser,
+  activateUser,
+  getLicenseTypes,
+  assignLicense,
+  revokeLicense,
+  getUserLicenses,
+  getBannedIPs,
+  banIP,
+  unbanIP,
+} from '../controllers/user.controller';
+
+const router = Router();
+
+router.use(protect);
+
+// User management
+router.get('/', authorize('MANAGE_USERS'), getUsers);
+router.get('/:id', authorize('MANAGE_USERS'), getUserById);
+router.post('/', authorize('MANAGE_USERS'), createUser);
+router.put('/:id', authorize('MANAGE_USERS'), updateUser);
+router.post('/:id/reset-password', authorize('MANAGE_USERS'), resetPassword);
+router.post('/:id/deactivate', authorize('MANAGE_USERS'), deactivateUser);
+router.post('/:id/activate', authorize('MANAGE_USERS'), activateUser);
+
+// License management
+router.get('/licenses/types', authorize('ASSIGN_LICENSES'), getLicenseTypes);
+router.get('/:userId/licenses', authorize('ASSIGN_LICENSES'), getUserLicenses);
+router.post('/licenses/assign', authorize('ASSIGN_LICENSES'), assignLicense);
+router.delete('/licenses/:id', authorize('ASSIGN_LICENSES'), revokeLicense);
+
+// IP ban
+router.get('/bans/ips', authorize('BAN_IP'), getBannedIPs);
+router.post('/bans/ips', authorize('BAN_IP'), banIP);
+router.delete('/bans/ips/:id', authorize('BAN_IP'), unbanIP);
+
+export default router;
+```
+
+Mount in `index.ts`:
+
+```typescript
+import userRoutes from './routes/user.routes';
+app.use('/api/v1/admin/users', userRoutes);
+```
+
+### Step 8.4: Update Permissions Constants
+
+Add the missing permissions in `server/src/constants/permissions.ts`:
+
+```typescript
+export const PERMISSIONS = {
+  // ... existing
+  MANAGE_USERS: 'MANAGE_USERS',
+  ASSIGN_LICENSES: 'ASSIGN_LICENSES',
+  BAN_IP: 'BAN_IP',
+} as const;
+```
+
+Update seed to include these permissions in the UserManager role.
+
+### Step 8.5: Frontend – User Manager Dashboard
+
+We'll create a similar structure to Data Manager but for users.
+
+Create `client/src/pages/admin/UserDashboard.tsx` (list users):
+
+```tsx
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import api from '../../services/api';
+import toast from 'react-hot-toast';
+import { format } from 'date-fns';
+
+interface User {
+  id: string;
+  email: string;
+  fullName: string | null;
+  role: { id: string; name: string } | null;
+  isActive: boolean;
+  emailVerified: boolean;
+  createdAt: string;
+  _count: { purchases: number; licenses: number };
+}
+
+export default function UserDashboard() {
+  const [users, setUsers] = useState<User[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState('');
+  const [roleFilter, setRoleFilter] = useState('');
+  const [activeFilter, setActiveFilter] = useState('');
+
+  const fetchUsers = async () => {
+    setLoading(true);
+    try {
+      const params: any = { page, limit: 20, search };
+      if (roleFilter) params.role = roleFilter;
+      if (activeFilter) params.isActive = activeFilter === 'active';
+
+      const res = await api.get('/admin/users', { params });
+      setUsers(res.data.data);
+      setTotalPages(res.data.pagination.pages);
+    } catch (error) {
+      toast.error('Failed to load users');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, [page, search, roleFilter, activeFilter]);
+
+  const handleToggleActive = async (userId: string, currentActive: boolean) => {
+    try {
+      const endpoint = currentActive ? '/admin/users/' + userId + '/deactivate' : '/admin/users/' + userId + '/activate';
+      await api.post(endpoint);
+      toast.success(`User ${currentActive ? 'deactivated' : 'activated'}`);
+      fetchUsers();
+    } catch (error) {
+      toast.error('Action failed');
+    }
+  };
+
+  return (
+    <div>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-[#723E31]">User Management</h1>
+        <Link
+          to="/admin/users/new"
+          className="bg-[#A67564] text-white px-4 py-2 rounded hover:bg-[#723E31]"
+        >
+          + New User
+        </Link>
+      </div>
+
+      {/* Filters */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+        <input
+          type="text"
+          placeholder="Search by email or name"
+          value={search}
+          onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+          className="border rounded px-3 py-2"
+        />
+        <select
+          value={roleFilter}
+          onChange={(e) => { setRoleFilter(e.target.value); setPage(1); }}
+          className="border rounded px-3 py-2"
+        >
+          <option value="">All Roles</option>
+          <option value="Developer">Developer</option>
+          <option value="FinancialManager">Financial Manager</option>
+          <option value="DataManager">Data Manager</option>
+          <option value="UserManager">User Manager</option>
+          <option value="CMSManager">CMS Manager</option>
+        </select>
+        <select
+          value={activeFilter}
+          onChange={(e) => { setActiveFilter(e.target.value); setPage(1); }}
+          className="border rounded px-3 py-2"
+        >
+          <option value="">All Status</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+
+      {loading && <div>Loading...</div>}
+
+      <div className="bg-white shadow overflow-hidden sm:rounded-md">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">User</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Role</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Purchases</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Licenses</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Joined</th>
+              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {users.map(user => (
+              <tr key={user.id}>
+                <td className="px-6 py-4">
+                  <div className="font-medium">{user.fullName || 'No name'}</div>
+                  <div className="text-sm text-gray-500">{user.email}</div>
+                </td>
+                <td className="px-6 py-4">{user.role?.name || 'No role'}</td>
+                <td className="px-6 py-4">
+                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                    user.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                  }`}>
+                    {user.isActive ? 'Active' : 'Inactive'}
+                  </span>
+                  {!user.emailVerified && <span className="ml-2 text-yellow-600 text-xs">(unverified)</span>}
+                </td>
+                <td className="px-6 py-4">{user._count.purchases}</td>
+                <td className="px-6 py-4">{user._count.licenses}</td>
+                <td className="px-6 py-4">{format(new Date(user.createdAt), 'yyyy-MM-dd')}</td>
+                <td className="px-6 py-4 text-right space-x-2">
+                  <Link to={`/admin/users/${user.id}`} className="text-[#A67564] hover:text-[#723E31]">
+                    View
+                  </Link>
+                  <button
+                    onClick={() => handleToggleActive(user.id, user.isActive)}
+                    className={`text-sm ${user.isActive ? 'text-red-600' : 'text-green-600'}`}
+                  >
+                    {user.isActive ? 'Deactivate' : 'Activate'}
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-4 space-x-2">
+          <button
+            onClick={() => setPage(p => Math.max(1, p-1))}
+            disabled={page === 1}
+            className="px-3 py-1 border rounded disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <span className="px-3 py-1">Page {page} of {totalPages}</span>
+          <button
+            onClick={() => setPage(p => Math.min(totalPages, p+1))}
+            disabled={page === totalPages}
+            className="px-3 py-1 border rounded disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+Create `client/src/pages/admin/UserDetailPage.tsx` (single user view with tabs):
+
+```tsx
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import api from '../../services/api';
+import toast from 'react-hot-toast';
+import { format } from 'date-fns';
+
+interface User {
+  id: string;
+  email: string;
+  fullName: string | null;
+  role: { id: string; name: string } | null;
+  isActive: boolean;
+  emailVerified: boolean;
+  createdAt: string;
+  purchases: Array<{
+    id: string;
+    amountINR: number;
+    status: string;
+    purchasedAt: string;
+    timeSeries: { name: string };
+  }>;
+  licenses: Array<{
+    id: string;
+    licenseType: { name: string; permissions: string[] };
+    validFrom: string;
+    validTo: string | null;
+    isActive: boolean;
+  }>;
+  downloads: Array<{
+    id: string;
+    format: string;
+    downloadedAt: string;
+    timeSeries: { name: string };
+  }>;
+}
+
+export default function UserDetailPage() {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<'profile' | 'licenses' | 'purchases' | 'downloads'>('profile');
+
+  useEffect(() => {
+    if (!id) return;
+    api.get(`/admin/users/${id}`)
+      .then(res => setUser(res.data.data))
+      .catch(() => toast.error('Failed to load user'))
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  if (loading) return <div>Loading...</div>;
+  if (!user) return <div>User not found</div>;
+
+  return (
+    <div>
+      <div className="mb-4">
+        <button onClick={() => navigate('/admin/users')} className="text-[#723E31] underline">← Back to Users</button>
+      </div>
+
+      <div className="bg-white p-6 rounded shadow mb-6">
+        <h1 className="text-2xl font-bold text-[#723E31] mb-4">{user.fullName || 'User'}</h1>
+        <p>Email: {user.email}</p>
+        <p>Role: {user.role?.name || 'None'}</p>
+        <p>Status: {user.isActive ? 'Active' : 'Inactive'} {!user.emailVerified && '(Email unverified)'}</p>
+        <p>Joined: {format(new Date(user.createdAt), 'PPP')}</p>
+      </div>
+
+      {/* Tabs */}
+      <div className="border-b border-gray-200 mb-4">
+        <nav className="-mb-px flex space-x-8">
+          {(['profile', 'licenses', 'purchases', 'downloads'] as const).map(tab => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`py-2 px-1 border-b-2 font-medium text-sm capitalize ${
+                activeTab === tab
+                  ? 'border-[#723E31] text-[#723E31]'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </nav>
+      </div>
+
+      <div className="bg-white p-6 rounded shadow">
+        {activeTab === 'profile' && (
+          <div>
+            <h2 className="text-lg font-semibold mb-4">Profile Details</h2>
+            {/* Add edit profile form later */}
+            <p>More info can be added here.</p>
+          </div>
+        )}
+
+        {activeTab === 'licenses' && (
+          <div>
+            <h2 className="text-lg font-semibold mb-4">Licenses</h2>
+            {user.licenses.length === 0 ? (
+              <p>No licenses assigned.</p>
+            ) : (
+              <ul className="divide-y">
+                {user.licenses.map(l => (
+                  <li key={l.id} className="py-2">
+                    <p><strong>{l.licenseType.name}</strong></p>
+                    <p className="text-sm">Valid: {format(new Date(l.validFrom), 'yyyy-MM-dd')} – {l.validTo ? format(new Date(l.validTo), 'yyyy-MM-dd') : 'No expiry'}</p>
+                    <p className="text-sm">Status: {l.isActive ? 'Active' : 'Revoked'}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <button className="mt-4 bg-[#A67564] text-white px-3 py-1 rounded text-sm hover:bg-[#723E31]">
+              Assign License
+            </button>
+          </div>
+        )}
+
+        {activeTab === 'purchases' && (
+          <div>
+            <h2 className="text-lg font-semibold mb-4">Purchase History</h2>
+            {user.purchases.length === 0 ? (
+              <p>No purchases yet.</p>
+            ) : (
+              <table className="min-w-full">
+                <thead>
+                  <tr><th>Date</th><th>Dataset</th><th>Amount</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                  {user.purchases.map(p => (
+                    <tr key={p.id}>
+                      <td>{format(new Date(p.purchasedAt), 'yyyy-MM-dd')}</td>
+                      <td>{p.timeSeries.name}</td>
+                      <td>₹{p.amountINR}</td>
+                      <td>{p.status}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        )}
+
+        {activeTab === 'downloads' && (
+          <div>
+            <h2 className="text-lg font-semibold mb-4">Download Logs</h2>
+            {user.downloads.length === 0 ? (
+              <p>No downloads recorded.</p>
+            ) : (
+              <ul className="divide-y">
+                {user.downloads.map(d => (
+                  <li key={d.id} className="py-2">
+                    {format(new Date(d.downloadedAt), 'yyyy-MM-dd HH:mm')} – {d.timeSeries.name} ({d.format})
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+```
+
+Create `client/src/pages/admin/IPBanPage.tsx` (IP ban management):
+
+```tsx
+import React, { useEffect, useState } from 'react';
+import api from '../../services/api';
+import toast from 'react-hot-toast';
+import { TrashIcon } from '@heroicons/react/24/outline';
+
+interface BannedIP {
+  id: string;
+  ipAddress: string;
+  reason: string | null;
+  bannedAt: string;
+}
+
+export default function IPBanPage() {
+  const [bannedIPs, setBannedIPs] = useState<BannedIP[]>([]);
+  const [newIP, setNewIP] = useState('');
+  const [reason, setReason] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const fetchBans = async () => {
+    try {
+      const res = await api.get('/admin/users/bans/ips');
+      setBannedIPs(res.data.data);
+    } catch (error) {
+      toast.error('Failed to load banned IPs');
+    }
+  };
+
+  useEffect(() => {
+    fetchBans();
+  }, []);
+
+  const handleBan = async () => {
+    if (!newIP) return;
+    try {
+      await api.post('/admin/users/bans/ips', { ipAddress: newIP, reason });
+      toast.success('IP banned');
+      setNewIP('');
+      setReason('');
+      fetchBans();
+    } catch (error) {
+      toast.error('Failed to ban IP');
+    }
+  };
+
+  const handleUnban = async (id: string) => {
+    try {
+      await api.delete(`/admin/users/bans/ips/${id}`);
+      toast.success('IP unbanned');
+      fetchBans();
+    } catch (error) {
+      toast.error('Failed to unban');
+    }
+  };
+
+  return (
+    <div>
+      <h2 className="text-xl font-semibold mb-4">IP Ban Management</h2>
+
+      <div className="bg-white p-4 rounded shadow mb-6">
+        <h3 className="font-medium mb-2">Ban a new IP</h3>
+        <div className="flex flex-col md:flex-row gap-2">
+          <input
+            type="text"
+            placeholder="IP Address"
+            value={newIP}
+            onChange={(e) => setNewIP(e.target.value)}
+            className="border rounded px-3 py-2 flex-1"
+          />
+          <input
+            type="text"
+            placeholder="Reason (optional)"
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+            className="border rounded px-3 py-2 flex-1"
+          />
+          <button
+            onClick={handleBan}
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+          >
+            Ban
+          </button>
+        </div>
+      </div>
+
+      <div className="bg-white shadow overflow-hidden sm:rounded-md">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">IP Address</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reason</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Banned At</th>
+              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Action</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {bannedIPs.map(ip => (
+              <tr key={ip.id}>
+                <td className="px-6 py-4 font-mono">{ip.ipAddress}</td>
+                <td className="px-6 py-4">{ip.reason || '-'}</td>
+                <td className="px-6 py-4">{new Date(ip.bannedAt).toLocaleString()}</td>
+                <td className="px-6 py-4 text-right">
+                  <button onClick={() => handleUnban(ip.id)} className="text-red-600 hover:text-red-800">
+                    <TrashIcon className="h-5 w-5" />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+```
+
+### Step 8.6: Add Routes to Admin Layout
+
+In `client/src/App.tsx`, add routes inside `AdminLayout`:
+
+```tsx
+<Route path="users" element={<UserDashboard />} />
+<Route path="users/:id" element={<UserDetailPage />} />
+<Route path="users/bans" element={<IPBanPage />} />
+```
+
+Also update the navigation in `AdminLayout.tsx` to include a dropdown or separate link for IP bans.
+
+We can add an "IP Bans" link inside the User Manager section or as a separate tab. For simplicity, we'll add it as a sub-route accessible from the User Dashboard (via a button). But for now, we'll just include it as a separate route that the user can navigate to manually, or we can add a tab in the User Manager UI. To keep it clean, we'll add a "Manage IP Bans" button on the User Dashboard that links to `/admin/users/bans`.
+
+In `UserDashboard.tsx`, add a button near the top:
+
+```tsx
+<Link to="/admin/users/bans" className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300">
+  Manage IP Bans
+</Link>
+```
+
+Place it next to "New User".
+
+### Step 8.7: Create User Form (Create/Edit) – optional, but we'll create a simple one.
+
+`client/src/pages/admin/UserForm.tsx`:
+
+```tsx
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
+import api from '../../services/api';
+import toast from 'react-hot-toast';
+
+interface FormData {
+  email: string;
+  password: string;
+  fullName: string;
+  roleId: string;
+  isActive: boolean;
+}
+
+export default function UserForm() {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [roles, setRoles] = useState<{ id: string; name: string }[]>([]);
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormData>();
+
+  useEffect(() => {
+    // Fetch roles
+    api.get('/admin/roles').then(res => setRoles(res.data.data)).catch(() => toast.error('Failed to load roles'));
+    if (id) {
+      // Fetch user data for editing
+      setLoading(true);
+      api.get(`/admin/users/${id}`)
+        .then(res => {
+          const user = res.data.data;
+          setValue('email', user.email);
+          setValue('fullName', user.fullName || '');
+          setValue('roleId', user.role?.id || '');
+          setValue('isActive', user.isActive);
+        })
+        .catch(() => toast.error('Failed to load user'))
+        .finally(() => setLoading(false));
+    }
+  }, [id, setValue]);
+
+  const onSubmit = async (data: FormData) => {
+    try {
+      if (id) {
+        await api.put(`/admin/users/${id}`, data);
+        toast.success('User updated');
+      } else {
+        await api.post('/admin/users', data);
+        toast.success('User created');
+      }
+      navigate('/admin/users');
+    } catch (error: any) {
+      toast.error(error.response?.data?.error || 'Operation failed');
+    }
+  };
+
+  if (loading) return <div>Loading...</div>;
+
+  return (
+    <div className="max-w-2xl mx-auto bg-white p-6 rounded shadow">
+      <h1 className="text-2xl font-bold text-[#723E31] mb-6">{id ? 'Edit User' : 'Create New User'}</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium mb-1">Email *</label>
+          <input
+            {...register('email', { required: 'Email required' })}
+            type="email"
+            className="w-full border rounded px-3 py-2"
+          />
+          {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+        </div>
+        {!id && (
+          <div>
+            <label className="block text-sm font-medium mb-1">Password *</label>
+            <input
+              {...register('password', { required: !id && 'Password required' })}
+              type="password"
+              className="w-full border rounded px-3 py-2"
+            />
+            {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+          </div>
+        )}
+        <div>
+          <label className="block text-sm font-medium mb-1">Full Name</label>
+          <input
+            {...register('fullName')}
+            className="w-full border rounded px-3 py-2"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1">Role</label>
+          <select {...register('roleId')} className="w-full border rounded px-3 py-2">
+            <option value="">No role</option>
+            {roles.map(role => (
+              <option key={role.id} value={role.id}>{role.name}</option>
+            ))}
+          </select>
+        </div>
+        <div className="flex items-center">
+          <input {...register('isActive')} type="checkbox" id="isActive" className="mr-2" />
+          <label htmlFor="isActive">Active</label>
+        </div>
+        <div className="flex justify-end space-x-3">
+          <button type="button" onClick={() => navigate('/admin/users')} className="px-4 py-2 border rounded">Cancel</button>
+          <button type="submit" className="px-4 py-2 bg-[#A67564] text-white rounded">{id ? 'Update' : 'Create'}</button>
+        </div>
+      </form>
+    </div>
+  );
+}
+```
+
+Add route in `App.tsx`:
+
+```tsx
+<Route path="users/new" element={<UserForm />} />
+<Route path="users/:id/edit" element={<UserForm />} />
+```
+
+And add edit button in UserDetailPage linking to `/admin/users/${user.id}/edit`.
+
+### Step 8.8: Update Permissions in Seed
+
+Ensure the UserManager role has `MANAGE_USERS`, `ASSIGN_LICENSES`, `BAN_IP` permissions. Update seed if needed.
+
+### Step 8.9: Testing
+
+- Log in as User Manager (or Developer).
+- Navigate to `/admin/users`. See list.
+- Search, filter, toggle active.
+- Click view to see details with tabs.
+- Create a new user.
+- Assign license (we'll implement the assign license modal later – for now just API test).
+- Ban an IP.

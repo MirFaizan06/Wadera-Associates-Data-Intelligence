@@ -1,0 +1,617 @@
+## Phase 2: Authentication & User Management
+
+Note: The code written in this Phase file is only dummy and placeholder. You write your own logic, and especially styles and structure. we are using custom css, not tailwind.
+
+We will build the complete authentication system including:
+- User registration with email, password, and email verification via OTP.
+- Password‑based login.
+- OTP‑based login (passwordless).
+- JWT issuance and authentication middleware.
+- Session tracking (for device limit enforcement later).
+- Email sending (Nodemailer) for OTPs and welcome emails.
+
+Follow each step carefully. All paths are relative to the project root unless specified.
+
+---
+
+### Step 2.1: Update Prisma Schema
+
+Add the `emailVerified` field to `User`, create an `Otp` model, and extend `Session` (if not already present). Replace your `prisma/schema.prisma` with the updated version below (additions highlighted with comments):
+
+```prisma
+// This is your Prisma schema file.
+// Learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String    @id @default(cuid())
+  email          String    @unique
+  passwordHash   String?   // null for OTP‑only users (but we'll require for now)
+  fullName       String?
+  emailVerified  Boolean   @default(false)   // NEW
+  roleId         String?
+  role           Role?     @relation(fields: [roleId], references: [id])
+  licenses       LicenseAssignment[]
+  purchases      Purchase[]
+  downloads      DownloadLog[]
+  sessions       Session[]
+  otps           Otp[]                        // NEW
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime?
+}
+
+model Session {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  token         String   @unique
+  deviceInfo    Json?    // browser, OS, IP (optional)
+  lastActive    DateTime @default(now())
+  expiresAt     DateTime
+  createdAt     DateTime @default(now())
+}
+
+model Otp {                                   // NEW
+  id        String   @id @default(cuid())
+  email     String
+  code      String
+  type      String   // "REGISTRATION", "LOGIN"
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+// Role, LicenseType, LicenseAssignment, TimeSeries, DataPoint, Purchase, DownloadLog, etc.
+// ... keep all previously defined models unchanged
+```
+
+> **Note**: If you already have a `Session` model from the initial schema, just add the `Otp` model and `emailVerified` field. If not, include the `Session` model as shown.
+
+### Step 2.2: Generate and Apply Migration
+
+```bash
+cd server
+npx prisma migrate dev --name add_auth_otp
+```
+
+This will create a new migration and apply it to your database. If you get a warning about data loss, it's fine (new fields are nullable or have defaults).
+
+### Step 2.3: Install Nodemailer Types (if missing)
+
+```bash
+npm install -D @types/nodemailer
+```
+
+### Step 2.4: Create Email Service
+
+Create `server/src/services/email.service.ts`:
+
+```typescript
+import nodemailer from 'nodemailer';
+import { google } from 'googleapis'; // optional, only if using OAuth2
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+// Create transporter using SMTP (or other configured method)
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT) || 587,
+  secure: false, // true for 465
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
+
+export const sendEmail = async (
+  to: string,
+  subject: string,
+  html: string
+): Promise<void> => {
+  const mailOptions = {
+    from: process.env.EMAIL_FROM || '"Data Platform" <noreply@example.com>',
+    to,
+    subject,
+    html,
+  };
+
+  await transporter.sendMail(mailOptions);
+};
+
+export const sendOtpEmail = async (email: string, otp: string, type: string): Promise<void> => {
+  const subject = type === 'REGISTRATION' ? 'Verify your email' : 'Your login OTP';
+  const html = `
+    <h1>Your OTP Code</h1>
+    <p>Use the following OTP to ${type === 'REGISTRATION' ? 'complete your registration' : 'log in'}:</p>
+    <h2 style="color: #723E31;">${otp}</h2>
+    <p>This code is valid for 5 minutes.</p>
+    <p>If you didn't request this, please ignore this email.</p>
+  `;
+  await sendEmail(email, subject, html);
+};
+```
+
+### Step 2.5: Create OTP Utility Functions
+
+Create `server/src/utils/otp.util.ts`:
+
+```typescript
+import crypto from 'crypto';
+
+export const generateOtp = (length: number = 6): string => {
+  // Generate a numeric OTP (e.g., 6 digits)
+  const min = 10 ** (length - 1);
+  const max = 10 ** length - 1;
+  const otp = crypto.randomInt(min, max).toString();
+  return otp;
+};
+
+export const isOtpExpired = (expiresAt: Date): boolean => {
+  return new Date() > expiresAt;
+};
+```
+
+### Step 2.6: Create Authentication Controller
+
+Create `server/src/controllers/auth.controller.ts`:
+
+```typescript
+import { Request, Response } from 'express';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { PrismaClient } from '@prisma/client';
+import { generateOtp } from '../utils/otp.util';
+import { sendOtpEmail } from '../services/email.service';
+import { v4 as uuidv4 } from 'uuid';
+
+const prisma = new PrismaClient();
+
+// Helper to generate JWT and create session
+const generateTokenAndSession = async (userId: string, deviceInfo?: any) => {
+  const token = jwt.sign(
+    { id: userId },
+    process.env.JWT_SECRET!,
+    { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+  );
+
+  // Calculate expiry date (same as JWT expiry)
+  const expiresInMs = jwt.decode(token) as any; // quick way, but better to parse
+  const expiresAt = new Date(expiresInMs.exp * 1000);
+
+  // Create session record
+  await prisma.session.create({
+    data: {
+      userId,
+      token,
+      deviceInfo: deviceInfo || {},
+      expiresAt,
+    },
+  });
+
+  return token;
+};
+
+// 1. Registration (step 1: create user unverified, send OTP)
+export const register = async (req: Request, res: Response) => {
+  try {
+    const { email, password, fullName } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ success: false, error: 'Email and password required' });
+    }
+
+    // Check if user exists
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({ success: false, error: 'User already exists' });
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create user (unverified)
+    const user = await prisma.user.create({
+      data: {
+        email,
+        passwordHash: hashedPassword,
+        fullName,
+        emailVerified: false,
+      },
+    });
+
+    // Generate OTP
+    const otp = generateOtp();
+    const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
+
+    // Store OTP in database
+    await prisma.otp.create({
+      data: {
+        email,
+        code: otp,
+        type: 'REGISTRATION',
+        expiresAt,
+      },
+    });
+
+    // Send OTP email
+    await sendOtpEmail(email, otp, 'REGISTRATION');
+
+    res.status(201).json({
+      success: true,
+      message: 'User created. Please verify your email with the OTP sent.',
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// 2. Verify OTP (for registration or login)
+export const verifyOtp = async (req: Request, res: Response) => {
+  try {
+    const { email, otp, type } = req.body; // type can be 'REGISTRATION' or 'LOGIN'
+
+    if (!email || !otp || !type) {
+      return res.status(400).json({ success: false, error: 'Email, OTP and type required' });
+    }
+
+    // Find the most recent unused OTP for this email and type
+    const otpRecord = await prisma.otp.findFirst({
+      where: {
+        email,
+        type,
+        used: false,
+        expiresAt: { gt: new Date() },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    if (!otpRecord || otpRecord.code !== otp) {
+      return res.status(400).json({ success: false, error: 'Invalid or expired OTP' });
+    }
+
+    // Mark OTP as used
+    await prisma.otp.update({
+      where: { id: otpRecord.id },
+      data: { used: true },
+    });
+
+    if (type === 'REGISTRATION') {
+      // Mark user as verified
+      const user = await prisma.user.update({
+        where: { email },
+        data: { emailVerified: true },
+      });
+
+      // (Optional) Auto-login after verification
+      const token = await generateTokenAndSession(user.id, req.headers['user-agent']);
+
+      res.json({
+        success: true,
+        message: 'Email verified successfully',
+        token,
+        user: { id: user.id, email: user.email, fullName: user.fullName },
+      });
+    } else if (type === 'LOGIN') {
+      // Login with OTP: find user
+      const user = await prisma.user.findUnique({ where: { email } });
+      if (!user) {
+        return res.status(404).json({ success: false, error: 'User not found' });
+      }
+      if (!user.emailVerified) {
+        return res.status(403).json({ success: false, error: 'Email not verified' });
+      }
+
+      const token = await generateTokenAndSession(user.id, req.headers['user-agent']);
+
+      res.json({
+        success: true,
+        message: 'Login successful',
+        token,
+        user: { id: user.id, email: user.email, fullName: user.fullName },
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// 3. Request OTP for login
+export const requestLoginOtp = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ success: false, error: 'Email required' });
+    }
+
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      // Don't reveal that user doesn't exist
+      return res.status(200).json({ success: true, message: 'If the email exists, an OTP has been sent.' });
+    }
+    if (!user.emailVerified) {
+      return res.status(403).json({ success: false, error: 'Email not verified. Please register first.' });
+    }
+
+    // Generate OTP
+    const otp = generateOtp();
+    const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
+
+    await prisma.otp.create({
+      data: {
+        email,
+        code: otp,
+        type: 'LOGIN',
+        expiresAt,
+      },
+    });
+
+    await sendOtpEmail(email, otp, 'LOGIN');
+
+    res.json({ success: true, message: 'OTP sent to your email' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// 4. Login with password
+export const loginWithPassword = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ success: false, error: 'Email and password required' });
+    }
+
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      return res.status(401).json({ success: false, error: 'Invalid credentials' });
+    }
+
+    if (!user.passwordHash) {
+      return res.status(401).json({ success: false, error: 'Invalid credentials' });
+    }
+
+    const valid = await bcrypt.compare(password, user.passwordHash);
+    if (!valid) {
+      return res.status(401).json({ success: false, error: 'Invalid credentials' });
+    }
+
+    if (!user.emailVerified) {
+      return res.status(403).json({ success: false, error: 'Email not verified' });
+    }
+
+    const token = await generateTokenAndSession(user.id, req.headers['user-agent']);
+
+    res.json({
+      success: true,
+      token,
+      user: { id: user.id, email: user.email, fullName: user.fullName, roleId: user.roleId },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// 5. Logout (invalidate session)
+export const logout = async (req: Request, res: Response) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (token) {
+      await prisma.session.deleteMany({ where: { token } });
+    }
+    res.json({ success: true, message: 'Logged out' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// 6. Get current user (protected)
+export const getMe = async (req: Request, res: Response) => {
+  // req.user will be set by auth middleware
+  const user = (req as any).user;
+  res.json({ success: true, data: user });
+};
+```
+
+### Step 2.7: Create Authentication Middleware
+
+Create `server/src/middleware/auth.middleware.ts`:
+
+```typescript
+import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+interface JwtPayload {
+  id: string;
+}
+
+export const protect = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    let token: string | undefined;
+
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+      token = req.headers.authorization.split(' ')[1];
+    }
+
+    if (!token) {
+      return res.status(401).json({ success: false, error: 'Not authorized, no token' });
+    }
+
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
+
+    // Check if session exists and is valid
+    const session = await prisma.session.findUnique({
+      where: { token },
+      include: { user: true },
+    });
+
+    if (!session || session.expiresAt < new Date()) {
+      // Clean up expired session
+      if (session) await prisma.session.delete({ where: { token } });
+      return res.status(401).json({ success: false, error: 'Session expired or invalid' });
+    }
+
+    // Update last active
+    await prisma.session.update({
+      where: { token },
+      data: { lastActive: new Date() },
+    });
+
+    // Attach user to request
+    (req as any).user = {
+      id: session.user.id,
+      email: session.user.email,
+      fullName: session.user.fullName,
+      roleId: session.user.roleId,
+    };
+
+    next();
+  } catch (error) {
+    console.error(error);
+    return res.status(401).json({ success: false, error: 'Not authorized' });
+  }
+};
+
+// Optional: role-based middleware (will be expanded later)
+export const authorize = (...roles: string[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const user = (req as any).user;
+    // This is simplified; we'll later check actual permissions from role
+    // For now, just check if user has a role that matches one of the passed role names
+    // We'll need to fetch the role with permissions from DB
+    next();
+  };
+};
+```
+
+### Step 2.8: Create Auth Routes
+
+Create `server/src/routes/auth.routes.ts`:
+
+```typescript
+import { Router } from 'express';
+import {
+  register,
+  verifyOtp,
+  requestLoginOtp,
+  loginWithPassword,
+  logout,
+  getMe,
+} from '../controllers/auth.controller';
+import { protect } from '../middleware/auth.middleware';
+
+const router = Router();
+
+// Public routes
+router.post('/register', register);
+router.post('/verify-otp', verifyOtp);
+router.post('/request-otp', requestLoginOtp);
+router.post('/login', loginWithPassword);
+router.post('/logout', protect, logout); // logout requires authentication
+router.get('/me', protect, getMe);
+
+export default router;
+```
+
+### Step 2.9: Mount Auth Routes in Main App
+
+Update `server/src/index.ts` to include the auth router:
+
+```typescript
+import authRoutes from './routes/auth.routes';
+
+// ... after app.use(express.json());
+
+app.use('/api/v1/auth', authRoutes);
+```
+
+### Step 2.10: Install UUID (if not already)
+
+```bash
+cd server
+npm install uuid
+npm install -D @types/uuid
+```
+
+### Step 2.11: Test the Endpoints
+
+You can use a tool like Postman or curl to test:
+
+1. **Register**: POST `http://localhost:5000/api/v1/auth/register`
+   ```json
+   { "email": "test@example.com", "password": "Test1234", "fullName": "Test User" }
+   ```
+   Should return success and send OTP.
+
+2. **Verify OTP**: POST `http://localhost:5000/api/v1/auth/verify-otp`
+   ```json
+   { "email": "test@example.com", "otp": "123456", "type": "REGISTRATION" }
+   ```
+   Replace OTP with the one from email (check console if no email server configured – you may log it for testing). Returns token.
+
+3. **Login with password**: POST `http://localhost:5000/api/v1/auth/login`
+   ```json
+   { "email": "test@example.com", "password": "Test1234" }
+   ```
+
+4. **Request login OTP**: POST `http://localhost:5000/api/v1/auth/request-otp`
+   ```json
+   { "email": "test@example.com" }
+   ```
+
+5. **Verify login OTP**: Same verify endpoint with type "LOGIN".
+
+6. **Get current user**: GET `http://localhost:5000/api/v1/auth/me` with `Authorization: Bearer <token>`
+
+### Step 2.12: Configure Email for Development (Optional)
+
+If you don't have SMTP credentials, you can use a test account from Ethereal (https://ethereal.email). Create a test account and update `.env` with its SMTP settings. The emails will be captured and viewable via Ethereal's web interface.
+
+Alternatively, for development, you can log the OTP to console instead of sending email. Modify `email.service.ts` temporarily:
+
+```typescript
+// In sendOtpEmail, if NODE_ENV === 'development', just console.log the OTP
+if (process.env.NODE_ENV === 'development') {
+  console.log(`[DEV] OTP for ${email}: ${otp}`);
+  return;
+}
+// else actually send email
+```
+
+### Step 2.13: Commit Phase 2
+
+```bash
+git add .
+git commit -m "Phase 2: Authentication with OTP and sessions"
+```
+
+---
+
+**Phase 2 complete.** You now have a working authentication system with:
+- Email/password registration (user unverified)
+- Email verification via OTP
+- Password‑based login
+- OTP‑based login (passwordless)
+- Session tracking (JWT stored in sessions table)
+- Logout (session deletion)
+- Protected route (`/me`) returning current user

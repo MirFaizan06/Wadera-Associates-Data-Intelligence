@@ -1,0 +1,298 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  passwordHash    String?
+  fullName        String?
+  phone           String?
+  profilePicture  String?
+  roleId          String?
+  role            Role?     @relation(fields: [roleId], references: [id])
+  isEmailVerified Boolean   @default(false)
+  isActive        Boolean   @default(true)
+  licenses        LicenseAssignment[]
+  purchases       Purchase[]
+  downloads       DownloadLog[]
+  sessions        Session[]
+  otpCodes        OtpCode[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+
+  @@index([email])
+  @@index([roleId])
+  @@index([isActive])
+}
+
+model Session {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  token      String   @unique
+  deviceInfo Json?
+  ipAddress  String?
+  lastActive DateTime @default(now())
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+  @@index([token])
+  @@index([expiresAt])
+}
+
+model OtpCode {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  email     String
+  code      String
+  type      String   // "REGISTER", "LOGIN", "RESET_PASSWORD"
+  isUsed    Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([email, type])
+  @@index([expiresAt])
+}
+
+model Role {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  permissions Json
+  users       User[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model LicenseType {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  permissions Json     // ["VIEW", "DOWNLOAD", "API_ACCESS"]
+  maxDevices  Int?
+  validDays   Int?
+  assignments LicenseAssignment[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model LicenseAssignment {
+  id            String      @id @default(cuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id])
+  licenseTypeId String
+  licenseType   LicenseType @relation(fields: [licenseTypeId], references: [id])
+  validFrom     DateTime
+  validTo       DateTime?
+  isActive      Boolean     @default(true)
+  revokedAt     DateTime?
+  revokedReason String?
+  datasetIds    Json?
+  grantedById   String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([userId])
+  @@index([licenseTypeId])
+  @@index([isActive])
+}
+
+model TimeSeries {
+  id          String      @id @default(cuid())
+  slug        String      @unique
+  name        String
+  description String?     @db.Text
+  defaultUnit String
+  priceINR    Float
+  isVisible   Boolean     @default(true)
+  isFeatured  Boolean     @default(false)
+  category    String?
+  tags        Json?
+  source      String?
+  region      String?
+  metadata    Json?
+  coverImage  String?
+  createdById String
+  dataPoints  DataPoint[]
+  purchases   Purchase[]
+  downloads   DownloadLog[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([slug])
+  @@index([isVisible])
+  @@index([category])
+}
+
+model DataPoint {
+  id           String     @id @default(cuid())
+  timeSeriesId String
+  timeSeries   TimeSeries @relation(fields: [timeSeriesId], references: [id])
+  date         DateTime
+  value        Float
+  unitOverride String?
+  note         String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([timeSeriesId, date])
+  @@index([timeSeriesId])
+  @@index([date])
+}
+
+model Purchase {
+  id                String     @id @default(cuid())
+  userId            String?
+  user              User?      @relation(fields: [userId], references: [id])
+  guestEmail        String?
+  timeSeriesId      String
+  timeSeries        TimeSeries @relation(fields: [timeSeriesId], references: [id])
+  amountINR         Float
+  currency          String     @default("INR")
+  amountDisplay     Float?
+  razorpayOrderId   String?    @unique
+  razorpayPaymentId String?    @unique
+  razorpaySignature String?
+  status            String     // "PENDING", "SUCCESS", "FAILED", "REFUNDED"
+  downloadToken     String?    @unique
+  downloadTokenExpiry DateTime?
+  purchasedAt       DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  @@index([userId])
+  @@index([guestEmail])
+  @@index([status])
+  @@index([timeSeriesId])
+}
+
+model DownloadLog {
+  id           String     @id @default(cuid())
+  userId       String?
+  user         User?      @relation(fields: [userId], references: [id])
+  guestEmail   String?
+  timeSeriesId String
+  timeSeries   TimeSeries @relation(fields: [timeSeriesId], references: [id])
+  format       String     // "XLSX", "CSV", "PDF", "PNG"
+  ipAddress    String?
+  downloadedAt DateTime   @default(now())
+
+  @@index([userId])
+  @@index([timeSeriesId])
+  @@index([downloadedAt])
+}
+
+model EmailLog {
+  id        String   @id @default(cuid())
+  type      String
+  recipient String
+  subject   String
+  status    String   // "SENT", "FAILED"
+  error     String?  @db.Text
+  sentAt    DateTime @default(now())
+
+  @@index([recipient])
+  @@index([type])
+  @@index([sentAt])
+}
+
+model ContactMessage {
+  id         String   @id @default(cuid())
+  name       String
+  email      String
+  subject    String?
+  message    String   @db.Text
+  status     String   @default("NEW") // "NEW", "IN_PROGRESS", "RESOLVED"
+  adminNotes String?  @db.Text
+  ipAddress  String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model ExchangeRate {
+  id           String   @id @default(cuid())
+  fromCurrency String
+  toCurrency   String
+  rate         Float
+  updatedAt    DateTime @updatedAt
+
+  @@unique([fromCurrency, toCurrency])
+  @@index([fromCurrency])
+}
+
+model UnitConversion {
+  id        String   @id @default(cuid())
+  fromUnit  String
+  toUnit    String
+  factor    Float
+  label     String?
+  updatedAt DateTime @updatedAt
+
+  @@unique([fromUnit, toUnit])
+}
+
+model BannedIP {
+  id        String   @id @default(cuid())
+  ipAddress String   @unique
+  reason    String?
+  bannedBy  String?
+  createdAt DateTime @default(now())
+
+  @@index([ipAddress])
+}
+
+model EmailTemplate {
+  id        String   @id @default(cuid())
+  type      String   @unique // "OTP", "WELCOME", "ORDER_CONFIRMATION", etc.
+  subject   String
+  htmlBody  String   @db.LongText
+  isActive  Boolean  @default(true)
+  updatedBy String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model StaticPage {
+  id        String   @id @default(cuid())
+  slug      String   @unique // "about", "privacy-policy", "terms", "contact"
+  title     String
+  content   String   @db.LongText
+  metaTitle String?
+  metaDesc  String?
+  updatedBy String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FreeResource {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  summary     String?  @db.Text
+  type        String   // "ARTICLE" | "PDF"
+  content     String?  @db.LongText // Markdown for ARTICLE type
+  pdfUrl      String?  // URL or path for PDF type
+  category    String?
+  tags        Json?
+  author      String?
+  coverImage  String?
+  isPublished Boolean  @default(false)
+  createdById String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([slug])
+  @@index([isPublished])
+  @@index([type])
+  @@index([category])
+}

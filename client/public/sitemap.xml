@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- Home -->
+  <url>
+    <loc>https://wa-data-intel.netlify.app/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <lastmod>2026-03-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en"       href="https://wa-data-intel.netlify.app/"/>
+    <xhtml:link rel="alternate" hreflang="zh"       href="https://wa-data-intel.netlify.app/"/>
+    <xhtml:link rel="alternate" hreflang="es"       href="https://wa-data-intel.netlify.app/"/>
+    <xhtml:link rel="alternate" hreflang="de"       href="https://wa-data-intel.netlify.app/"/>
+    <xhtml:link rel="alternate" hreflang="fr"       href="https://wa-data-intel.netlify.app/"/>
+    <xhtml:link rel="alternate" hreflang="pt"       href="https://wa-data-intel.netlify.app/"/>
+    <xhtml:link rel="alternate" hreflang="ru"       href="https://wa-data-intel.netlify.app/"/>
+    <xhtml:link rel="alternate" hreflang="ja"       href="https://wa-data-intel.netlify.app/"/>
+    <xhtml:link rel="alternate" hreflang="ar"       href="https://wa-data-intel.netlify.app/"/>
+    <xhtml:link rel="alternate" hreflang="hi"       href="https://wa-data-intel.netlify.app/"/>
+    <xhtml:link rel="alternate" hreflang="ko"       href="https://wa-data-intel.netlify.app/"/>
+    <xhtml:link rel="alternate" hreflang="id"       href="https://wa-data-intel.netlify.app/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://wa-data-intel.netlify.app/"/>
+  </url>
+
+  <!-- Datasets catalog -->
+  <url>
+    <loc>https://wa-data-intel.netlify.app/datasets</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <lastmod>2026-03-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en"       href="https://wa-data-intel.netlify.app/datasets"/>
+    <xhtml:link rel="alternate" hreflang="zh"       href="https://wa-data-intel.netlify.app/datasets"/>
+    <xhtml:link rel="alternate" hreflang="es"       href="https://wa-data-intel.netlify.app/datasets"/>
+    <xhtml:link rel="alternate" hreflang="de"       href="https://wa-data-intel.netlify.app/datasets"/>
+    <xhtml:link rel="alternate" hreflang="fr"       href="https://wa-data-intel.netlify.app/datasets"/>
+    <xhtml:link rel="alternate" hreflang="pt"       href="https://wa-data-intel.netlify.app/datasets"/>
+    <xhtml:link rel="alternate" hreflang="ru"       href="https://wa-data-intel.netlify.app/datasets"/>
+    <xhtml:link rel="alternate" hreflang="ja"       href="https://wa-data-intel.netlify.app/datasets"/>
+    <xhtml:link rel="alternate" hreflang="ar"       href="https://wa-data-intel.netlify.app/datasets"/>
+    <xhtml:link rel="alternate" hreflang="hi"       href="https://wa-data-intel.netlify.app/datasets"/>
+    <xhtml:link rel="alternate" hreflang="ko"       href="https://wa-data-intel.netlify.app/datasets"/>
+    <xhtml:link rel="alternate" hreflang="id"       href="https://wa-data-intel.netlify.app/datasets"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://wa-data-intel.netlify.app/datasets"/>
+  </url>
+
+  <!-- Free Data -->
+  <url>
+    <loc>https://wa-data-intel.netlify.app/free-data</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>2026-03-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en"       href="https://wa-data-intel.netlify.app/free-data"/>
+    <xhtml:link rel="alternate" hreflang="zh"       href="https://wa-data-intel.netlify.app/free-data"/>
+    <xhtml:link rel="alternate" hreflang="es"       href="https://wa-data-intel.netlify.app/free-data"/>
+    <xhtml:link rel="alternate" hreflang="de"       href="https://wa-data-intel.netlify.app/free-data"/>
+    <xhtml:link rel="alternate" hreflang="fr"       href="https://wa-data-intel.netlify.app/free-data"/>
+    <xhtml:link rel="alternate" hreflang="pt"       href="https://wa-data-intel.netlify.app/free-data"/>
+    <xhtml:link rel="alternate" hreflang="ru"       href="https://wa-data-intel.netlify.app/free-data"/>
+    <xhtml:link rel="alternate" hreflang="ja"       href="https://wa-data-intel.netlify.app/free-data"/>
+    <xhtml:link rel="alternate" hreflang="ar"       href="https://wa-data-intel.netlify.app/free-data"/>
+    <xhtml:link rel="alternate" hreflang="hi"       href="https://wa-data-intel.netlify.app/free-data"/>
+    <xhtml:link rel="alternate" hreflang="ko"       href="https://wa-data-intel.netlify.app/free-data"/>
+    <xhtml:link rel="alternate" hreflang="id"       href="https://wa-data-intel.netlify.app/free-data"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://wa-data-intel.netlify.app/free-data"/>
+  </url>
+
+  <!-- About -->
+  <url>
+    <loc>https://wa-data-intel.netlify.app/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-03-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en"       href="https://wa-data-intel.netlify.app/about"/>
+    <xhtml:link rel="alternate" hreflang="zh"       href="https://wa-data-intel.netlify.app/about"/>
+    <xhtml:link rel="alternate" hreflang="es"       href="https://wa-data-intel.netlify.app/about"/>
+    <xhtml:link rel="alternate" hreflang="de"       href="https://wa-data-intel.netlify.app/about"/>
+    <xhtml:link rel="alternate" hreflang="fr"       href="https://wa-data-intel.netlify.app/about"/>
+    <xhtml:link rel="alternate" hreflang="pt"       href="https://wa-data-intel.netlify.app/about"/>
+    <xhtml:link rel="alternate" hreflang="ru"       href="https://wa-data-intel.netlify.app/about"/>
+    <xhtml:link rel="alternate" hreflang="ja"       href="https://wa-data-intel.netlify.app/about"/>
+    <xhtml:link rel="alternate" hreflang="ar"       href="https://wa-data-intel.netlify.app/about"/>
+    <xhtml:link rel="alternate" hreflang="hi"       href="https://wa-data-intel.netlify.app/about"/>
+    <xhtml:link rel="alternate" hreflang="ko"       href="https://wa-data-intel.netlify.app/about"/>
+    <xhtml:link rel="alternate" hreflang="id"       href="https://wa-data-intel.netlify.app/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://wa-data-intel.netlify.app/about"/>
+  </url>
+
+  <!-- Contact -->
+  <url>
+    <loc>https://wa-data-intel.netlify.app/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-03-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en"       href="https://wa-data-intel.netlify.app/contact"/>
+    <xhtml:link rel="alternate" hreflang="zh"       href="https://wa-data-intel.netlify.app/contact"/>
+    <xhtml:link rel="alternate" hreflang="es"       href="https://wa-data-intel.netlify.app/contact"/>
+    <xhtml:link rel="alternate" hreflang="de"       href="https://wa-data-intel.netlify.app/contact"/>
+    <xhtml:link rel="alternate" hreflang="fr"       href="https://wa-data-intel.netlify.app/contact"/>
+    <xhtml:link rel="alternate" hreflang="pt"       href="https://wa-data-intel.netlify.app/contact"/>
+    <xhtml:link rel="alternate" hreflang="ru"       href="https://wa-data-intel.netlify.app/contact"/>
+    <xhtml:link rel="alternate" hreflang="ja"       href="https://wa-data-intel.netlify.app/contact"/>
+    <xhtml:link rel="alternate" hreflang="ar"       href="https://wa-data-intel.netlify.app/contact"/>
+    <xhtml:link rel="alternate" hreflang="hi"       href="https://wa-data-intel.netlify.app/contact"/>
+    <xhtml:link rel="alternate" hreflang="ko"       href="https://wa-data-intel.netlify.app/contact"/>
+    <xhtml:link rel="alternate" hreflang="id"       href="https://wa-data-intel.netlify.app/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://wa-data-intel.netlify.app/contact"/>
+  </url>
+
+</urlset>

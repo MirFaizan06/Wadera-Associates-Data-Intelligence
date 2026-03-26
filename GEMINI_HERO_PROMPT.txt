@@ -1,0 +1,71 @@
+═══════════════════════════════════════════════════════════════════
+GEMINI IMAGE GENERATION PROMPT — Hero Background Images
+For: Wadera Associates — Data Intelligence Platform
+Target dimensions: 1920×1080 px (16:9, landscape)
+Placement: Full-bleed background behind dark navy overlay (85 % opacity)
+Purpose: 5 cycling images for homepage hero section
+═══════════════════════════════════════════════════════════════════
+
+─── GLOBAL STYLE RULES (apply to ALL 5 images) ──────────────────
+• Mood: authoritative, analytical, premium, global
+• Colour palette: deep navy (#1A365D), electric blue (#2B6CB0),
+  white accents, subtle gold/amber highlights
+• Style: photorealistic + subtle data-visualization aesthetic
+• Lighting: dramatic directional light with a cool-blue atmosphere
+• Aspect ratio: 16:9 landscape (wide cinematic crop)
+• DO NOT include: faces, people, text/labels overlaid in the image,
+  logos, watermarks, or any readable copy
+• The image MUST remain legible with a semi-transparent dark overlay
+  placed on top — so keep mid-tones, avoid pure-black regions
+• Ultra high detail, 8K quality rendering
+
+─── IMAGE 1 — "Global Energy Grid" ──────────────────────────────
+A dramatic aerial view of Earth from low orbit at night. Continents
+outlined by city lights, with glowing electrical grid lines stretching
+across continents like luminous data streams. Oil platform lights
+visible offshore. Deep space background with subtle star field.
+Colour accent: electric blue network paths on deep navy oceans.
+Photorealistic, cinematic, ultra-detailed.
+
+─── IMAGE 2 — "Data Flows / Time Series" ────────────────────────
+Abstract visualization of flowing data streams rendered as luminous
+ribbons of blue and white light on a deep dark background. The
+ribbons curve and weave like time-series charts come alive — peaks
+and troughs visible in the flow. Subtle grid lines in the background,
+like a financial chart. Bokeh depth of field. Premium digital art
+aesthetic, dark background with navy-to-black gradient.
+
+─── IMAGE 3 — "Oil & Commodity Markets" ─────────────────────────
+Close-up of gleaming metal oil pipeline infrastructure at blue hour
+(twilight). Background: refinery towers with controlled flares
+casting amber glow, set against a deep blue sky. Foreground elements:
+metallic pipes, valves, industrial precision. Dramatic contrast of
+warm amber flame against cool blue sky. Photorealistic, cinematic
+depth of field, ultra-sharp foreground.
+
+─── IMAGE 4 — "Financial Markets / Charts" ──────────────────────
+Stylized 3D render of a financial trading floor environment —
+holographic candlestick charts and line graphs floating in a dark
+room, glowing electric blue and white. Data panels project upward
+like architecture. Reflective dark floor mirrors the glow. Futuristic,
+cinematic, no visible text or numbers — only the shapes of charts
+as abstract architecture. Dark, moody, high-tech.
+
+─── IMAGE 5 — "Global Commerce / Commodities" ───────────────────
+A dramatic wide-angle shot of a modern cargo port at blue hour —
+massive container ships loading, cranes silhouetted against a deep
+electric-blue sky, reflections shimmering in the water below. Conveys
+global trade, logistics, and commodity movement. Warm dock lights
+contrast with cold blue sky. Cinematic, photorealistic, ultra-detailed.
+No faces visible.
+
+─── GENERATION NOTES ────────────────────────────────────────────
+• Generate each as a separate image
+• Save as: 1.png, 2.png, 3.png, 4.png, 5.png
+• Place in: client/public/homepage_hero_imgs/
+• Recommended Gemini model: Imagen 3 (imagegeneration@005)
+• Aspect ratio param: "1:1" → use custom 1920×1080 if available,
+  otherwise generate 1:1 and crop/extend horizontally
+• If using Google AI Studio: use "Generate images" with Imagen 3,
+  paste one prompt block at a time, download as PNG
+═══════════════════════════════════════════════════════════════════

@@ -1,0 +1,788 @@
+## Phase 10: Developer Admin Dashboard (Super Admin)
+
+Note: The code written in this Phase file is only dummy and placeholder. You write your own logic, and especially styles and structure. we are using custom css, not tailwind.
+
+In this phase, we build the Developer Admin dashboard – the super admin panel with full system oversight. This includes:
+
+- **System Health**: real‑time server metrics (CPU, memory, uptime, disk usage).
+- **Log Viewer**: tail recent application logs (Winston logs stored in files), with filtering by level (error, warn, info) and search.
+- **Error Monitoring**: aggregated error rates, recent errors, and stack traces.
+- **Analytics**: user signup trends, purchase trends, top datasets, traffic overview (from request logs).
+- **Permission Enforcement**: only users with Developer role (or `ALL` permission) can access.
+
+We'll use the existing Winston logging and add a simple in‑memory or file‑based log viewer. For analytics, we'll query the database for aggregated stats.
+
+---
+
+### Step 10.1: Update Prisma Schema (if needed)
+
+We might want a `SystemLog` table to store important events, but we can also read directly from log files. For simplicity and to meet the “no external tools” requirement, we'll keep using Winston file logs and provide an API to read them. However, for error rates and trends, we need structured data. We'll create a `SystemLog` model to store errors and warnings (optional) and also store request logs if needed.
+
+Add to `prisma/schema.prisma`:
+
+```prisma
+model SystemLog {
+  id        String   @id @default(cuid())
+  level     String   // "error", "warn", "info"
+  message   String
+  meta      Json?    // additional data (stack, user, etc.)
+  timestamp DateTime @default(now())
+  @@index([level])
+  @@index([timestamp])
+}
+```
+
+But to avoid over‑engineering, we can skip this and rely on file logs. However, the dashboard needs to display recent errors and error rates. We could parse the log files on demand, but that's inefficient. So we'll create a `SystemLog` model and modify the error‑handling middleware to log errors to the database as well as to Winston.
+
+We'll also need a mechanism to log request counts (for traffic) – we could use a middleware that records each request in a `RequestLog` table, but that might be too heavy. Instead, we can aggregate counts in memory and flush to a `Stats` table every hour, as per the requirement. For simplicity, we'll just query purchase and user tables for now, and leave advanced traffic monitoring as optional.
+
+Let's implement a simple `SystemLog` model for errors and important events.
+
+Run migration:
+
+```bash
+cd server
+npx prisma migrate dev --name add_system_log
+```
+
+### Step 10.2: Backend – Developer APIs
+
+Create `server/src/controllers/dev.controller.ts`:
+
+```typescript
+import { Request, Response } from 'express';
+import { PrismaClient } from '@prisma/client';
+import os from 'os';
+import fs from 'fs';
+import path from 'path';
+import { exec } from 'child_process';
+import util from 'util';
+
+const prisma = new PrismaClient();
+const execAsync = util.promisify(exec);
+
+// Helper to read last N lines from a file
+async function tailFile(filePath: string, lines: number = 100): Promise<string[]> {
+  try {
+    if (!fs.existsSync(filePath)) return [];
+    const { stdout } = await execAsync(`tail -n ${lines} "${filePath}"`);
+    return stdout.split('\n').filter(line => line.trim() !== '');
+  } catch (error) {
+    console.error('Error tailing file:', error);
+    return [];
+  }
+}
+
+// ========== System Health ==========
+export const getSystemHealth = async (req: Request, res: Response) => {
+  try {
+    const uptime = os.uptime();
+    const totalMem = os.totalmem();
+    const freeMem = os.freemem();
+    const usedMem = totalMem - freeMem;
+    const memoryUsage = (usedMem / totalMem) * 100;
+    const cpuLoad = os.loadavg(); // 1, 5, 15 minutes
+    const diskUsage = await getDiskUsage(); // optional
+
+    res.json({
+      success: true,
+      data: {
+        uptime,
+        memory: {
+          total: totalMem,
+          free: freeMem,
+          used: usedMem,
+          usagePercent: memoryUsage.toFixed(2),
+        },
+        cpu: {
+          load1: cpuLoad[0],
+          load5: cpuLoad[1],
+          load15: cpuLoad[2],
+          cores: os.cpus().length,
+        },
+        disk: diskUsage,
+        hostname: os.hostname(),
+        platform: os.platform(),
+        arch: os.arch(),
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+async function getDiskUsage() {
+  // This is platform-specific. On Linux, we can use `df -k .`
+  try {
+    const { stdout } = await execAsync('df -k . | tail -1');
+    const parts = stdout.trim().split(/\s+/);
+    if (parts.length >= 5) {
+      const total = parseInt(parts[1]) * 1024; // KB to bytes
+      const used = parseInt(parts[2]) * 1024;
+      const available = parseInt(parts[3]) * 1024;
+      const usePercent = parseInt(parts[4].replace('%', ''));
+      return { total, used, available, usePercent };
+    }
+  } catch (error) {
+    console.error('Disk usage error:', error);
+  }
+  return null;
+}
+
+// ========== Logs ==========
+export const getLogs = async (req: Request, res: Response) => {
+  try {
+    const { lines = 100, level } = req.query;
+    const logDir = path.join(__dirname, '../../logs'); // adjust to your log directory
+    const logFile = level === 'error' ? 'error.log' : 'combined.log';
+    const filePath = path.join(logDir, logFile);
+
+    const logs = await tailFile(filePath, parseInt(lines as string));
+    res.json({ success: true, data: logs });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// ========== Error Stats ==========
+export const getErrorStats = async (req: Request, res: Response) => {
+  try {
+    const now = new Date();
+    const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
+    const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+    const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+    const [lastHour, lastDay, lastWeek, recentErrors] = await Promise.all([
+      prisma.systemLog.count({ where: { level: 'error', timestamp: { gte: oneHourAgo } } }),
+      prisma.systemLog.count({ where: { level: 'error', timestamp: { gte: oneDayAgo } } }),
+      prisma.systemLog.count({ where: { level: 'error', timestamp: { gte: oneWeekAgo } } }),
+      prisma.systemLog.findMany({
+        where: { level: 'error' },
+        orderBy: { timestamp: 'desc' },
+        take: 20,
+      }),
+    ]);
+
+    res.json({
+      success: true,
+      data: {
+        lastHour,
+        lastDay,
+        lastWeek,
+        recentErrors,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// ========== Analytics ==========
+export const getAnalytics = async (req: Request, res: Response) => {
+  try {
+    const now = new Date();
+    const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+    // Signups per day (last 30 days)
+    const signups = await prisma.$queryRaw`
+      SELECT DATE(createdAt) as date, COUNT(*) as count
+      FROM User
+      WHERE createdAt >= ${thirtyDaysAgo}
+      GROUP BY DATE(createdAt)
+      ORDER BY date ASC
+    `;
+
+    // Purchases per day (successful)
+    const purchases = await prisma.$queryRaw`
+      SELECT DATE(purchasedAt) as date, COUNT(*) as count, SUM(amountINR) as revenue
+      FROM Purchase
+      WHERE status = 'SUCCESS' AND purchasedAt >= ${thirtyDaysAgo}
+      GROUP BY DATE(purchasedAt)
+      ORDER BY date ASC
+    `;
+
+    // Top datasets by purchase count
+    const topDatasets = await prisma.$queryRaw`
+      SELECT ts.id, ts.name, COUNT(p.id) as purchaseCount, SUM(p.amountINR) as revenue
+      FROM TimeSeries ts
+      JOIN Purchase p ON p.timeSeriesId = ts.id
+      WHERE p.status = 'SUCCESS'
+      GROUP BY ts.id, ts.name
+      ORDER BY purchaseCount DESC
+      LIMIT 10
+    `;
+
+    // Total users
+    const totalUsers = await prisma.user.count();
+    const totalPurchases = await prisma.purchase.count({ where: { status: 'SUCCESS' } });
+    const totalRevenue = await prisma.purchase.aggregate({ where: { status: 'SUCCESS' }, _sum: { amountINR: true } });
+
+    res.json({
+      success: true,
+      data: {
+        signups,
+        purchases,
+        topDatasets,
+        totals: {
+          users: totalUsers,
+          purchases: totalPurchases,
+          revenue: totalRevenue._sum.amountINR || 0,
+        },
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
+// ========== System Logs from DB (optional) ==========
+export const getSystemLogs = async (req: Request, res: Response) => {
+  try {
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 50;
+    const skip = (page - 1) * limit;
+    const level = req.query.level as string;
+
+    const where: any = {};
+    if (level) where.level = level;
+
+    const logs = await prisma.systemLog.findMany({
+      where,
+      orderBy: { timestamp: 'desc' },
+      skip,
+      take: limit,
+    });
+    const total = await prisma.systemLog.count({ where });
+
+    res.json({
+      success: true,
+      data: logs,
+      pagination: { page, limit, total, pages: Math.ceil(total / limit) },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+```
+
+### Step 10.3: Modify Error Handling Middleware to Log to DB
+
+In your error handling middleware (e.g., `server/src/middleware/error.middleware.ts`), add:
+
+```typescript
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
+
+export const errorHandler = async (err: any, req: Request, res: Response, next: NextFunction) => {
+  // ... existing error handling ...
+
+  // Log to database
+  await prisma.systemLog.create({
+    data: {
+      level: 'error',
+      message: err.message || 'Unknown error',
+      meta: {
+        stack: err.stack,
+        url: req.url,
+        method: req.method,
+        ip: req.ip,
+        userId: (req as any).user?.id,
+      },
+    },
+  }).catch(e => console.error('Failed to log error to DB:', e));
+
+  // ... send response ...
+};
+```
+
+Also, you might want to log warnings and info similarly.
+
+### Step 10.4: Create Developer Routes
+
+Create `server/src/routes/dev.routes.ts`:
+
+```typescript
+import { Router } from 'express';
+import { protect } from '../middleware/auth.middleware';
+import { authorize } from '../middleware/permission.middleware';
+import {
+  getSystemHealth,
+  getLogs,
+  getErrorStats,
+  getAnalytics,
+  getSystemLogs,
+} from '../controllers/dev.controller';
+
+const router = Router();
+
+router.use(protect);
+router.use(authorize('ALL')); // only Developer has ALL permission
+
+router.get('/health', getSystemHealth);
+router.get('/logs', getLogs);
+router.get('/error-stats', getErrorStats);
+router.get('/analytics', getAnalytics);
+router.get('/system-logs', getSystemLogs); // DB logs
+
+export default router;
+```
+
+Mount in `index.ts`:
+
+```typescript
+import devRoutes from './routes/dev.routes';
+app.use('/api/v1/admin/dev', devRoutes);
+```
+
+### Step 10.5: Frontend – Developer Dashboard
+
+We'll create a set of pages under `/admin/dev`:
+
+- `DevDashboard.tsx` – main dashboard with tabs or cards linking to sections.
+- `SystemHealth.tsx` – display health metrics.
+- `LogViewer.tsx` – view file logs with level filter.
+- `ErrorStats.tsx` – show error rates and recent errors.
+- `Analytics.tsx` – charts for signups, purchases, top datasets.
+- `SystemLogs.tsx` – view DB logs with pagination.
+
+We'll use Recharts for graphs (already installed).
+
+#### 10.5.1: DevDashboard
+
+`client/src/pages/admin/DevDashboard.tsx`:
+
+```tsx
+import { Link } from 'react-router-dom';
+
+export default function DevDashboard() {
+  return (
+    <div>
+      <h1 className="text-2xl font-bold text-[#723E31] mb-6">Developer Dashboard</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <Link to="/admin/dev/health" className="block p-6 bg-white rounded shadow hover:shadow-lg">
+          <h2 className="text-lg font-semibold">System Health</h2>
+          <p className="text-gray-600">CPU, memory, disk, uptime.</p>
+        </Link>
+        <Link to="/admin/dev/logs" className="block p-6 bg-white rounded shadow hover:shadow-lg">
+          <h2 className="text-lg font-semibold">Log Viewer</h2>
+          <p className="text-gray-600">Tail application logs (Winston).</p>
+        </Link>
+        <Link to="/admin/dev/errors" className="block p-6 bg-white rounded shadow hover:shadow-lg">
+          <h2 className="text-lg font-semibold">Error Monitoring</h2>
+          <p className="text-gray-600">Error rates, recent errors.</p>
+        </Link>
+        <Link to="/admin/dev/analytics" className="block p-6 bg-white rounded shadow hover:shadow-lg">
+          <h2 className="text-lg font-semibold">Analytics</h2>
+          <p className="text-gray-600">User signups, purchases, top datasets.</p>
+        </Link>
+        <Link to="/admin/dev/system-logs" className="block p-6 bg-white rounded shadow hover:shadow-lg">
+          <h2 className="text-lg font-semibold">System Logs (DB)</h2>
+          <p className="text-gray-600">Persisted error/warn logs.</p>
+        </Link>
+      </div>
+    </div>
+  );
+}
+```
+
+#### 10.5.2: SystemHealth Component
+
+`client/src/pages/admin/SystemHealth.tsx`:
+
+```tsx
+import { useEffect, useState } from 'react';
+import api from '../../services/api';
+import toast from 'react-hot-toast';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+
+interface HealthData {
+  uptime: number;
+  memory: { total: number; free: number; used: number; usagePercent: string };
+  cpu: { load1: number; load5: number; load15: number; cores: number };
+  disk: { total: number; used: number; available: number; usePercent: number } | null;
+  hostname: string;
+  platform: string;
+  arch: string;
+}
+
+export default function SystemHealth() {
+  const [health, setHealth] = useState<HealthData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api.get('/admin/dev/health')
+      .then(res => setHealth(res.data.data))
+      .catch(() => toast.error('Failed to fetch health'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (!health) return <div>No data</div>;
+
+  const formatBytes = (bytes: number) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
+  const formatUptime = (seconds: number) => {
+    const days = Math.floor(seconds / 86400);
+    const hours = Math.floor((seconds % 86400) / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    return `${days}d ${hours}h ${minutes}m`;
+  };
+
+  return (
+    <div>
+      <h1 className="text-2xl font-bold text-[#723E31] mb-6">System Health</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white p-6 rounded shadow">
+          <h2 className="text-lg font-semibold mb-4">Host Info</h2>
+          <p>Hostname: {health.hostname}</p>
+          <p>Platform: {health.platform}</p>
+          <p>Arch: {health.arch}</p>
+          <p>Uptime: {formatUptime(health.uptime)}</p>
+        </div>
+
+        <div className="bg-white p-6 rounded shadow">
+          <h2 className="text-lg font-semibold mb-4">Memory</h2>
+          <div className="w-32 h-32 mx-auto mb-4">
+            <CircularProgressbar
+              value={parseFloat(health.memory.usagePercent)}
+              text={`${health.memory.usagePercent}%`}
+              styles={buildStyles({
+                textSize: '16px',
+                pathColor: health.memory.usagePercent > 80 ? '#dc2626' : '#10b981',
+                textColor: '#723E31',
+              })}
+            />
+          </div>
+          <p>Total: {formatBytes(health.memory.total)}</p>
+          <p>Used: {formatBytes(health.memory.used)}</p>
+          <p>Free: {formatBytes(health.memory.free)}</p>
+        </div>
+
+        <div className="bg-white p-6 rounded shadow">
+          <h2 className="text-lg font-semibold mb-4">CPU</h2>
+          <p>Cores: {health.cpu.cores}</p>
+          <p>Load 1m: {health.cpu.load1.toFixed(2)}</p>
+          <p>Load 5m: {health.cpu.load5.toFixed(2)}</p>
+          <p>Load 15m: {health.cpu.load15.toFixed(2)}</p>
+        </div>
+
+        {health.disk && (
+          <div className="bg-white p-6 rounded shadow">
+            <h2 className="text-lg font-semibold mb-4">Disk Usage</h2>
+            <div className="w-32 h-32 mx-auto mb-4">
+              <CircularProgressbar
+                value={health.disk.usePercent}
+                text={`${health.disk.usePercent}%`}
+                styles={buildStyles({
+                  textSize: '16px',
+                  pathColor: health.disk.usePercent > 80 ? '#dc2626' : '#10b981',
+                  textColor: '#723E31',
+                })}
+              />
+            </div>
+            <p>Total: {formatBytes(health.disk.total)}</p>
+            <p>Used: {formatBytes(health.disk.used)}</p>
+            <p>Available: {formatBytes(health.disk.available)}</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+```
+
+#### 10.5.3: LogViewer
+
+`client/src/pages/admin/LogViewer.tsx`:
+
+```tsx
+import { useEffect, useState } from 'react';
+import api from '../../services/api';
+import toast from 'react-hot-toast';
+
+export default function LogViewer() {
+  const [logs, setLogs] = useState<string[]>([]);
+  const [level, setLevel] = useState('info');
+  const [lines, setLines] = useState(100);
+  const [loading, setLoading] = useState(false);
+
+  const fetchLogs = async () => {
+    setLoading(true);
+    try {
+      const res = await api.get('/admin/dev/logs', { params: { lines, level } });
+      setLogs(res.data.data);
+    } catch (error) {
+      toast.error('Failed to fetch logs');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchLogs();
+  }, [level, lines]);
+
+  return (
+    <div>
+      <h1 className="text-2xl font-bold text-[#723E31] mb-6">Log Viewer</h1>
+      <div className="flex space-x-4 mb-4">
+        <select value={level} onChange={(e) => setLevel(e.target.value)} className="border rounded px-3 py-2">
+          <option value="info">All (combined)</option>
+          <option value="error">Errors</option>
+        </select>
+        <select value={lines} onChange={(e) => setLines(Number(e.target.value))} className="border rounded px-3 py-2">
+          <option value="50">50 lines</option>
+          <option value="100">100 lines</option>
+          <option value="200">200 lines</option>
+          <option value="500">500 lines</option>
+        </select>
+        <button onClick={fetchLogs} className="bg-[#A67564] text-white px-4 py-2 rounded hover:bg-[#723E31]">
+          Refresh
+        </button>
+      </div>
+      <div className="bg-black text-green-400 p-4 rounded font-mono text-sm overflow-auto max-h-[600px]">
+        {loading ? 'Loading...' : logs.map((line, i) => <div key={i} className="whitespace-pre-wrap">{line}</div>)}
+      </div>
+    </div>
+  );
+}
+```
+
+#### 10.5.4: ErrorStats
+
+`client/src/pages/admin/ErrorStats.tsx`:
+
+```tsx
+import { useEffect, useState } from 'react';
+import api from '../../services/api';
+import toast from 'react-hot-toast';
+import { format } from 'date-fns';
+
+interface ErrorStats {
+  lastHour: number;
+  lastDay: number;
+  lastWeek: number;
+  recentErrors: Array<{
+    id: string;
+    message: string;
+    level: string;
+    timestamp: string;
+    meta: any;
+  }>;
+}
+
+export default function ErrorStats() {
+  const [stats, setStats] = useState<ErrorStats | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api.get('/admin/dev/error-stats')
+      .then(res => setStats(res.data.data))
+      .catch(() => toast.error('Failed to fetch error stats'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (!stats) return <div>No data</div>;
+
+  return (
+    <div>
+      <h1 className="text-2xl font-bold text-[#723E31] mb-6">Error Monitoring</h1>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="bg-white p-6 rounded shadow">
+          <p className="text-sm text-gray-500">Last Hour</p>
+          <p className="text-3xl font-bold">{stats.lastHour}</p>
+        </div>
+        <div className="bg-white p-6 rounded shadow">
+          <p className="text-sm text-gray-500">Last 24 Hours</p>
+          <p className="text-3xl font-bold">{stats.lastDay}</p>
+        </div>
+        <div className="bg-white p-6 rounded shadow">
+          <p className="text-sm text-gray-500">Last 7 Days</p>
+          <p className="text-3xl font-bold">{stats.lastWeek}</p>
+        </div>
+      </div>
+
+      <h2 className="text-xl font-semibold mb-4">Recent Errors</h2>
+      <div className="bg-white shadow overflow-hidden sm:rounded-md">
+        <ul className="divide-y divide-gray-200">
+          {stats.recentErrors.map(err => (
+            <li key={err.id} className="px-6 py-4">
+              <p className="font-mono text-sm text-red-600">{err.message}</p>
+              <p className="text-xs text-gray-500">{format(new Date(err.timestamp), 'yyyy-MM-dd HH:mm:ss')}</p>
+              {err.meta && (
+                <pre className="bg-gray-100 p-2 rounded text-xs mt-2 overflow-auto">
+                  {JSON.stringify(err.meta, null, 2)}
+                </pre>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+```
+
+#### 10.5.5: Analytics
+
+`client/src/pages/admin/Analytics.tsx`:
+
+```tsx
+import { useEffect, useState } from 'react';
+import api from '../../services/api';
+import toast from 'react-hot-toast';
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { format } from 'date-fns';
+
+interface AnalyticsData {
+  signups: Array<{ date: string; count: number }>;
+  purchases: Array<{ date: string; count: number; revenue: number }>;
+  topDatasets: Array<{ id: string; name: string; purchaseCount: number; revenue: number }>;
+  totals: { users: number; purchases: number; revenue: number };
+}
+
+export default function Analytics() {
+  const [data, setData] = useState<AnalyticsData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api.get('/admin/dev/analytics')
+      .then(res => setData(res.data.data))
+      .catch(() => toast.error('Failed to fetch analytics'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (!data) return <div>No data</div>;
+
+  const signupData = data.signups.map((item: any) => ({
+    date: format(new Date(item.date), 'MMM dd'),
+    count: Number(item.count),
+  }));
+
+  const purchaseData = data.purchases.map((item: any) => ({
+    date: format(new Date(item.date), 'MMM dd'),
+    count: Number(item.count),
+    revenue: Number(item.revenue),
+  }));
+
+  return (
+    <div>
+      <h1 className="text-2xl font-bold text-[#723E31] mb-6">Analytics</h1>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="bg-white p-6 rounded shadow">
+          <p className="text-sm text-gray-500">Total Users</p>
+          <p className="text-3xl font-bold">{data.totals.users}</p>
+        </div>
+        <div className="bg-white p-6 rounded shadow">
+          <p className="text-sm text-gray-500">Total Purchases</p>
+          <p className="text-3xl font-bold">{data.totals.purchases}</p>
+        </div>
+        <div className="bg-white p-6 rounded shadow">
+          <p className="text-sm text-gray-500">Total Revenue</p>
+          <p className="text-3xl font-bold">₹{data.totals.revenue.toFixed(2)}</p>
+        </div>
+      </div>
+
+      <div className="bg-white p-6 rounded shadow mb-8">
+        <h2 className="text-lg font-semibold mb-4">Signups (Last 30 Days)</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={signupData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="date" />
+            <YAxis />
+            <Tooltip />
+            <Line type="monotone" dataKey="count" stroke="#723E31" />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+
+      <div className="bg-white p-6 rounded shadow mb-8">
+        <h2 className="text-lg font-semibold mb-4">Purchases (Last 30 Days)</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={purchaseData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="date" />
+            <YAxis />
+            <Tooltip />
+            <Bar dataKey="count" fill="#D9B061" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+
+      <div className="bg-white p-6 rounded shadow">
+        <h2 className="text-lg font-semibold mb-4">Top Datasets by Purchases</h2>
+        <table className="min-w-full">
+          <thead>
+            <tr>
+              <th className="text-left">Dataset</th>
+              <th className="text-left">Purchases</th>
+              <th className="text-left">Revenue</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.topDatasets.map((ds: any) => (
+              <tr key={ds.id}>
+                <td>{ds.name}</td>
+                <td>{ds.purchaseCount}</td>
+                <td>₹{Number(ds.revenue).toFixed(2)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+```
+
+#### 10.5.6: SystemLogs (DB logs)
+
+`client/src/pages/admin/SystemLogs.tsx` (similar to ErrorStats but with pagination and level filter).
+
+We'll create a table with logs from the database.
+
+### Step 10.6: Add Routes in `App.tsx`
+
+```tsx
+<Route path="dev" element={<DevDashboard />} />
+<Route path="dev/health" element={<SystemHealth />} />
+<Route path="dev/logs" element={<LogViewer />} />
+<Route path="dev/errors" element={<ErrorStats />} />
+<Route path="dev/analytics" element={<Analytics />} />
+<Route path="dev/system-logs" element={<SystemLogs />} />
+```
+
+### Step 10.7: Update Navigation in AdminLayout
+
+Add "Developer" to the navigation array (already present). Ensure it's visible only to users with Developer role.
+
+---
+
+**Phase 10 complete.** Now the Developer (super admin) has full insight into system health, logs, errors, and analytics.
+
+With this, all admin roles are implemented:
+
+- **Data Manager** – dataset CRUD, uploads.
+- **Financial Manager** – revenue, orders.
+- **User Manager** – user accounts, licenses, IP bans.
+- **CMS Manager** – pages, email templates, settings, contact messages.
+- **Developer** – system health, logs, error stats, analytics.
+
+The platform is now fully functional with a comprehensive admin panel.
+
+If you need any further refinements or additional features, just let me know.

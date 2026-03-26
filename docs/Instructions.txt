@@ -1,0 +1,81 @@
+## Phase Instruction for Claude: Writing Production‑Ready Code
+
+### Objective
+For the given phase, you must write **complete, production‑ready code** that integrates all relevant fragments scattered across the previous phase files (Phases 1–11). The code must be secure, performant, accessible, and SEO‑optimized from the start. Follow the guidelines below to ensure the final output meets industry standards and passes Google Lighthouse with scores above 90.
+
+### Scope of Work
+1. **Understand the Phase Requirements** – Read the phase description carefully. Identify which features, endpoints, UI components, or configurations are required.
+2. **Scan Previous Phases** – Locate any existing code snippets, schemas, or placeholders related to this phase in the earlier instructions. These may be partial implementations, TODOs, or suggested approaches. You must integrate them fully, completing any missing parts.
+3. **Write from Scratch if Needed** – If no prior code exists, implement the feature entirely, ensuring consistency with the overall architecture.
+
+### Security Requirements
+- **Input Validation** – Validate all user inputs on both client and server using a library like Zod or Yup. Never trust raw request data.
+- **SQL Injection** – Use Prisma ORM with parameterized queries; avoid raw SQL unless absolutely necessary.
+- **XSS Prevention** – Sanitize any user‑generated HTML (e.g., in CMS pages) with a library like DOMPurify. Use React’s built‑in escaping.
+- **CSRF Protection** – Implement CSRF tokens for state‑changing requests, or use SameSite cookies and anti‑CSRF tokens.
+- **Authentication & Authorization** – Ensure all protected routes use the `protect` middleware. Apply permission checks with `authorize`. Never expose internal IDs or sensitive data.
+- **Secure Headers** – Use Helmet.js on the backend to set security headers (HSTS, X‑Frame‑Options, etc.).
+- **Rate Limiting** – Apply rate limiting (e.g., express‑rate‑limit) to login, OTP, and payment endpoints to prevent brute force.
+- **Environment Variables** – Never hardcode secrets. Use environment variables and validate them on startup (e.g., with envalid).
+- **Logging** – Log security‑relevant events (failed logins, permission denials) with Winston, but avoid logging sensitive data.
+
+### Performance & Lighthouse (Score ≥ 90)
+- **Frontend**  
+  - Code split routes with React.lazy and Suspense.  
+  - Optimize images: use WebP format, lazy loading (`loading="lazy"`), and appropriate dimensions.  
+  - Minimize main‑thread work: use Web Workers for heavy computations (e.g., chart generation).  
+  - Use `rel="preconnect"` for external origins (e.g., Razorpay).  
+  - Ensure all assets are cacheable (set proper Cache‑Control headers).  
+  - Eliminate render‑blocking resources: inline critical CSS, defer non‑critical JS.  
+- **Backend**  
+  - Compress responses with `compression`.  
+  - Implement database indexing for frequently queried fields.  
+  - Use caching (e.g., Redis) for exchange rates and license checks if needed.  
+  - Optimize large dataset queries: paginate, select only needed fields.
+
+### SEO & On‑Page Optimisation
+- **robots.txt** – Place at `/robots.txt` with appropriate directives (allow/disallow).  
+- **sitemap.xml** – Generate dynamically listing all public pages and datasets. Update on dataset creation.  
+- **Meta Tags** – Every page must have unique `<title>`, `<meta name="description">`, and Open Graph tags (for social sharing).  
+- **Canonical URLs** – Use `<link rel="canonical">` to avoid duplicate content.  
+- **Semantic HTML** – Use proper heading hierarchy (`h1`‑`h6`), `<article>`, `<section>`, etc.  
+- **Structured Data** – Implement JSON‑LD for datasets (e.g., using Schema.org `Dataset` type) and for organization.  
+- **Friendly URLs** – Use clean, descriptive URLs (e.g., `/datasets/oil‑prices` instead of `/datasets/123`).  
+- **Mobile Friendliness** – Ensure responsive design (Tailwind CSS helps).  
+- **Accessibility** – Follow WCAG 2.1 AA: proper ARIA labels, keyboard navigation, sufficient color contrast (use your palette). Test with axe.
+
+### Code Quality
+- **TypeScript** – Use strict mode; avoid `any`. Define interfaces for all props and API responses.  
+- **Error Handling** – Wrap async routes in try/catch and pass errors to the central error handler. Provide user‑friendly messages.  
+- **Logging** – Use Winston for backend; log errors with stack traces. For frontend, log errors to a service (or at least console in dev).  
+- **Comments & Documentation** – Add JSDoc comments for complex functions. Document non‑obvious logic.  
+- **Testing** – Write unit tests for critical services (e.g., license check, currency conversion). Use Jest and Supertest for API endpoints. Aim for >70% coverage.
+
+### Integration with Existing Code
+- **File Structure** – Place new files exactly where they belong according to the established structure (e.g., controllers in `server/src/controllers/`, pages in `client/src/pages/`).  
+- **Naming Conventions** – Follow the conventions in the `CLAUDE.md` (e.g., `controllerName.controller.ts`, `PageName.tsx`).  
+- **API Routes** – Prefix with `/api/v1/` and use appropriate resource names.  
+- **Database** – If schema changes are needed, provide a new Prisma migration file.  
+- **Environment Variables** – Update `.env.example` with any new variables.
+
+### Deliverables
+In a single response, provide:
+
+1. **Summary** – Brief overview of what you implemented.  
+2. **All Code Files** – For each file, show the full path and the complete code. Use markdown code blocks with language specification.  
+3. **Instructions** – Any manual steps required (e.g., running migrations, installing new packages).  
+4. **Testing Notes** – How to verify the feature works correctly.
+
+### Example (for clarity)
+If the phase requires adding a currency converter, you would:
+- Create the `ExchangeRate` model and migration.
+- Implement a cron job to fetch rates.
+- Build the frontend component with currency dropdown.
+- Update dataset pages to display converted prices.
+- Add tests for conversion logic.
+
+Your response should include all those files and modifications in one cohesive block.
+
+**Remember:** You are writing for production. Every line must be secure, accessible, and performant. Assume the code will be deployed to real users handling real money.
+
+Proceed with the phase now.

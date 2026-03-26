@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Block auth and private routes
+Disallow: /auth/
+Disallow: /profile
+Disallow: /purchases
+Disallow: /download/
+Disallow: /admin/
+
+# Block API
+Disallow: /api/
+
+# Allow important assets
+Allow: /images/
+Allow: /locales/
+Allow: /homepage_hero_imgs/
+
+# Sitemaps
+Sitemap: https://wa-data-intel.netlify.app/sitemap.xml
+
+# Crawl-delay (be gentle)
+Crawl-delay: 5

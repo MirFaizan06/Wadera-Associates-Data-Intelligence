@@ -1,0 +1,402 @@
+{
+  "titles": {
+    "home": "Wadera Associates - Plataforma de Inteligencia de Datos Premium",
+    "datasets": "Explorar Conjuntos de Datos - Wadera Associates",
+    "datasetDetail": "{{name}} - Wadera Associates",
+    "about": "Sobre Nosotros - Wadera Associates | Inteligencia de Datos",
+    "contact": "Contáctenos - Wadera Associates",
+    "freeData": "Datos y Recursos Gratuitos - Wadera Associates",
+    "freeDataDetail": "{{name}} - Datos Gratuitos | Wadera Associates",
+    "notFound": "Página No Encontrada - Wadera Associates",
+    "login": "Iniciar Sesión - Wadera Associates",
+    "register": "Crear Cuenta - Wadera Associates",
+    "otp": "Verificar Email - Wadera Associates",
+    "forgotPassword": "Olvidé mi Contraseña - Wadera Associates",
+    "resetPassword": "Restablecer Contraseña - Wadera Associates",
+    "profile": "Mi Perfil - Wadera Associates",
+    "purchases": "Mis Compras - Wadera Associates",
+    "download": "Descargar Conjunto de Datos - Wadera Associates"
+  },
+  "nav": {
+    "home": "Inicio",
+    "datasets": "Conjuntos de Datos",
+    "freeData": "Datos Gratuitos",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "signIn": "Iniciar Sesión",
+    "getStarted": "Comenzar",
+    "register": "Registrarse",
+    "myProfile": "Perfil",
+    "myPurchases": "Mis Compras",
+    "adminPanel": "Panel de Administración",
+    "signOut": "Cerrar Sesión"
+  },
+  "language": {
+    "select": "Idioma"
+  },
+  "home": {
+    "hero": {
+      "badge": "Inteligencia de Datos Premium",
+      "title1": "Datos que Impulsan",
+      "title2": "Mejores Decisiones",
+      "typewriter": [
+        "Analistas de Energía",
+        "Operadores de Materias Primas",
+        "Investigadores de Mercado",
+        "Consultores de Estrategia",
+        "Profesionales Financieros"
+      ],
+      "subtitle": "Conjuntos de datos de series temporales para energía, materias primas y mercados financieros. Explore, compre y descargue instantáneamente — sin suscripción.",
+      "browseBtn": "Explorar Conjuntos de Datos",
+      "freeDataBtn": "Ver Datos Gratuitos"
+    },
+    "stats": {
+      "formatsLabel": "Formatos de Descarga",
+      "sectorsValue": "8+",
+      "sectorsLabel": "Sectores Cubiertos",
+      "currenciesValue": "8",
+      "currenciesLabel": "Monedas Admitidas",
+      "accessValue": "100%",
+      "accessLabel": "Acceso Inmediato"
+    },
+    "howItWorks": {
+      "badge": "Proceso Simple",
+      "title": "Cómo Funciona",
+      "subtitle": "Del descubrimiento a la descarga en tres pasos sencillos.",
+      "steps": [
+        {
+          "title": "Explorar y Descubrir",
+          "desc": "Busque en nuestro catálogo por sector, región o palabra clave. Filtre por categoría y previsualice el número de puntos de datos antes de comprar."
+        },
+        {
+          "title": "Comprar de Forma Segura",
+          "desc": "Pague con Razorpay — tarjeta, UPI o banca en línea. Precios mostrados en su moneda local. Sin suscripción requerida."
+        },
+        {
+          "title": "Descargar y Usar",
+          "desc": "Descargue instantáneamente en formato XLSX, CSV, PDF o PNG. Use los datos en sus modelos, informes o paneles."
+        }
+      ]
+    },
+    "features": {
+      "title": "Por Qué Elegir Nuestra Plataforma",
+      "items": [
+        {
+          "title": "Gráficos Interactivos",
+          "desc": "Visualice tendencias con gráficos dinámicos y ampliables de series temporales antes de comprar."
+        },
+        {
+          "title": "Múltiples Formatos",
+          "desc": "Descargue en XLSX, CSV, PDF o PNG — el que mejor se adapte a su flujo de trabajo."
+        },
+        {
+          "title": "Datos con Licencia",
+          "desc": "Acceso seguro y controlado por licencia con auditoría completa y términos de PI claros."
+        },
+        {
+          "title": "Precios en Vivo",
+          "desc": "Precios mostrados en su moneda local mediante tipos de cambio en tiempo real."
+        }
+      ]
+    },
+    "featured": {
+      "title": "Conjuntos de Datos Destacados",
+      "viewAll": "Ver Todos",
+      "empty": "Aún no hay conjuntos de datos destacados."
+    },
+    "cta": {
+      "title": "¿Listo para acceder a datos premium?",
+      "subtitle": "Regístrese gratis y explore nuestro catálogo completo de conjuntos de datos de series temporales.",
+      "primaryBtn": "Crear Cuenta Gratuita",
+      "secondaryBtn": "Explorar sin Registrarse"
+    }
+  },
+  "datasets": {
+    "pageTitle": "Catálogo de Conjuntos de Datos",
+    "pageSubtitle": "Datos de series temporales premium para profesionales",
+    "searchPlaceholder": "Buscar conjuntos de datos...",
+    "allCategories": "Todas las Categorías",
+    "sort": {
+      "newest": "Más Recientes Primero",
+      "nameAZ": "Nombre A–Z",
+      "priceLow": "Precio Menor–Mayor"
+    },
+    "found": "{{count}} conjuntos de datos encontrados",
+    "noResults": {
+      "heading": "No se encontraron conjuntos de datos",
+      "sub": "Intente ajustar su búsqueda o filtros"
+    },
+    "prev": "Anterior",
+    "next": "Siguiente"
+  },
+  "datasetDetail": {
+    "notFound": "Conjunto de datos no encontrado.",
+    "sourceLabel": "Fuente:",
+    "unitLabel": "Unidad:",
+    "chart": {
+      "title": "Historial de Precios (Últimos 60 Meses)",
+      "noData": "No hay datos disponibles"
+    },
+    "preview": {
+      "title": "Vista Previa de Datos (Primeras 5 Filas)",
+      "dateCol": "Fecha",
+      "valueCol": "Valor",
+      "unitCol": "Unidad",
+      "purchaseNote": "Compre para acceder a los {{count}} puntos de datos completos"
+    },
+    "purchase": {
+      "lifetime": "Compra única · Acceso de por vida",
+      "downloads": "Descargas XLSX, CSV, PDF, PNG",
+      "dataPoints": "{{count}} puntos de datos mensuales",
+      "btn": "Comprar Conjunto de Datos",
+      "secure": "Pago seguro vía Razorpay"
+    }
+  },
+  "datasetCard": {
+    "dataPoints": "{{count}} puntos de datos",
+    "view": "Ver →"
+  },
+  "about": {
+    "heroTitle1": "Potenciando Decisiones con",
+    "heroTitle2": "Datos Confiables",
+    "heroSubtitle": "Wadera Associates es una plataforma de inteligencia de datos construida para ofrecer conjuntos de datos de alta calidad empresariales, sectoriales e industriales a profesionales, investigadores y empresas en todo el mundo.",
+    "mission": {
+      "badge": "Nuestra Misión",
+      "title": "Hacer que los datos de calidad sean accesibles para cada empresa",
+      "body": "Los datos de nivel profesional han estado históricamente bloqueados detrás de costosas suscripciones y licencias opacas. Creemos que los datos precisos, estructurados y con precios justos deben ser accesibles para empresas de todos los tamaños — desde consultores independientes hasta grandes corporaciones en todo el mundo."
+    },
+    "offer": {
+      "badge": "Lo Que Ofrecemos",
+      "title": "Construido para los Tomadores de Decisiones",
+      "values": [
+        {
+          "title": "Precisión de Datos",
+          "desc": "Cada conjunto de datos pasa por un riguroso proceso de verificación antes de su publicación. Citamos nuestras fuentes y señalamos las incertidumbres claramente."
+        },
+        {
+          "title": "Alcance Global",
+          "desc": "Cubrimos sectores e industrias en Asia, Oriente Medio y mercados globales — con precios en múltiples monedas para compradores internacionales."
+        },
+        {
+          "title": "Seguro y Conforme",
+          "desc": "Los pagos se procesan de forma segura a través de Razorpay. Cumplimos con las regulaciones de protección de datos aplicables y publicamos términos legales transparentes."
+        },
+        {
+          "title": "Inteligencia Accionable",
+          "desc": "No solo entregamos números brutos. Nuestros productos están estructurados para apoyar decisiones comerciales, benchmarking e investigación sectorial."
+        }
+      ]
+    },
+    "teamIllustrationAlt": "El equipo de Wadera Associates colaborando con datos",
+    "team": {
+      "badge": "Las Personas Detrás",
+      "title": "Nuestro Equipo",
+      "subtitle": "Un equipo compacto con experiencia complementaria en tecnología, investigación de datos y finanzas.",
+      "members": [
+        {
+          "name": "Faizan",
+          "role": "Gerente de Tecnología",
+          "bio": "Lidera todo el desarrollo tecnológico — arquitectura de plataforma, ingeniería frontend y backend, infraestructura de servidores, integración de pagos y entrega continua de funciones."
+        },
+        {
+          "name": "Hamid",
+          "role": "Líder de Producto y Datos",
+          "bio": "Impulsa la creación de conjuntos de datos empresariales e informes industriales de alta calidad. Responsable de investigación, estructuración de contenido, precisión de datos y desarrollo de productos."
+        },
+        {
+          "name": "Rauf",
+          "role": "Finanzas, Cumplimiento y Legal",
+          "bio": "Supervisa todas las operaciones financieras, cumplimiento fiscal y regulatorio en diferentes jurisdicciones, documentación legal, propiedad intelectual y gestión de ingresos."
+        }
+      ]
+    },
+    "structure": {
+      "badge": "Estructura",
+      "title": "Cómo Operamos",
+      "p1": "Wadera Associates funciona como una vertical de inteligencia de datos bajo su empresa matriz. Todas las decisiones estratégicas — incluyendo precios, asociaciones y dirección tecnológica — se toman por consenso entre los socios fundadores, asegurando responsabilidad en cada nivel.",
+      "p2": "Las responsabilidades operativas están claramente distribuidas: la tecnología es gestionada de principio a fin por Faizan, el desarrollo de productos de datos por Hamid, y los asuntos financieros y legales por Rauf. Esta estructura mantiene los ciclos de decisión cortos y la ejecución ágil.",
+      "p3": "Todos los conjuntos de datos, informes, código de plataforma y propiedad intelectual desarrollados bajo la empresa son de propiedad conjunta. Tomamos en serio la protección de la PI y hacemos cumplir nuestros términos de licencia para proteger tanto nuestro trabajo como los derechos de nuestros clientes."
+    },
+    "cta": {
+      "title": "¿Quiere trabajar con nosotros?",
+      "subtitle": "Ya sea que necesite un conjunto de datos personalizado, una asociación de investigación, o tenga una pregunta sobre nuestros productos — nos encantaría escucharle.",
+      "btn": "Ponerse en Contacto"
+    }
+  },
+  "contact": {
+    "badge": "Contáctenos",
+    "title": "Contáctenos",
+    "subtitle": "Preguntas sobre un conjunto de datos, una propuesta de asociación, o simplemente quiere saludar — envíenos un mensaje y le responderemos rápidamente.",
+    "emailLabel": "Correo Electrónico",
+    "responseLabel": "Tiempo de Respuesta",
+    "responseTime": "Normalmente respondemos en 1–2 días hábiles.",
+    "form": {
+      "fullName": "Nombre Completo",
+      "namePlaceholder": "Su nombre",
+      "email": "Dirección de Correo Electrónico",
+      "emailPlaceholder": "su@email.com",
+      "subject": "Asunto (opcional)",
+      "subjectPlaceholder": "¿De qué se trata?",
+      "message": "Mensaje",
+      "messagePlaceholder": "Su mensaje...",
+      "sendBtn": "Enviar Mensaje"
+    },
+    "success": {
+      "title": "¡Mensaje Enviado!",
+      "body": "Hemos recibido su mensaje y le responderemos en breve."
+    }
+  },
+  "freeData": {
+    "badge": "Sin Cuenta Requerida",
+    "title": "Datos y Recursos Gratuitos",
+    "subtitle": "Artículos, informes y PDFs descargables de libre acceso sobre mercados energéticos, precios de materias primas y datos económicos.",
+    "typeAll": "Todos",
+    "typeArticles": "Artículos",
+    "typePDFs": "PDFs",
+    "categoryLabel": "Categoría:",
+    "resourceCount_one": "{{count}} recurso",
+    "resourceCount_other": "{{count}} recursos",
+    "noResources": {
+      "title": "Aún no hay recursos publicados",
+      "sub": "Vuelva a consultar pronto."
+    },
+    "card": {
+      "pdfBadge": "Descarga PDF",
+      "articleBadge": "Artículo",
+      "downloadPDF": "Descargar PDF",
+      "read": "Leer"
+    }
+  },
+  "freeDataDetail": {
+    "back": "Volver a Datos Gratuitos",
+    "notFound": "Recurso no encontrado.",
+    "pdfBadge": "Descarga PDF",
+    "articleBadge": "Artículo",
+    "pdfDesc": "Este recurso está disponible como documento PDF.",
+    "downloadPDF": "Descargar PDF"
+  },
+  "notFound": {
+    "title": "Página No Encontrada",
+    "subtitle": "La página que busca no existe o ha sido movida.",
+    "homeBtn": "Ir a la Página Principal",
+    "browseBtn": "Explorar Conjuntos de Datos"
+  },
+  "auth": {
+    "login": {
+      "title": "Bienvenido de nuevo",
+      "subtitle": "Inicie sesión en su cuenta",
+      "emailLabel": "Dirección de Correo Electrónico",
+      "emailPlaceholder": "su@email.com",
+      "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "••••••••",
+      "signInBtn": "Iniciar Sesión",
+      "forgotPassword": "¿Olvidó su contraseña?",
+      "noAccount": "¿No tiene una cuenta?",
+      "createOne": "Crear una",
+      "backToWebsite": "Volver al sitio web principal",
+      "failed": "Inicio de sesión fallido"
+    },
+    "register": {
+      "title": "Cree su cuenta",
+      "subtitle": "Obtenga acceso a conjuntos de datos premium",
+      "avatarHint": "Foto de perfil (opcional)",
+      "fullNameLabel": "Nombre Completo",
+      "fullNamePlaceholder": "Juan García",
+      "emailLabel": "Dirección de Correo Electrónico",
+      "emailPlaceholder": "su@email.com",
+      "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "Mín. 8 caracteres, mayúsc+minúsc+número",
+      "confirmLabel": "Confirmar Contraseña",
+      "confirmPlaceholder": "Repita la contraseña",
+      "createBtn": "Crear Cuenta",
+      "alreadyHave": "¿Ya tiene una cuenta?",
+      "signIn": "Iniciar sesión",
+      "backToWebsite": "Volver al sitio web principal",
+      "failed": "Error en el registro"
+    },
+    "otp": {
+      "title": "Verifique su Correo Electrónico",
+      "subtitle": "Ingrese el código de 6 dígitos enviado a",
+      "digitLabel": "Dígito {{n}}",
+      "enterAll": "Ingrese los 6 dígitos",
+      "verifyBtn": "Verificar Código",
+      "resend": "Reenviar Código",
+      "resendAlert": "Nuevo OTP enviado a su correo electrónico",
+      "invalidOtp": "OTP inválido"
+    },
+    "forgotPassword": {
+      "title": "Restablecer Contraseña",
+      "emailLabel": "Dirección de Correo Electrónico",
+      "sendBtn": "Enviar Enlace de Restablecimiento",
+      "sent": "Si ese correo existe, se ha enviado un enlace de restablecimiento.",
+      "backToLogin": "Volver al Inicio de Sesión"
+    },
+    "resetPassword": {
+      "title": "Establecer Nueva Contraseña",
+      "newPasswordLabel": "Nueva Contraseña",
+      "confirmLabel": "Confirmar Contraseña",
+      "resetBtn": "Restablecer Contraseña",
+      "failed": "Error al restablecer. El enlace puede haber expirado."
+    }
+  },
+  "profile": {
+    "title": "Mi Perfil",
+    "picture": {
+      "cardTitle": "Foto de Perfil",
+      "changePhoto": "Cambiar Foto",
+      "uploading": "Subiendo…",
+      "hint": "JPG, PNG, GIF — máx. 5 MB",
+      "tooLarge": "La imagen debe ser menor de 5 MB",
+      "uploadFailed": "Error al subir. Por favor, inténtelo de nuevo."
+    },
+    "details": {
+      "cardTitle": "Detalles de la Cuenta",
+      "emailLabel": "Correo Electrónico",
+      "fullNameLabel": "Nombre Completo",
+      "phoneLabel": "Teléfono",
+      "saved": "¡Perfil guardado!",
+      "saveBtn": "Guardar Cambios"
+    }
+  },
+  "purchases": {
+    "title": "Mis Compras",
+    "empty": {
+      "title": "Aún no hay compras",
+      "subtitle": "Explore nuestro catálogo y obtenga su primer conjunto de datos.",
+      "browseBtn": "Explorar Conjuntos de Datos"
+    },
+    "downloadBtn": "Descargar"
+  },
+  "download": {
+    "title": "Descargue su Conjunto de Datos",
+    "subtitle": "Elija su formato preferido a continuación",
+    "formats": {
+      "xlsx": {
+        "label": "Excel (XLSX)",
+        "desc": "Conjunto de datos completo con formato"
+      },
+      "csv": {
+        "label": "CSV",
+        "desc": "Datos sin procesar, compatibilidad universal"
+      },
+      "pdf": {
+        "label": "Informe PDF",
+        "desc": "Informe formateado con gráfico"
+      }
+    },
+    "preparing": "Preparando...",
+    "failed": "Error en la descarga. Su acceso puede haber expirado."
+  },
+  "footer": {
+    "tagline": "Conjuntos de datos de series temporales premium para energía, materias primas y mercados financieros.",
+    "quickLinks": "Enlaces Rápidos",
+    "browseDatasets": "Explorar Conjuntos de Datos",
+    "aboutUs": "Sobre Nosotros",
+    "contact": "Contacto",
+    "legal": "Legal",
+    "privacyPolicy": "Política de Privacidad",
+    "termsOfService": "Términos de Servicio",
+    "contactSection": "Contacto",
+    "copyright": "© {{year}} Wadera Associates. Todos los derechos reservados."
+  }
+}

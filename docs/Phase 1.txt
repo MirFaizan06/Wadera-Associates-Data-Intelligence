@@ -1,0 +1,297 @@
+## Phase 1: Project Setup & Configuration
+
+Note: The code written in this Phase file is only dummy and placeholder. You write your own logic, and especially styles and structure. we are using custom css, not tailwind.
+
+### Step 1.1: Create Project Root and Folder Structure
+```bash
+mkdir -p client server
+touch .env.example .claudeignore
+```
+
+### Step 1.2: Initialize Root `package.json` (Optional – for workspaces)
+If you want to use npm/yarn workspaces (recommended for monorepo management), create a root `package.json`:
+```bash
+npm init -y
+```
+Then edit `package.json` to enable workspaces:
+```json
+{
+  "name": "data-selling-platform",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": ["client", "server"]
+}
+```
+If you prefer not to use workspaces, you can skip this and manage dependencies separately in each folder.
+
+### Step 1.3: Backend Initialization
+```bash
+cd server
+npm init -y
+```
+
+### Step 1.4: Install Backend Dependencies
+```bash
+npm install express cors helmet morgan compression dotenv winston mysql2 @prisma/client bcryptjs jsonwebtoken nodemailer exceljs puppeteer
+npm install -D typescript @types/node @types/express @types/cors @types/morgan @types/bcryptjs @types/jsonwebtoken @types/nodemailer ts-node nodemon prisma
+```
+
+### Step 1.5: Generate `tsconfig.json` for Backend
+```bash
+npx tsc --init --rootDir src --outDir dist --esModuleInterop --resolveJsonModule --lib es2020 --module commonjs --target es2020 --strict true --sourceMap true
+```
+Then adjust if needed.
+
+### Step 1.6: Initialize Prisma
+```bash
+npx prisma init
+```
+This creates a `prisma` folder and `.env`. Update the `.env` file with your database URL (example):
+```
+DATABASE_URL="mysql://username:password@localhost:3306/dataselling"
+```
+Also copy `.env` to `.env.example` (remove sensitive values) at the root level later.
+
+### Step 1.7: Create Initial Prisma Schema
+Replace `prisma/schema.prisma` with the full schema outlined in `CLAUDE.md`. For brevity, you can copy from that document (the schema section). Ensure the datasource is `mysql` and the generator is `prisma-client-js`.
+
+### Step 1.8: Create Backend Entry Point
+Create `server/src/index.ts`:
+```typescript
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import compression from 'compression';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const app = express();
+const port = process.env.PORT || 5000;
+
+app.use(helmet());
+app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:3000' }));
+app.use(compression());
+app.use(morgan('combined'));
+app.use(express.json());
+
+// Health check
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+```
+
+### Step 1.9: Add Scripts to `server/package.json`
+```json
+"scripts": {
+  "dev": "nodemon src/index.ts",
+  "build": "tsc",
+  "start": "node dist/index.js",
+  "prisma:generate": "prisma generate",
+  "prisma:migrate": "prisma migrate dev",
+  "seed": "ts-node prisma/seed.ts"
+}
+```
+
+### Step 1.10: Create Initial Seed Script
+Create `server/prisma/seed.ts`:
+```typescript
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
+
+const prisma = new PrismaClient();
+
+async function main() {
+  // Create default roles
+  const roles = [
+    { name: 'Developer', permissions: ['ALL'] },
+    { name: 'FinancialManager', permissions: ['VIEW_REVENUE', 'VIEW_ORDERS'] },
+    { name: 'DataManager', permissions: ['CREATE_DATASET', 'EDIT_DATASET', 'DELETE_DATASET'] },
+    { name: 'UserManager', permissions: ['MANAGE_USERS', 'ASSIGN_LICENSES', 'BAN_IP'] },
+    { name: 'CMSManager', permissions: ['EDIT_PAGES', 'EDIT_EMAIL_TEMPLATES'] },
+  ];
+
+  for (const role of roles) {
+    await prisma.role.upsert({
+      where: { name: role.name },
+      update: {},
+      create: { name: role.name, permissions: role.permissions },
+    });
+  }
+
+  // Create default developer admin user (if not exists)
+  const devEmail = process.env.DEV_ADMIN_EMAIL || 'dev@admin.com';
+  const devPassword = process.env.DEV_ADMIN_PASSWORD || 'Dev@123456';
+  const hashed = await bcrypt.hash(devPassword, 10);
+
+  const devRole = await prisma.role.findUnique({ where: { name: 'Developer' } });
+  if (devRole) {
+    await prisma.user.upsert({
+      where: { email: devEmail },
+      update: {},
+      create: {
+        email: devEmail,
+        passwordHash: hashed,
+        fullName: 'Developer Admin',
+        roleId: devRole.id,
+      },
+    });
+  }
+
+  // Create default license types
+  const licenseTypes = [
+    { name: 'View Only', permissions: ['VIEW'], maxDevices: null, validDays: null },
+    { name: 'Download Enabled', permissions: ['VIEW', 'DOWNLOAD'], maxDevices: 3, validDays: 30 },
+    { name: 'Full Access', permissions: ['VIEW', 'DOWNLOAD', 'EXPORT_PDF'], maxDevices: 5, validDays: 365 },
+  ];
+
+  for (const lt of licenseTypes) {
+    await prisma.licenseType.upsert({
+      where: { name: lt.name },
+      update: {},
+      create: lt,
+    });
+  }
+
+  console.log('Database seeded successfully');
+}
+
+main()
+  .catch(e => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
+```
+
+### Step 1.11: Frontend Initialization (Vite + React + TypeScript)
+```bash
+cd ../client
+npm create vite@latest . -- --template react-ts
+```
+Install additional dependencies:
+```bash
+npm install axios react-router-dom recharts tailwindcss postcss autoprefixer @headlessui/react @heroicons/react
+npm install @types/node
+```
+
+### Step 1.12: create custom css files with fully responsiveness for all devices, similar to tailwind css but our own properietory. NO TAILWIND CSS ALLOWED CUZ THE YOU MISJUDGE THE CONFIGURATION.
+
+### Step 1.13: Update `client/src/App.tsx` with a basic layout
+```tsx
+import React from 'react';
+import './index.css';
+
+function App() {
+  return (
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <h1 className="text-3xl font-bold text-[#723E31]">
+        Data Selling Platform – Frontend Ready
+      </h1>
+    </div>
+  );
+}
+
+export default App;
+```
+
+### Step 1.14: Set Up ESLint and Prettier (Root Level)
+From project root, install shared dev dependencies:
+```bash
+npm install -D eslint prettier eslint-config-prettier eslint-plugin-prettier @typescript-eslint/eslint-plugin @typescript-eslint/parser
+```
+Create `.eslintrc.js` (root):
+```js
+module.exports = {
+  root: true,
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint', 'prettier'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+  ],
+  rules: {
+    'prettier/prettier': 'error',
+  },
+};
+```
+Create `.prettierrc`:
+```json
+{
+  "singleQuote": true,
+  "trailingComma": "all",
+  "printWidth": 100,
+  "tabWidth": 2,
+  "semi": true
+}
+```
+
+### Step 1.15: Create `.env.example` at Root
+Copy the content from the `CLAUDE.md` environment variables section. Ensure no real secrets are included.
+
+### Step 1.16: Create `.claudeignore` at Root
+Exclude common noise:
+```
+# Dependencies
+**/node_modules
+**/package-lock.json
+
+# Build outputs
+**/dist
+**/build
+**/.next
+
+# Logs
+**/*.log
+logs
+
+# Environment files
+.env
+.env.local
+
+# Prisma (except schema and migrations)
+**/prisma/migrations
+**/prisma/*.db
+
+# OS files
+.DS_Store
+Thumbs.db
+```
+
+### Step 1.17: Run Initial Database Migration
+Make sure your MySQL server is running and the database exists (create it if not: `CREATE DATABASE dataselling;`). Then run:
+```bash
+cd server
+npx prisma migrate dev --name init
+npx prisma generate
+npm run seed
+```
+
+### Step 1.18: Test Both Servers
+- Backend: `cd server && npm run dev` – should see "Server running on port 5000"
+- Frontend: `cd client && npm run dev` – open http://localhost:5173, should see the styled heading.
+
+### Step 1.19: Commit Initial Structure (Optional but Recommended)
+```bash
+git init
+git add .
+git commit -m "Phase 1: Project setup and configuration"
+```
+
+---
+
+**Phase 1 complete.** You now have a fully initialized monorepo with:
+- TypeScript backend (Express) and frontend (React + Vite)
+- Prisma with MySQL, seeded with default roles, admin user, and license types
+- Basic health check endpoint
+- Tailwind CSS configured
+- ESLint/Prettier set up
+- Environment variable template and `.claudeignore`

@@ -1,0 +1,402 @@
+{
+  "titles": {
+    "home": "Wadera Associates - 프리미엄 데이터 인텔리전스 플랫폼",
+    "datasets": "데이터셋 탐색 - Wadera Associates",
+    "datasetDetail": "{{name}} - Wadera Associates",
+    "about": "회사 소개 - Wadera Associates | 데이터 인텔리전스",
+    "contact": "문의하기 - Wadera Associates",
+    "freeData": "무료 데이터 & 리소스 - Wadera Associates",
+    "freeDataDetail": "{{name}} - 무료 데이터 | Wadera Associates",
+    "notFound": "페이지를 찾을 수 없음 - Wadera Associates",
+    "login": "로그인 - Wadera Associates",
+    "register": "계정 만들기 - Wadera Associates",
+    "otp": "이메일 인증 - Wadera Associates",
+    "forgotPassword": "비밀번호 찾기 - Wadera Associates",
+    "resetPassword": "비밀번호 재설정 - Wadera Associates",
+    "profile": "내 프로필 - Wadera Associates",
+    "purchases": "내 구매 내역 - Wadera Associates",
+    "download": "데이터셋 다운로드 - Wadera Associates"
+  },
+  "nav": {
+    "home": "홈",
+    "datasets": "데이터셋",
+    "freeData": "무료 데이터",
+    "about": "소개",
+    "contact": "문의",
+    "signIn": "로그인",
+    "getStarted": "시작하기",
+    "register": "회원가입",
+    "myProfile": "프로필",
+    "myPurchases": "내 구매",
+    "adminPanel": "관리자 패널",
+    "signOut": "로그아웃"
+  },
+  "language": {
+    "select": "언어"
+  },
+  "home": {
+    "hero": {
+      "badge": "프리미엄 데이터 인텔리전스",
+      "title1": "더 나은 의사결정을",
+      "title2": "이끄는 데이터",
+      "typewriter": [
+        "에너지 애널리스트",
+        "상품 트레이더",
+        "시장 조사원",
+        "전략 컨설턴트",
+        "금융 전문가"
+      ],
+      "subtitle": "에너지, 상품 및 금융 시장을 위한 시계열 데이터셋. 즉시 탐색, 구매, 다운로드 — 구독 불필요.",
+      "browseBtn": "데이터셋 탐색",
+      "freeDataBtn": "무료 데이터 보기"
+    },
+    "stats": {
+      "formatsLabel": "다운로드 형식",
+      "sectorsValue": "8+",
+      "sectorsLabel": "커버되는 섹터",
+      "currenciesValue": "8",
+      "currenciesLabel": "지원 통화",
+      "accessValue": "100%",
+      "accessLabel": "즉시 접근"
+    },
+    "howItWorks": {
+      "badge": "간단한 프로세스",
+      "title": "이용 방법",
+      "subtitle": "세 가지 간단한 단계로 발견에서 다운로드까지.",
+      "steps": [
+        {
+          "title": "탐색 및 발견",
+          "desc": "섹터, 지역 또는 키워드로 카탈로그를 검색하세요. 구매 전에 카테고리로 필터링하고 데이터 포인트 수를 미리 보세요."
+        },
+        {
+          "title": "안전하게 구매",
+          "desc": "Razorpay로 결제 — 카드, UPI 또는 인터넷 뱅킹. 현지 통화로 가격 표시. 구독 불필요."
+        },
+        {
+          "title": "다운로드 및 활용",
+          "desc": "XLSX, CSV, PDF 또는 PNG 형식으로 즉시 다운로드. 모델, 보고서 또는 대시보드에서 데이터를 활용하세요."
+        }
+      ]
+    },
+    "features": {
+      "title": "우리 플랫폼을 선택하는 이유",
+      "items": [
+        {
+          "title": "인터랙티브 차트",
+          "desc": "구매 전에 동적이고 확대 가능한 시계열 차트로 트렌드를 시각화하세요."
+        },
+        {
+          "title": "다양한 형식",
+          "desc": "XLSX, CSV, PDF 또는 PNG로 다운로드 — 워크플로에 맞는 형식을 선택하세요."
+        },
+        {
+          "title": "라이선스 데이터",
+          "desc": "완전한 감사 추적과 명확한 IP 조건이 있는 안전한 라이선스 제어 접근."
+        },
+        {
+          "title": "실시간 가격",
+          "desc": "실시간 환율을 통해 현지 통화로 가격이 표시됩니다."
+        }
+      ]
+    },
+    "featured": {
+      "title": "추천 데이터셋",
+      "viewAll": "전체 보기",
+      "empty": "아직 추천 데이터셋이 없습니다."
+    },
+    "cta": {
+      "title": "프리미엄 데이터에 접근할 준비가 되셨나요?",
+      "subtitle": "무료로 등록하고 시계열 데이터셋의 전체 카탈로그를 탐색하세요.",
+      "primaryBtn": "무료 계정 만들기",
+      "secondaryBtn": "로그인 없이 탐색"
+    }
+  },
+  "datasets": {
+    "pageTitle": "데이터셋 카탈로그",
+    "pageSubtitle": "전문가를 위한 프리미엄 시계열 데이터",
+    "searchPlaceholder": "데이터셋 검색...",
+    "allCategories": "모든 카테고리",
+    "sort": {
+      "newest": "최신순",
+      "nameAZ": "이름 A–Z",
+      "priceLow": "낮은 가격순"
+    },
+    "found": "{{count}}개의 데이터셋 발견",
+    "noResults": {
+      "heading": "데이터셋을 찾을 수 없음",
+      "sub": "검색 또는 필터를 조정해 보세요"
+    },
+    "prev": "이전",
+    "next": "다음"
+  },
+  "datasetDetail": {
+    "notFound": "데이터셋을 찾을 수 없습니다.",
+    "sourceLabel": "출처:",
+    "unitLabel": "단위:",
+    "chart": {
+      "title": "가격 이력 (최근 60개월)",
+      "noData": "아직 데이터가 없습니다"
+    },
+    "preview": {
+      "title": "데이터 미리보기 (처음 5행)",
+      "dateCol": "날짜",
+      "valueCol": "값",
+      "unitCol": "단위",
+      "purchaseNote": "전체 {{count}}개 데이터 포인트에 접근하려면 구매하세요"
+    },
+    "purchase": {
+      "lifetime": "일회성 구매 · 평생 접근",
+      "downloads": "XLSX, CSV, PDF, PNG 다운로드",
+      "dataPoints": "{{count}}개의 월별 데이터 포인트",
+      "btn": "데이터셋 구매",
+      "secure": "Razorpay를 통한 안전한 결제"
+    }
+  },
+  "datasetCard": {
+    "dataPoints": "{{count}}개의 데이터 포인트",
+    "view": "보기 →"
+  },
+  "about": {
+    "heroTitle1": "신뢰할 수 있는 데이터로",
+    "heroTitle2": "의사결정 지원",
+    "heroSubtitle": "Wadera Associates는 전 세계 전문가, 연구원 및 기업에 고품질 비즈니스, 섹터 및 산업 데이터셋을 제공하기 위해 구축된 데이터 인텔리전스 플랫폼입니다.",
+    "mission": {
+      "badge": "우리의 미션",
+      "title": "모든 비즈니스가 고품질 데이터에 접근할 수 있도록",
+      "body": "전문가 수준의 데이터는 역사적으로 값비싼 구독료와 불투명한 라이선스 뒤에 갇혀 있었습니다. 우리는 정확하고 구조화되고 공정하게 가격이 책정된 데이터가 독립 컨설턴트부터 전 세계 대기업까지 모든 규모의 비즈니스에 접근 가능해야 한다고 믿습니다."
+    },
+    "offer": {
+      "badge": "우리가 제공하는 것",
+      "title": "의사결정자를 위해 구축",
+      "values": [
+        {
+          "title": "데이터 정확성",
+          "desc": "모든 데이터셋은 공개 전에 엄격한 검증 과정을 거칩니다. 출처를 인용하고 불확실성을 명확하게 표시합니다."
+        },
+        {
+          "title": "글로벌 범위",
+          "desc": "아시아, 중동 및 글로벌 시장의 섹터와 산업을 커버 — 국제 구매자를 위한 다중 통화 가격 책정."
+        },
+        {
+          "title": "안전하고 규정 준수",
+          "desc": "결제는 Razorpay를 통해 안전하게 처리됩니다. 적용 가능한 데이터 보호 규정을 준수하고 투명한 법적 조건을 공개합니다."
+        },
+        {
+          "title": "실행 가능한 인텔리전스",
+          "desc": "단순히 원시 숫자를 제공하는 것이 아닙니다. 우리 제품은 비즈니스 의사결정, 벤치마킹 및 섹터 연구를 지원하도록 구조화되어 있습니다."
+        }
+      ]
+    },
+    "teamIllustrationAlt": "Wadera Associates 팀이 데이터를 중심으로 협업",
+    "team": {
+      "badge": "뒤에 있는 사람들",
+      "title": "우리 팀",
+      "subtitle": "기술, 데이터 연구 및 금융 분야에서 상호 보완적인 전문성을 가진 소규모 팀.",
+      "members": [
+        {
+          "name": "Faizan",
+          "role": "기술 매니저",
+          "bio": "모든 기술 개발을 이끕니다 — 플랫폼 아키텍처, 프론트엔드 및 백엔드 엔지니어링, 서버 인프라, 결제 통합 및 지속적인 기능 제공."
+        },
+        {
+          "name": "Hamid",
+          "role": "제품 & 데이터 리드",
+          "bio": "고품질 비즈니스 데이터셋과 산업 보고서 생성을 이끕니다. 연구, 콘텐츠 구조화, 데이터 정확성 및 제품 개발 담당."
+        },
+        {
+          "name": "Rauf",
+          "role": "재무, 컴플라이언스 & 법무",
+          "bio": "모든 재무 운영, 여러 관할권에서의 세금 및 규제 준수, 법적 문서, 지식재산권 및 수익 관리를 감독합니다."
+        }
+      ]
+    },
+    "structure": {
+      "badge": "구조",
+      "title": "우리의 운영 방식",
+      "p1": "Wadera Associates는 모회사 아래 데이터 인텔리전스 버티컬로 운영됩니다. 가격 책정, 파트너십, 기술 방향을 포함한 모든 전략적 결정은 창립 파트너들의 합의로 이루어져 모든 수준에서 책임을 보장합니다.",
+      "p2": "운영 책임은 명확하게 분배되어 있습니다: 기술은 Faizan이 엔드투엔드로 담당하고, 데이터 제품 개발은 Hamid, 재무 및 법적 사항은 Rauf가 담당합니다. 이 구조는 의사결정 사이클을 짧고 실행을 날카롭게 유지합니다.",
+      "p3": "벤처 하에 개발된 모든 데이터셋, 보고서, 플랫폼 코드 및 지식재산권은 공동 소유입니다. IP 보호를 진지하게 생각하고 우리의 작업과 고객의 권리를 보호하기 위해 라이선스 조건을 시행합니다."
+    },
+    "cta": {
+      "title": "함께 일하고 싶으신가요?",
+      "subtitle": "맞춤형 데이터셋, 연구 파트너십이 필요하거나 제품에 대한 질문이 있으시면 — 기꺼이 들을게요.",
+      "btn": "문의하기"
+    }
+  },
+  "contact": {
+    "badge": "문의하기",
+    "title": "문의하기",
+    "subtitle": "데이터셋에 대한 질문, 파트너십 제안, 또는 간단한 인사 — 메시지를 보내주시면 빠르게 답변드리겠습니다.",
+    "emailLabel": "이메일",
+    "responseLabel": "응답 시간",
+    "responseTime": "보통 영업일 기준 1-2일 내에 답변드립니다.",
+    "form": {
+      "fullName": "전체 이름",
+      "namePlaceholder": "이름",
+      "email": "이메일 주소",
+      "emailPlaceholder": "your@email.com",
+      "subject": "제목 (선택 사항)",
+      "subjectPlaceholder": "무엇에 관한 건가요?",
+      "message": "메시지",
+      "messagePlaceholder": "메시지...",
+      "sendBtn": "메시지 보내기"
+    },
+    "success": {
+      "title": "메시지가 전송되었습니다!",
+      "body": "메시지를 받았습니다. 곧 답변드리겠습니다."
+    }
+  },
+  "freeData": {
+    "badge": "계정 불필요",
+    "title": "무료 데이터 & 리소스",
+    "subtitle": "에너지 시장, 상품 가격 및 경제 데이터에 관한 무료 접근 가능한 기사, 보고서 및 다운로드 가능한 PDF.",
+    "typeAll": "전체",
+    "typeArticles": "기사",
+    "typePDFs": "PDF",
+    "categoryLabel": "카테고리:",
+    "resourceCount_one": "{{count}}개의 리소스",
+    "resourceCount_other": "{{count}}개의 리소스",
+    "noResources": {
+      "title": "아직 게시된 리소스가 없습니다",
+      "sub": "곧 다시 확인하세요."
+    },
+    "card": {
+      "pdfBadge": "PDF 다운로드",
+      "articleBadge": "기사",
+      "downloadPDF": "PDF 다운로드",
+      "read": "읽기"
+    }
+  },
+  "freeDataDetail": {
+    "back": "무료 데이터로 돌아가기",
+    "notFound": "리소스를 찾을 수 없습니다.",
+    "pdfBadge": "PDF 다운로드",
+    "articleBadge": "기사",
+    "pdfDesc": "이 리소스는 PDF 문서로 제공됩니다.",
+    "downloadPDF": "PDF 다운로드"
+  },
+  "notFound": {
+    "title": "페이지를 찾을 수 없음",
+    "subtitle": "찾고 있는 페이지가 존재하지 않거나 이동되었습니다.",
+    "homeBtn": "홈페이지로 이동",
+    "browseBtn": "데이터셋 탐색"
+  },
+  "auth": {
+    "login": {
+      "title": "다시 오신 것을 환영합니다",
+      "subtitle": "계정에 로그인하세요",
+      "emailLabel": "이메일 주소",
+      "emailPlaceholder": "your@email.com",
+      "passwordLabel": "비밀번호",
+      "passwordPlaceholder": "••••••••",
+      "signInBtn": "로그인",
+      "forgotPassword": "비밀번호를 잊으셨나요?",
+      "noAccount": "계정이 없으신가요?",
+      "createOne": "만들기",
+      "backToWebsite": "메인 웹사이트로 돌아가기",
+      "failed": "로그인 실패"
+    },
+    "register": {
+      "title": "계정을 만드세요",
+      "subtitle": "프리미엄 데이터셋에 접근하세요",
+      "avatarHint": "프로필 사진 (선택 사항)",
+      "fullNameLabel": "전체 이름",
+      "fullNamePlaceholder": "홍길동",
+      "emailLabel": "이메일 주소",
+      "emailPlaceholder": "your@email.com",
+      "passwordLabel": "비밀번호",
+      "passwordPlaceholder": "최소 8자, 대소문자+숫자",
+      "confirmLabel": "비밀번호 확인",
+      "confirmPlaceholder": "비밀번호 반복",
+      "createBtn": "계정 만들기",
+      "alreadyHave": "이미 계정이 있으신가요?",
+      "signIn": "로그인",
+      "backToWebsite": "메인 웹사이트로 돌아가기",
+      "failed": "등록 실패"
+    },
+    "otp": {
+      "title": "이메일 인증",
+      "subtitle": "다음 주소로 전송된 6자리 코드를 입력하세요",
+      "digitLabel": "{{n}}번째 숫자",
+      "enterAll": "6자리 모두 입력하세요",
+      "verifyBtn": "코드 확인",
+      "resend": "코드 재전송",
+      "resendAlert": "새 OTP가 이메일로 전송되었습니다",
+      "invalidOtp": "잘못된 OTP"
+    },
+    "forgotPassword": {
+      "title": "비밀번호 재설정",
+      "emailLabel": "이메일 주소",
+      "sendBtn": "재설정 링크 보내기",
+      "sent": "해당 이메일이 존재하면 재설정 링크가 전송되었습니다.",
+      "backToLogin": "로그인으로 돌아가기"
+    },
+    "resetPassword": {
+      "title": "새 비밀번호 설정",
+      "newPasswordLabel": "새 비밀번호",
+      "confirmLabel": "비밀번호 확인",
+      "resetBtn": "비밀번호 재설정",
+      "failed": "재설정 실패. 링크가 만료되었을 수 있습니다."
+    }
+  },
+  "profile": {
+    "title": "내 프로필",
+    "picture": {
+      "cardTitle": "프로필 사진",
+      "changePhoto": "사진 변경",
+      "uploading": "업로드 중…",
+      "hint": "JPG, PNG, GIF — 최대 5MB",
+      "tooLarge": "이미지는 5MB 미만이어야 합니다",
+      "uploadFailed": "업로드 실패. 다시 시도해 주세요."
+    },
+    "details": {
+      "cardTitle": "계정 정보",
+      "emailLabel": "이메일",
+      "fullNameLabel": "전체 이름",
+      "phoneLabel": "전화번호",
+      "saved": "프로필이 저장되었습니다!",
+      "saveBtn": "변경 사항 저장"
+    }
+  },
+  "purchases": {
+    "title": "내 구매 내역",
+    "empty": {
+      "title": "아직 구매 내역이 없습니다",
+      "subtitle": "카탈로그를 탐색하고 첫 번째 데이터셋을 받으세요.",
+      "browseBtn": "데이터셋 탐색"
+    },
+    "downloadBtn": "다운로드"
+  },
+  "download": {
+    "title": "데이터셋 다운로드",
+    "subtitle": "아래에서 선호하는 형식을 선택하세요",
+    "formats": {
+      "xlsx": {
+        "label": "Excel (XLSX)",
+        "desc": "서식이 포함된 전체 데이터셋"
+      },
+      "csv": {
+        "label": "CSV",
+        "desc": "원시 데이터, 범용 호환성"
+      },
+      "pdf": {
+        "label": "PDF 보고서",
+        "desc": "차트가 포함된 서식 보고서"
+      }
+    },
+    "preparing": "준비 중...",
+    "failed": "다운로드 실패. 접근 권한이 만료되었을 수 있습니다."
+  },
+  "footer": {
+    "tagline": "에너지, 상품 및 금융 시장을 위한 프리미엄 시계열 데이터셋.",
+    "quickLinks": "빠른 링크",
+    "browseDatasets": "데이터셋 탐색",
+    "aboutUs": "회사 소개",
+    "contact": "문의",
+    "legal": "법적 정보",
+    "privacyPolicy": "개인정보 처리방침",
+    "termsOfService": "이용약관",
+    "contactSection": "문의",
+    "copyright": "© {{year}} Wadera Associates. All rights reserved."
+  }
+}

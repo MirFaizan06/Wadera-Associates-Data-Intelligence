@@ -1,0 +1,402 @@
+{
+  "titles": {
+    "home": "Wadera Associates - Plateforme Premium d'Intelligence des Données",
+    "datasets": "Parcourir les Jeux de Données - Wadera Associates",
+    "datasetDetail": "{{name}} - Wadera Associates",
+    "about": "À Propos - Wadera Associates | Intelligence des Données",
+    "contact": "Contactez-nous - Wadera Associates",
+    "freeData": "Données et Ressources Gratuites - Wadera Associates",
+    "freeDataDetail": "{{name}} - Données Gratuites | Wadera Associates",
+    "notFound": "Page Non Trouvée - Wadera Associates",
+    "login": "Se Connecter - Wadera Associates",
+    "register": "Créer un Compte - Wadera Associates",
+    "otp": "Vérifier l'Email - Wadera Associates",
+    "forgotPassword": "Mot de Passe Oublié - Wadera Associates",
+    "resetPassword": "Réinitialiser le Mot de Passe - Wadera Associates",
+    "profile": "Mon Profil - Wadera Associates",
+    "purchases": "Mes Achats - Wadera Associates",
+    "download": "Télécharger le Jeu de Données - Wadera Associates"
+  },
+  "nav": {
+    "home": "Accueil",
+    "datasets": "Jeux de Données",
+    "freeData": "Données Gratuites",
+    "about": "À Propos",
+    "contact": "Contact",
+    "signIn": "Se Connecter",
+    "getStarted": "Commencer",
+    "register": "S'inscrire",
+    "myProfile": "Profil",
+    "myPurchases": "Mes Achats",
+    "adminPanel": "Panneau d'Administration",
+    "signOut": "Se Déconnecter"
+  },
+  "language": {
+    "select": "Langue"
+  },
+  "home": {
+    "hero": {
+      "badge": "Intelligence des Données Premium",
+      "title1": "Des Données qui Propulsent",
+      "title2": "de Meilleures Décisions",
+      "typewriter": [
+        "Analystes Énergétiques",
+        "Traders de Matières Premières",
+        "Chercheurs en Marché",
+        "Consultants en Stratégie",
+        "Professionnels de la Finance"
+      ],
+      "subtitle": "Séries temporelles pour l'énergie, les matières premières et les marchés financiers. Parcourez, achetez et téléchargez instantanément — sans abonnement.",
+      "browseBtn": "Parcourir les Jeux de Données",
+      "freeDataBtn": "Voir les Données Gratuites"
+    },
+    "stats": {
+      "formatsLabel": "Formats de Téléchargement",
+      "sectorsValue": "8+",
+      "sectorsLabel": "Secteurs Couverts",
+      "currenciesValue": "8",
+      "currenciesLabel": "Devises Supportées",
+      "accessValue": "100%",
+      "accessLabel": "Accès Instantané"
+    },
+    "howItWorks": {
+      "badge": "Processus Simple",
+      "title": "Comment Ça Marche",
+      "subtitle": "De la découverte au téléchargement en trois étapes simples.",
+      "steps": [
+        {
+          "title": "Parcourir & Découvrir",
+          "desc": "Recherchez dans notre catalogue par secteur, région ou mot-clé. Filtrez par catégorie et prévisualisez le nombre de points de données avant d'acheter."
+        },
+        {
+          "title": "Acheter en Sécurité",
+          "desc": "Payez avec Razorpay — carte, UPI ou banque en ligne. Prix affichés dans votre devise locale. Aucun abonnement requis."
+        },
+        {
+          "title": "Télécharger & Utiliser",
+          "desc": "Téléchargez instantanément au format XLSX, CSV, PDF ou PNG. Utilisez les données dans vos modèles, rapports ou tableaux de bord."
+        }
+      ]
+    },
+    "features": {
+      "title": "Pourquoi Choisir Notre Plateforme",
+      "items": [
+        {
+          "title": "Graphiques Interactifs",
+          "desc": "Visualisez les tendances avec des graphiques temporels dynamiques et zoomables avant d'acheter."
+        },
+        {
+          "title": "Formats Multiples",
+          "desc": "Téléchargez en XLSX, CSV, PDF ou PNG — selon ce qui convient à votre flux de travail."
+        },
+        {
+          "title": "Données Licenciées",
+          "desc": "Accès sécurisé et contrôlé par licence avec audit complet et termes de PI clairs."
+        },
+        {
+          "title": "Prix en Direct",
+          "desc": "Prix affichés dans votre devise locale via des taux de change en temps réel."
+        }
+      ]
+    },
+    "featured": {
+      "title": "Jeux de Données en Vedette",
+      "viewAll": "Voir Tout",
+      "empty": "Aucun jeu de données en vedette pour l'instant."
+    },
+    "cta": {
+      "title": "Prêt à accéder aux données premium ?",
+      "subtitle": "Inscrivez-vous gratuitement et parcourez notre catalogue complet de séries temporelles.",
+      "primaryBtn": "Créer un Compte Gratuit",
+      "secondaryBtn": "Parcourir sans S'inscrire"
+    }
+  },
+  "datasets": {
+    "pageTitle": "Catalogue de Jeux de Données",
+    "pageSubtitle": "Données de séries temporelles premium pour les professionnels",
+    "searchPlaceholder": "Rechercher des jeux de données...",
+    "allCategories": "Toutes les Catégories",
+    "sort": {
+      "newest": "Plus Récents d'Abord",
+      "nameAZ": "Nom A–Z",
+      "priceLow": "Prix Croissant"
+    },
+    "found": "{{count}} jeux de données trouvés",
+    "noResults": {
+      "heading": "Aucun jeu de données trouvé",
+      "sub": "Essayez d'ajuster votre recherche ou vos filtres"
+    },
+    "prev": "Précédent",
+    "next": "Suivant"
+  },
+  "datasetDetail": {
+    "notFound": "Ensemble de données introuvable.",
+    "sourceLabel": "Source :",
+    "unitLabel": "Unité :",
+    "chart": {
+      "title": "Historique des Prix (60 Derniers Mois)",
+      "noData": "Aucune donnée disponible"
+    },
+    "preview": {
+      "title": "Aperçu des Données (5 Premières Lignes)",
+      "dateCol": "Date",
+      "valueCol": "Valeur",
+      "unitCol": "Unité",
+      "purchaseNote": "Achetez pour accéder aux {{count}} points de données complets"
+    },
+    "purchase": {
+      "lifetime": "Achat unique · Accès à vie",
+      "downloads": "Téléchargements XLSX, CSV, PDF, PNG",
+      "dataPoints": "{{count}} points de données mensuels",
+      "btn": "Acheter le Jeu de Données",
+      "secure": "Paiement sécurisé via Razorpay"
+    }
+  },
+  "datasetCard": {
+    "dataPoints": "{{count}} points de données",
+    "view": "Voir →"
+  },
+  "about": {
+    "heroTitle1": "Alimenter les Décisions avec",
+    "heroTitle2": "des Données Fiables",
+    "heroSubtitle": "Wadera Associates est une plateforme d'intelligence des données construite pour fournir des jeux de données de haute qualité commerciaux, sectoriels et industriels aux professionnels, chercheurs et entreprises du monde entier.",
+    "mission": {
+      "badge": "Notre Mission",
+      "title": "Rendre les données de qualité accessibles à toutes les entreprises",
+      "body": "Les données de niveau professionnel ont historiquement été bloquées derrière des abonnements coûteux et des licences opaques. Nous croyons que des données précises, structurées et équitablement tarifées devraient être accessibles aux entreprises de toutes tailles — des consultants indépendants aux grandes entreprises mondiales."
+    },
+    "offer": {
+      "badge": "Ce Que Nous Offrons",
+      "title": "Conçu pour les Décideurs",
+      "values": [
+        {
+          "title": "Précision des Données",
+          "desc": "Chaque jeu de données passe par un processus de vérification rigoureux avant publication. Nous citons nos sources et signalons clairement les incertitudes."
+        },
+        {
+          "title": "Portée Mondiale",
+          "desc": "Nous couvrons des secteurs et industries en Asie, au Moyen-Orient et sur les marchés mondiaux — avec une tarification multi-devises pour les acheteurs internationaux."
+        },
+        {
+          "title": "Sécurisé & Conforme",
+          "desc": "Les paiements sont traités en toute sécurité via Razorpay. Nous respectons les réglementations applicables en matière de protection des données et publions des conditions légales transparentes."
+        },
+        {
+          "title": "Intelligence Actionnable",
+          "desc": "Nous ne livrons pas seulement des chiffres bruts. Nos produits sont structurés pour soutenir les décisions commerciales, le benchmarking et la recherche sectorielle."
+        }
+      ]
+    },
+    "teamIllustrationAlt": "L'équipe Wadera Associates collaborant autour des données",
+    "team": {
+      "badge": "Les Personnes Derrière",
+      "title": "Notre Équipe",
+      "subtitle": "Une équipe compacte avec une expertise complémentaire en technologie, recherche de données et finance.",
+      "members": [
+        {
+          "name": "Faizan",
+          "role": "Responsable Technologie",
+          "bio": "Dirige tout le développement technologique — architecture de plateforme, ingénierie frontend et backend, infrastructure serveur, intégration des paiements et livraison continue des fonctionnalités."
+        },
+        {
+          "name": "Hamid",
+          "role": "Responsable Produit & Données",
+          "bio": "Pilote la création de jeux de données commerciaux et de rapports industriels de haute qualité. Responsable de la recherche, de la structuration du contenu, de la précision des données et du développement des produits."
+        },
+        {
+          "name": "Rauf",
+          "role": "Finance, Conformité & Juridique",
+          "bio": "Supervise toutes les opérations financières, la conformité fiscale et réglementaire dans différentes juridictions, la documentation juridique, la propriété intellectuelle et la gestion des revenus."
+        }
+      ]
+    },
+    "structure": {
+      "badge": "Structure",
+      "title": "Comment Nous Opérons",
+      "p1": "Wadera Associates fonctionne comme un vertical d'intelligence des données sous sa société mère. Toutes les décisions stratégiques — y compris la tarification, les partenariats et la direction technologique — sont prises par consensus entre les associés fondateurs, assurant la responsabilité à chaque niveau.",
+      "p2": "Les responsabilités opérationnelles sont clairement distribuées : la technologie est gérée de bout en bout par Faizan, le développement de produits de données par Hamid, et les affaires financières et juridiques par Rauf. Cette structure maintient des cycles de décision courts et une exécution précise.",
+      "p3": "Tous les jeux de données, rapports, code de plateforme et propriété intellectuelle développés sous la coentreprise sont en copropriété. Nous prenons au sérieux la protection de la PI et appliquons nos conditions de licence pour protéger notre travail et les droits de nos clients."
+    },
+    "cta": {
+      "title": "Vous souhaitez travailler avec nous ?",
+      "subtitle": "Que vous ayez besoin d'un jeu de données personnalisé, d'un partenariat de recherche ou d'une question sur nos produits — nous serions ravis de vous entendre.",
+      "btn": "Prendre Contact"
+    }
+  },
+  "contact": {
+    "badge": "Prenez Contact",
+    "title": "Contactez-nous",
+    "subtitle": "Questions sur un jeu de données, une proposition de partenariat, ou simplement dire bonjour — envoyez-nous un message et nous vous répondrons rapidement.",
+    "emailLabel": "Email",
+    "responseLabel": "Délai de Réponse",
+    "responseTime": "Nous répondons généralement dans 1–2 jours ouvrables.",
+    "form": {
+      "fullName": "Nom Complet",
+      "namePlaceholder": "Votre nom",
+      "email": "Adresse Email",
+      "emailPlaceholder": "votre@email.com",
+      "subject": "Sujet (optionnel)",
+      "subjectPlaceholder": "De quoi s'agit-il ?",
+      "message": "Message",
+      "messagePlaceholder": "Votre message...",
+      "sendBtn": "Envoyer le Message"
+    },
+    "success": {
+      "title": "Message Envoyé !",
+      "body": "Nous avons reçu votre message et vous répondrons sous peu."
+    }
+  },
+  "freeData": {
+    "badge": "Aucun Compte Requis",
+    "title": "Données et Ressources Gratuites",
+    "subtitle": "Articles, rapports et PDFs téléchargeables librement accessibles sur les marchés énergétiques, les prix des matières premières et les données économiques.",
+    "typeAll": "Tout",
+    "typeArticles": "Articles",
+    "typePDFs": "PDFs",
+    "categoryLabel": "Catégorie :",
+    "resourceCount_one": "{{count}} ressource",
+    "resourceCount_other": "{{count}} ressources",
+    "noResources": {
+      "title": "Aucune ressource publiée pour l'instant",
+      "sub": "Revenez bientôt."
+    },
+    "card": {
+      "pdfBadge": "Téléchargement PDF",
+      "articleBadge": "Article",
+      "downloadPDF": "Télécharger PDF",
+      "read": "Lire"
+    }
+  },
+  "freeDataDetail": {
+    "back": "Retour aux Données Gratuites",
+    "notFound": "Ressource non trouvée.",
+    "pdfBadge": "Téléchargement PDF",
+    "articleBadge": "Article",
+    "pdfDesc": "Cette ressource est disponible en tant que document PDF.",
+    "downloadPDF": "Télécharger PDF"
+  },
+  "notFound": {
+    "title": "Page Non Trouvée",
+    "subtitle": "La page que vous recherchez n'existe pas ou a été déplacée.",
+    "homeBtn": "Aller à la Page d'Accueil",
+    "browseBtn": "Parcourir les Jeux de Données"
+  },
+  "auth": {
+    "login": {
+      "title": "Bon retour",
+      "subtitle": "Connectez-vous à votre compte",
+      "emailLabel": "Adresse Email",
+      "emailPlaceholder": "votre@email.com",
+      "passwordLabel": "Mot de Passe",
+      "passwordPlaceholder": "••••••••",
+      "signInBtn": "Se Connecter",
+      "forgotPassword": "Mot de passe oublié ?",
+      "noAccount": "Pas de compte ?",
+      "createOne": "En créer un",
+      "backToWebsite": "Retour au site principal",
+      "failed": "Connexion échouée"
+    },
+    "register": {
+      "title": "Créez votre compte",
+      "subtitle": "Accédez aux jeux de données premium",
+      "avatarHint": "Photo de profil (optionnelle)",
+      "fullNameLabel": "Nom Complet",
+      "fullNamePlaceholder": "Jean Dupont",
+      "emailLabel": "Adresse Email",
+      "emailPlaceholder": "votre@email.com",
+      "passwordLabel": "Mot de Passe",
+      "passwordPlaceholder": "Min 8 caractères, maj+min+chiffre",
+      "confirmLabel": "Confirmer le Mot de Passe",
+      "confirmPlaceholder": "Répétez le mot de passe",
+      "createBtn": "Créer un Compte",
+      "alreadyHave": "Vous avez déjà un compte ?",
+      "signIn": "Se connecter",
+      "backToWebsite": "Retour au site principal",
+      "failed": "Inscription échouée"
+    },
+    "otp": {
+      "title": "Vérifiez Votre Email",
+      "subtitle": "Entrez le code à 6 chiffres envoyé à",
+      "digitLabel": "Chiffre {{n}}",
+      "enterAll": "Entrez les 6 chiffres",
+      "verifyBtn": "Vérifier le Code",
+      "resend": "Renvoyer le Code",
+      "resendAlert": "Nouveau OTP envoyé à votre email",
+      "invalidOtp": "OTP invalide"
+    },
+    "forgotPassword": {
+      "title": "Réinitialiser le Mot de Passe",
+      "emailLabel": "Adresse Email",
+      "sendBtn": "Envoyer le Lien de Réinitialisation",
+      "sent": "Si cet email existe, un lien de réinitialisation a été envoyé.",
+      "backToLogin": "Retour à la Connexion"
+    },
+    "resetPassword": {
+      "title": "Définir un Nouveau Mot de Passe",
+      "newPasswordLabel": "Nouveau Mot de Passe",
+      "confirmLabel": "Confirmer le Mot de Passe",
+      "resetBtn": "Réinitialiser le Mot de Passe",
+      "failed": "Réinitialisation échouée. Le lien a peut-être expiré."
+    }
+  },
+  "profile": {
+    "title": "Mon Profil",
+    "picture": {
+      "cardTitle": "Photo de Profil",
+      "changePhoto": "Changer la Photo",
+      "uploading": "Téléchargement…",
+      "hint": "JPG, PNG, GIF — max 5 Mo",
+      "tooLarge": "L'image doit être inférieure à 5 Mo",
+      "uploadFailed": "Téléchargement échoué. Veuillez réessayer."
+    },
+    "details": {
+      "cardTitle": "Détails du Compte",
+      "emailLabel": "Email",
+      "fullNameLabel": "Nom Complet",
+      "phoneLabel": "Téléphone",
+      "saved": "Profil sauvegardé !",
+      "saveBtn": "Sauvegarder les Modifications"
+    }
+  },
+  "purchases": {
+    "title": "Mes Achats",
+    "empty": {
+      "title": "Aucun achat pour l'instant",
+      "subtitle": "Parcourez notre catalogue et obtenez votre premier jeu de données.",
+      "browseBtn": "Parcourir les Jeux de Données"
+    },
+    "downloadBtn": "Télécharger"
+  },
+  "download": {
+    "title": "Téléchargez Votre Jeu de Données",
+    "subtitle": "Choisissez votre format préféré ci-dessous",
+    "formats": {
+      "xlsx": {
+        "label": "Excel (XLSX)",
+        "desc": "Jeu de données complet avec mise en forme"
+      },
+      "csv": {
+        "label": "CSV",
+        "desc": "Données brutes, compatibilité universelle"
+      },
+      "pdf": {
+        "label": "Rapport PDF",
+        "desc": "Rapport formaté avec graphique"
+      }
+    },
+    "preparing": "Préparation...",
+    "failed": "Téléchargement échoué. Votre accès a peut-être expiré."
+  },
+  "footer": {
+    "tagline": "Jeux de données de séries temporelles premium pour l'énergie, les matières premières et les marchés financiers.",
+    "quickLinks": "Liens Rapides",
+    "browseDatasets": "Parcourir les Jeux de Données",
+    "aboutUs": "À Propos de Nous",
+    "contact": "Contact",
+    "legal": "Légal",
+    "privacyPolicy": "Politique de Confidentialité",
+    "termsOfService": "Conditions d'Utilisation",
+    "contactSection": "Contact",
+    "copyright": "© {{year}} Wadera Associates. Tous droits réservés."
+  }
+}

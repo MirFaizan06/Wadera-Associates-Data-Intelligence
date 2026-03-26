@@ -1,0 +1,402 @@
+{
+  "titles": {
+    "home": "Wadera Associates - プレミアムデータインテリジェンスプラットフォーム",
+    "datasets": "データセットを閲覧 - Wadera Associates",
+    "datasetDetail": "{{name}} - Wadera Associates",
+    "about": "私たちについて - Wadera Associates | データインテリジェンス",
+    "contact": "お問い合わせ - Wadera Associates",
+    "freeData": "無料データ＆リソース - Wadera Associates",
+    "freeDataDetail": "{{name}} - 無料データ | Wadera Associates",
+    "notFound": "ページが見つかりません - Wadera Associates",
+    "login": "サインイン - Wadera Associates",
+    "register": "アカウント作成 - Wadera Associates",
+    "otp": "メール認証 - Wadera Associates",
+    "forgotPassword": "パスワードをお忘れですか - Wadera Associates",
+    "resetPassword": "パスワードのリセット - Wadera Associates",
+    "profile": "マイプロフィール - Wadera Associates",
+    "purchases": "購入履歴 - Wadera Associates",
+    "download": "データセットのダウンロード - Wadera Associates"
+  },
+  "nav": {
+    "home": "ホーム",
+    "datasets": "データセット",
+    "freeData": "無料データ",
+    "about": "私たちについて",
+    "contact": "お問い合わせ",
+    "signIn": "サインイン",
+    "getStarted": "始める",
+    "register": "登録",
+    "myProfile": "プロフィール",
+    "myPurchases": "購入履歴",
+    "adminPanel": "管理パネル",
+    "signOut": "サインアウト"
+  },
+  "language": {
+    "select": "言語"
+  },
+  "home": {
+    "hero": {
+      "badge": "プレミアムデータインテリジェンス",
+      "title1": "より良い意思決定を",
+      "title2": "データで推進する",
+      "typewriter": [
+        "エネルギーアナリスト",
+        "コモディティトレーダー",
+        "市場調査員",
+        "戦略コンサルタント",
+        "金融専門家"
+      ],
+      "subtitle": "エネルギー、コモディティ、金融市場の時系列データセット。即時閲覧、購入、ダウンロード — サブスクリプション不要。",
+      "browseBtn": "データセットを閲覧",
+      "freeDataBtn": "無料データを見る"
+    },
+    "stats": {
+      "formatsLabel": "ダウンロード形式",
+      "sectorsValue": "8+",
+      "sectorsLabel": "対応セクター",
+      "currenciesValue": "8",
+      "currenciesLabel": "対応通貨",
+      "accessValue": "100%",
+      "accessLabel": "即時アクセス"
+    },
+    "howItWorks": {
+      "badge": "シンプルなプロセス",
+      "title": "ご利用方法",
+      "subtitle": "3つの簡単なステップで発見からダウンロードまで。",
+      "steps": [
+        {
+          "title": "閲覧と発見",
+          "desc": "セクター、地域、またはキーワードでカタログを検索。購入前にカテゴリでフィルタリングし、データポイント数をプレビュー。"
+        },
+        {
+          "title": "安全な購入",
+          "desc": "Razorpayでお支払い — カード、UPI、またはネットバンキング。現地通貨で価格表示。サブスクリプション不要。"
+        },
+        {
+          "title": "ダウンロードと活用",
+          "desc": "XLSX、CSV、PDF、またはPNG形式で即時ダウンロード。モデル、レポート、ダッシュボードでデータを活用。"
+        }
+      ]
+    },
+    "features": {
+      "title": "当プラットフォームを選ぶ理由",
+      "items": [
+        {
+          "title": "インタラクティブチャート",
+          "desc": "購入前に動的でズーム可能な時系列チャートでトレンドを視覚化。"
+        },
+        {
+          "title": "複数の形式",
+          "desc": "XLSX、CSV、PDF、またはPNGでダウンロード — ワークフローに合わせて選択。"
+        },
+        {
+          "title": "ライセンスデータ",
+          "desc": "完全な監査証跡と明確なIP条件を持つ安全なライセンス制御アクセス。"
+        },
+        {
+          "title": "リアルタイム価格",
+          "desc": "リアルタイム為替レートで現地通貨の価格を表示。"
+        }
+      ]
+    },
+    "featured": {
+      "title": "注目のデータセット",
+      "viewAll": "すべて見る",
+      "empty": "まだ注目のデータセットはありません。"
+    },
+    "cta": {
+      "title": "プレミアムデータにアクセスする準備はできましたか？",
+      "subtitle": "無料登録して、時系列データセットの完全なカタログをご覧ください。",
+      "primaryBtn": "無料アカウントを作成",
+      "secondaryBtn": "登録なしで閲覧"
+    }
+  },
+  "datasets": {
+    "pageTitle": "データセットカタログ",
+    "pageSubtitle": "プロフェッショナル向けプレミアム時系列データ",
+    "searchPlaceholder": "データセットを検索...",
+    "allCategories": "すべてのカテゴリ",
+    "sort": {
+      "newest": "新しい順",
+      "nameAZ": "名前 A–Z",
+      "priceLow": "価格が安い順"
+    },
+    "found": "{{count}}件のデータセットが見つかりました",
+    "noResults": {
+      "heading": "データセットが見つかりません",
+      "sub": "検索またはフィルターを調整してみてください"
+    },
+    "prev": "前へ",
+    "next": "次へ"
+  },
+  "datasetDetail": {
+    "notFound": "データセットが見つかりません。",
+    "sourceLabel": "出典：",
+    "unitLabel": "単位：",
+    "chart": {
+      "title": "価格履歴（過去60ヶ月）",
+      "noData": "データがまだありません"
+    },
+    "preview": {
+      "title": "データプレビュー（最初の5行）",
+      "dateCol": "日付",
+      "valueCol": "値",
+      "unitCol": "単位",
+      "purchaseNote": "購入して全{{count}}データポイントにアクセス"
+    },
+    "purchase": {
+      "lifetime": "一回払い · 生涯アクセス",
+      "downloads": "XLSX、CSV、PDF、PNGダウンロード",
+      "dataPoints": "{{count}}件の月次データポイント",
+      "btn": "データセットを購入",
+      "secure": "Razorpayによる安全なお支払い"
+    }
+  },
+  "datasetCard": {
+    "dataPoints": "{{count}}件のデータポイント",
+    "view": "見る →"
+  },
+  "about": {
+    "heroTitle1": "信頼性の高いデータで",
+    "heroTitle2": "意思決定を支援",
+    "heroSubtitle": "Wadera Associatesは、世界中の専門家、研究者、企業に高品質なビジネス、セクター、産業データセットを提供するために構築されたデータインテリジェンスプラットフォームです。",
+    "mission": {
+      "badge": "私たちのミッション",
+      "title": "すべてのビジネスに高品質データを",
+      "body": "プロフェッショナルレベルのデータは、歴史的に高額のサブスクリプションと不透明なライセンスの背後に隠されていました。私たちは、正確で構造化されたフェアな価格のデータが、独立したコンサルタントから世界中の大企業まで、あらゆる規模のビジネスに利用可能であるべきと信じています。"
+    },
+    "offer": {
+      "badge": "私たちのサービス",
+      "title": "意思決定者のために構築",
+      "values": [
+        {
+          "title": "データの正確性",
+          "desc": "すべてのデータセットは公開前に厳格な検証プロセスを経ます。出典を明示し、不確実性を明確に示します。"
+        },
+        {
+          "title": "グローバルリーチ",
+          "desc": "アジア、中東、グローバル市場のセクターと産業をカバー — 国際的な購入者向けに多通貨価格を提供。"
+        },
+        {
+          "title": "安全でコンプライアント",
+          "desc": "支払いはRazorpayを通じて安全に処理されます。適用されるデータ保護規制に準拠し、透明な法的条件を公開しています。"
+        },
+        {
+          "title": "実用的なインサイト",
+          "desc": "単純な数字を提供するだけでなく、ビジネス意思決定、ベンチマーキング、セクター調査をサポートするために構造化されています。"
+        }
+      ]
+    },
+    "teamIllustrationAlt": "Wadera Associatesチームがデータを中心に協働",
+    "team": {
+      "badge": "チームのご紹介",
+      "title": "私たちのチーム",
+      "subtitle": "テクノロジー、データ研究、金融における補完的な専門知識を持つコンパクトなチーム。",
+      "members": [
+        {
+          "name": "Faizan",
+          "role": "テクノロジーマネージャー",
+          "bio": "すべての技術開発をリード — プラットフォームアーキテクチャ、フロントエンドおよびバックエンドエンジニアリング、サーバーインフラ、決済統合、継続的な機能デリバリー。"
+        },
+        {
+          "name": "Hamid",
+          "role": "プロダクト＆データリード",
+          "bio": "高品質なビジネスデータセットと産業レポートの作成を推進。調査、コンテンツ構造化、データ精度、製品開発を担当。"
+        },
+        {
+          "name": "Rauf",
+          "role": "財務、コンプライアンス＆法務",
+          "bio": "すべての財務運営、複数の管轄における税務および規制コンプライアンス、法的文書、知的財産、収益管理を監督。"
+        }
+      ]
+    },
+    "structure": {
+      "badge": "組織構造",
+      "title": "私たちの運営方法",
+      "p1": "Wadera Associatesは、親会社のデータインテリジェンス部門として機能しています。すべての戦略的決定 — 価格設定、パートナーシップ、技術的方向性を含む — は創設パートナーのコンセンサスで行われ、すべてのレベルでの説明責任を確保しています。",
+      "p2": "運営責任は明確に分担されています：テクノロジーはFaizanがエンドツーエンドで担当し、データ製品開発はHamid、財務および法的事項はRaufが担当。この構造により意思決定サイクルを短く、実行を鋭くしています。",
+      "p3": "合弁企業で開発されたすべてのデータセット、レポート、プラットフォームコード、知的財産は共同所有です。IP保護を真剣に捉え、私たちの仕事と顧客の権利を守るためにライセンス条件を執行します。"
+    },
+    "cta": {
+      "title": "一緒に働きませんか？",
+      "subtitle": "カスタムデータセット、研究パートナーシップ、または製品についてのご質問がある場合 — ぜひお聞かせください。",
+      "btn": "お問い合わせ"
+    }
+  },
+  "contact": {
+    "badge": "お問い合わせ",
+    "title": "お問い合わせ",
+    "subtitle": "データセットに関するご質問、パートナーシップのご提案、またはご挨拶 — メッセージをお送りいただければ迅速に対応いたします。",
+    "emailLabel": "メール",
+    "responseLabel": "返信時間",
+    "responseTime": "通常1〜2営業日以内にご返信いたします。",
+    "form": {
+      "fullName": "氏名",
+      "namePlaceholder": "お名前",
+      "email": "メールアドレス",
+      "emailPlaceholder": "your@email.com",
+      "subject": "件名（任意）",
+      "subjectPlaceholder": "件名は何ですか？",
+      "message": "メッセージ",
+      "messagePlaceholder": "メッセージ...",
+      "sendBtn": "メッセージを送る"
+    },
+    "success": {
+      "title": "メッセージを送信しました！",
+      "body": "メッセージを受け取りました。近日中にご返信いたします。"
+    }
+  },
+  "freeData": {
+    "badge": "アカウント不要",
+    "title": "無料データ＆リソース",
+    "subtitle": "エネルギー市場、コモディティ価格、経済データに関する無料記事、レポート、ダウンロード可能なPDF。",
+    "typeAll": "すべて",
+    "typeArticles": "記事",
+    "typePDFs": "PDF",
+    "categoryLabel": "カテゴリ：",
+    "resourceCount_one": "{{count}}件のリソース",
+    "resourceCount_other": "{{count}}件のリソース",
+    "noResources": {
+      "title": "まだリソースが公開されていません",
+      "sub": "後でまたご確認ください。"
+    },
+    "card": {
+      "pdfBadge": "PDFダウンロード",
+      "articleBadge": "記事",
+      "downloadPDF": "PDFをダウンロード",
+      "read": "読む"
+    }
+  },
+  "freeDataDetail": {
+    "back": "無料データに戻る",
+    "notFound": "リソースが見つかりません。",
+    "pdfBadge": "PDFダウンロード",
+    "articleBadge": "記事",
+    "pdfDesc": "このリソースはPDFドキュメントとして利用可能です。",
+    "downloadPDF": "PDFをダウンロード"
+  },
+  "notFound": {
+    "title": "ページが見つかりません",
+    "subtitle": "お探しのページは存在しないか、移動されました。",
+    "homeBtn": "ホームページへ",
+    "browseBtn": "データセットを閲覧"
+  },
+  "auth": {
+    "login": {
+      "title": "おかえりなさい",
+      "subtitle": "アカウントにサインイン",
+      "emailLabel": "メールアドレス",
+      "emailPlaceholder": "your@email.com",
+      "passwordLabel": "パスワード",
+      "passwordPlaceholder": "••••••••",
+      "signInBtn": "サインイン",
+      "forgotPassword": "パスワードをお忘れですか？",
+      "noAccount": "アカウントをお持ちでないですか？",
+      "createOne": "作成する",
+      "backToWebsite": "メインサイトに戻る",
+      "failed": "ログイン失敗"
+    },
+    "register": {
+      "title": "アカウントを作成",
+      "subtitle": "プレミアムデータセットへのアクセスを取得",
+      "avatarHint": "プロフィール写真（任意）",
+      "fullNameLabel": "氏名",
+      "fullNamePlaceholder": "山田太郎",
+      "emailLabel": "メールアドレス",
+      "emailPlaceholder": "your@email.com",
+      "passwordLabel": "パスワード",
+      "passwordPlaceholder": "8文字以上、大文字+小文字+数字",
+      "confirmLabel": "パスワードの確認",
+      "confirmPlaceholder": "パスワードを繰り返す",
+      "createBtn": "アカウントを作成",
+      "alreadyHave": "すでにアカウントをお持ちですか？",
+      "signIn": "サインイン",
+      "backToWebsite": "メインサイトに戻る",
+      "failed": "登録に失敗しました"
+    },
+    "otp": {
+      "title": "メールアドレスを確認",
+      "subtitle": "送信された6桁のコードを入力してください",
+      "digitLabel": "{{n}}桁目",
+      "enterAll": "6桁すべてを入力してください",
+      "verifyBtn": "コードを確認",
+      "resend": "コードを再送",
+      "resendAlert": "新しいOTPをメールに送信しました",
+      "invalidOtp": "無効なOTP"
+    },
+    "forgotPassword": {
+      "title": "パスワードのリセット",
+      "emailLabel": "メールアドレス",
+      "sendBtn": "リセットリンクを送信",
+      "sent": "そのメールアドレスが存在する場合、リセットリンクが送信されました。",
+      "backToLogin": "ログインに戻る"
+    },
+    "resetPassword": {
+      "title": "新しいパスワードを設定",
+      "newPasswordLabel": "新しいパスワード",
+      "confirmLabel": "パスワードの確認",
+      "resetBtn": "パスワードをリセット",
+      "failed": "リセットに失敗しました。リンクが期限切れの可能性があります。"
+    }
+  },
+  "profile": {
+    "title": "マイプロフィール",
+    "picture": {
+      "cardTitle": "プロフィール写真",
+      "changePhoto": "写真を変更",
+      "uploading": "アップロード中…",
+      "hint": "JPG、PNG、GIF — 最大5MB",
+      "tooLarge": "画像は5MB未満である必要があります",
+      "uploadFailed": "アップロードに失敗しました。もう一度お試しください。"
+    },
+    "details": {
+      "cardTitle": "アカウント詳細",
+      "emailLabel": "メール",
+      "fullNameLabel": "氏名",
+      "phoneLabel": "電話番号",
+      "saved": "プロフィールを保存しました！",
+      "saveBtn": "変更を保存"
+    }
+  },
+  "purchases": {
+    "title": "購入履歴",
+    "empty": {
+      "title": "まだ購入がありません",
+      "subtitle": "カタログを閲覧して最初のデータセットを入手してください。",
+      "browseBtn": "データセットを閲覧"
+    },
+    "downloadBtn": "ダウンロード"
+  },
+  "download": {
+    "title": "データセットをダウンロード",
+    "subtitle": "以下からご希望の形式を選択してください",
+    "formats": {
+      "xlsx": {
+        "label": "Excel (XLSX)",
+        "desc": "書式付き完全データセット"
+      },
+      "csv": {
+        "label": "CSV",
+        "desc": "生データ、汎用互換性"
+      },
+      "pdf": {
+        "label": "PDFレポート",
+        "desc": "チャート付きフォーマットレポート"
+      }
+    },
+    "preparing": "準備中...",
+    "failed": "ダウンロードに失敗しました。アクセスが期限切れの可能性があります。"
+  },
+  "footer": {
+    "tagline": "エネルギー、コモディティ、金融市場向けプレミアム時系列データセット。",
+    "quickLinks": "クイックリンク",
+    "browseDatasets": "データセットを閲覧",
+    "aboutUs": "私たちについて",
+    "contact": "お問い合わせ",
+    "legal": "法的情報",
+    "privacyPolicy": "プライバシーポリシー",
+    "termsOfService": "利用規約",
+    "contactSection": "お問い合わせ",
+    "copyright": "© {{year}} Wadera Associates. All rights reserved."
+  }
+}
