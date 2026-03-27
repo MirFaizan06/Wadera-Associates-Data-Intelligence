@@ -32,7 +32,7 @@ Admins can manage datasets, users, email templates, static pages, and free resou
 | Auth | JWT (httpOnly) + OTP email verification |
 | Email | Nodemailer — Gmail SMTP via App Password |
 | Storage | AWS S3 (production) / local disk (development) |
-| Payments | Razorpay (integrated, currently disabled) |
+| Payments | Razorpay (integrated, disabled — keys empty) |
 | SEO | react-helmet-async, JSON-LD structured data, sitemap.xml |
 | Deployment | Netlify (frontend) · Railway (backend, see deploy guide) |
 
@@ -227,13 +227,12 @@ Language and currency preferences are stored in `localStorage`. First visit alwa
 
 ### Backend (Railway)
 
-See **[BACKEND_DEPLOYMENT_GUIDE.md](BACKEND_DEPLOYMENT_GUIDE.md)** for complete step-by-step instructions covering:
+All deploy-required code changes are already in place (PORT binding, Prisma binaryTargets, nixpacks.toml for Puppeteer). See **[BACKEND_DEPLOYMENT_GUIDE.md](BACKEND_DEPLOYMENT_GUIDE.md)** for complete step-by-step instructions covering:
 - Railway project setup + MySQL add-on
 - Gmail SMTP App Password configuration
 - AWS S3 bucket + IAM setup
 - Environment variables (Railway raw editor format)
-- Prisma migration on first deploy
-- Puppeteer system dependencies for PDF generation
+- Prisma migration on first deploy (`railway run npx prisma migrate deploy`)
 
 ---
 

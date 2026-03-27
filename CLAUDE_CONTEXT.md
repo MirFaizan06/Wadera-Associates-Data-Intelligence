@@ -1,7 +1,7 @@
 # Claude Developer Context — Wadera Associates Data Intelligence Website
 
 > Read this at the start of every new session to restore full project context.
-> Last updated: March 2026
+> Last updated: 2026-03-27
 
 ---
 
@@ -328,8 +328,8 @@ GEOLOCATION_API_KEY=...
 GEOLOCATION_API_URL=https://api.ipgeolocation.io/ipgeo
 FRONTEND_URL=http://localhost:3000
 REDIS_URL=redis://localhost:6379
-DEVELOPER_ADMIN_EMAIL=admin@waderaassociates.com
-DEVELOPER_ADMIN_PASSWORD=ChangeMe@123
+DEVELOPER_ADMIN_EMAIL=admin@waderaassociates.com   # REQUIRED — no default, server won't start without it
+DEVELOPER_ADMIN_PASSWORD=ChangeMe@123              # REQUIRED — no default, set a strong password
 LOG_LEVEL=info
 ```
 
@@ -432,24 +432,41 @@ Creates:
 ### Backend — Railway (not yet deployed, guide written)
 - See `BACKEND_DEPLOYMENT_GUIDE.md` for full steps
 - MySQL add-on via Railway, Gmail SMTP via App Password, AWS S3
-- Required code change before deploy: `app.listen(PORT, '0.0.0.0', ...)`
-- Required schema change: add `binaryTargets` for Debian in `schema.prisma`
+- All deploy-required code changes are **already done**: PORT binding to `0.0.0.0`, Prisma `binaryTargets`, `nixpacks.toml` for Puppeteer, Razorpay null-guard
+- Run `railway run npx prisma migrate deploy` after first deploy
 
 ---
 
-## 16. Open Tasks
+## 16. Security Hardening (Applied)
 
-1. **Deploy backend** on Railway — follow `BACKEND_DEPLOYMENT_GUIDE.md`
-   - Code changes needed: PORT binding, Prisma binaryTargets, Razorpay null-guard, `/health` endpoint
-   - Run `railway run npx prisma migrate deploy` after first deploy
-2. **Re-enable Razorpay** — add null-guard in payment routes, set keys in Railway env vars
+All of these are in place as of 2026-03-27:
+
+| What | Where | Detail |
+|---|---|---|
+| Rate limit on `/register` | `auth.routes.ts` | `loginLimiter` (10/15min) — was unguarded |
+| Rate limit on `/reset-password` | `auth.routes.ts` | `otpLimiter` (5/10min) — was unguarded |
+| Rate limit on `/contact` | `public.routes.ts` | `contactLimiter` (3/15min) — new limiter |
+| Profile picture ext from mimetype | `auth.controller.ts` | Replaces `path.extname(originalname)` — prevents path-traversal via crafted filename |
+| Cookie `maxAge` reduced | `auth.controller.ts` | 24 hours (was 7 days) |
+| `DEVELOPER_ADMIN_EMAIL/PASSWORD` required | `config/env.ts` | No defaults — server won't start in prod without explicit values set |
+| CSP tightened | `app.ts` | Removed `unsafe-inline` from `scriptSrc`; explicit `imgSrc` domains; removed Razorpay `frameSrc` |
+| `SameSite: strict` cookies | `auth.controller.ts` | Already in place — mitigates CSRF |
+| JWT verified + `deletedAt: null` checked | `auth.middleware.ts` | Already in place |
+| IP ban middleware | `app.ts` | Already in place — runs before rate limiting |
+
+---
+
+## 17. Open Tasks
+
+1. **Deploy backend** on Railway — follow `BACKEND_DEPLOYMENT_GUIDE.md`; all code changes are already done
+2. **Re-enable Razorpay** — set keys in Railway env vars; null-guard already in payment.service.ts
 3. **Redis** — if used in production paths, add Redis service on Railway
 4. **Team profile pictures** — add `faizan.jpg`, `hamid.jpg`, `rauf.jpg` to `client/public/team_profile_pics/`
 5. **Custom domain** — update all canonical URLs from `wa-data-intel.netlify.app` to the real domain when purchased
 
 ---
 
-## 17. Root-Level Documents
+## 18. Root-Level Documents
 
 | File | Purpose |
 |---|---|
