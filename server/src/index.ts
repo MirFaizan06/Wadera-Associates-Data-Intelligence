@@ -16,7 +16,7 @@ async function startServer() {
     // Start cron jobs
     startCronJobs();
 
-    app.listen(PORT, () => {
+    app.listen(PORT, '0.0.0.0', () => {
       logger.info(`Server running on port ${PORT} in ${env.NODE_ENV} mode`);
     });
   } catch (error) {
