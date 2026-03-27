@@ -4,6 +4,7 @@ import * as freeResourceController from '../controllers/freeResource.controller'
 import { contactController } from '../controllers/contact.controller';
 import { getExchangeRates } from '../controllers/exchangeRate.controller';
 import { getStaticPage, getSitemap } from '../controllers/cms.controller';
+import { contactLimiter } from '../middleware/rateLimiter.middleware';
 
 const router = Router();
 
@@ -30,6 +31,6 @@ router.get('/robots.txt', (_req, res) => {
 });
 
 // Contact
-router.post('/contact', contactController.submit);
+router.post('/contact', contactLimiter, contactController.submit);
 
 export default router;

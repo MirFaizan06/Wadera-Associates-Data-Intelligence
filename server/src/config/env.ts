@@ -23,7 +23,7 @@ export const env = cleanEnv(process.env, {
   GEOLOCATION_API_URL: str({ default: 'https://api.ipgeolocation.io/ipgeo' }),
   FRONTEND_URL: str({ default: 'http://localhost:3000' }),
   REDIS_URL: str({ default: 'redis://localhost:6379' }),
-  DEVELOPER_ADMIN_EMAIL: str({ default: 'admin@waderaassociates.com' }),
-  DEVELOPER_ADMIN_PASSWORD: str({ default: 'ChangeMe@123' }),
+  DEVELOPER_ADMIN_EMAIL: str(),
+  DEVELOPER_ADMIN_PASSWORD: str(),
   LOG_LEVEL: str({ default: 'info' }),
 });

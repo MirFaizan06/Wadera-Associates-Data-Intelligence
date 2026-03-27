@@ -32,6 +32,16 @@ export const paymentLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+export const contactLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 3,
+  handler: (_req, _res, next) => {
+    next(new AppError('Too many contact submissions. Try again in 15 minutes.', 429, 'TOO_MANY_REQUESTS'));
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 export const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 200,

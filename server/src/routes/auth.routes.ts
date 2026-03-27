@@ -16,13 +16,13 @@ const avatarUpload = multer({
 const router = Router();
 
 // Public
-router.post('/register', authController.register);
+router.post('/register', loginLimiter, authController.register);
 router.post('/login', loginLimiter, authController.login);
 router.post('/verify-otp', otpLimiter, authController.verifyOtp);
 router.post('/resend-otp', otpLimiter, authController.resendOtp);
 router.post('/logout', authController.logout);
 router.post('/forgot-password', otpLimiter, authController.forgotPassword);
-router.post('/reset-password', authController.resetPassword);
+router.post('/reset-password', otpLimiter, authController.resetPassword);
 
 // Protected
 router.get('/profile', protect, authController.getProfile);

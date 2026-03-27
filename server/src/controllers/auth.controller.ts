@@ -41,7 +41,7 @@ const cookieOptions = {
   httpOnly: true,
   secure: env.NODE_ENV === 'production',
   sameSite: 'strict' as const,
-  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  maxAge: 24 * 60 * 60 * 1000, // 24 hours
 };
 
 export const register = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -152,7 +152,8 @@ export const uploadProfilePicture = async (req: Request, res: Response, next: Ne
 
     const userId = req.user!.id;
     const file = req.file;
-    const ext = path.extname(file.originalname).toLowerCase() || '.jpg';
+    const mimeToExt: Record<string, string> = { 'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp', 'image/gif': '.gif' };
+    const ext = mimeToExt[file.mimetype] ?? '.jpg';
     let profilePicture: string;
 
     if (env.NODE_ENV === 'production' || (env.AWS_BUCKET_NAME && env.AWS_ACCESS_KEY_ID !== 'dev')) {

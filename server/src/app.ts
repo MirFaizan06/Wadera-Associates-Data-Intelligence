@@ -28,11 +28,11 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", 'https://checkout.razorpay.com'],
+      scriptSrc: ["'self'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
-      imgSrc: ["'self'", 'data:', 'https:'],
+      imgSrc: ["'self'", 'data:', 'https://flagcdn.com', 'https://fonts.gstatic.com', `https://${env.AWS_BUCKET_NAME}.s3.${env.AWS_REGION}.amazonaws.com`],
       connectSrc: ["'self'", env.FRONTEND_URL],
-      frameSrc: ['https://api.razorpay.com'],
+      frameSrc: ["'none'"],
     },
   },
   crossOriginEmbedderPolicy: false,
