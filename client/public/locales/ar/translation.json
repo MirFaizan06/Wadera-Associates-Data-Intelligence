@@ -1,21 +1,21 @@
 {
   "titles": {
-    "home": "Wadera Associates - منصة ذكاء البيانات المتميزة",
-    "datasets": "تصفح مجموعات البيانات - Wadera Associates",
-    "datasetDetail": "{{name}} - Wadera Associates",
-    "about": "من نحن - Wadera Associates | ذكاء البيانات",
-    "contact": "اتصل بنا - Wadera Associates",
-    "freeData": "البيانات والموارد المجانية - Wadera Associates",
-    "freeDataDetail": "{{name}} - بيانات مجانية | Wadera Associates",
-    "notFound": "الصفحة غير موجودة - Wadera Associates",
-    "login": "تسجيل الدخول - Wadera Associates",
-    "register": "إنشاء حساب - Wadera Associates",
-    "otp": "التحقق من البريد الإلكتروني - Wadera Associates",
-    "forgotPassword": "نسيت كلمة المرور - Wadera Associates",
-    "resetPassword": "إعادة تعيين كلمة المرور - Wadera Associates",
-    "profile": "ملفي الشخصي - Wadera Associates",
-    "purchases": "مشترياتي - Wadera Associates",
-    "download": "تنزيل مجموعة البيانات - Wadera Associates"
+    "home": "ARW Analytics - منصة ذكاء البيانات المتميزة",
+    "datasets": "تصفح مجموعات البيانات - ARW Analytics",
+    "datasetDetail": "{{name}} - ARW Analytics",
+    "about": "من نحن - ARW Analytics | ذكاء البيانات",
+    "contact": "اتصل بنا - ARW Analytics",
+    "freeData": "البيانات والموارد المجانية - ARW Analytics",
+    "freeDataDetail": "{{name}} - بيانات مجانية | ARW Analytics",
+    "notFound": "الصفحة غير موجودة - ARW Analytics",
+    "login": "تسجيل الدخول - ARW Analytics",
+    "register": "إنشاء حساب - ARW Analytics",
+    "otp": "التحقق من البريد الإلكتروني - ARW Analytics",
+    "forgotPassword": "نسيت كلمة المرور - ARW Analytics",
+    "resetPassword": "إعادة تعيين كلمة المرور - ARW Analytics",
+    "profile": "ملفي الشخصي - ARW Analytics",
+    "purchases": "مشترياتي - ARW Analytics",
+    "download": "تنزيل مجموعة البيانات - ARW Analytics"
   },
   "nav": {
     "home": "الرئيسية",
@@ -163,7 +163,7 @@
   "about": {
     "heroTitle1": "تمكين القرارات من خلال",
     "heroTitle2": "البيانات الموثوقة",
-    "heroSubtitle": "Wadera Associates هي منصة ذكاء بيانات مبنية لتوفير مجموعات بيانات تجارية وقطاعية وصناعية عالية الجودة للمحترفين والباحثين والمؤسسات في جميع أنحاء العالم.",
+    "heroSubtitle": "ARW Analytics هي منصة ذكاء بيانات مبنية لتوفير مجموعات بيانات تجارية وقطاعية وصناعية عالية الجودة للمحترفين والباحثين والمؤسسات في جميع أنحاء العالم.",
     "mission": {
       "badge": "مهمتنا",
       "title": "جعل البيانات عالية الجودة في متناول كل عمل تجاري",
@@ -191,7 +191,7 @@
         }
       ]
     },
-    "teamIllustrationAlt": "فريق Wadera Associates يتعاون حول البيانات",
+    "teamIllustrationAlt": "فريق ARW Analytics يتعاون حول البيانات",
     "team": {
       "badge": "الأشخاص وراء ذلك",
       "title": "فريقنا",
@@ -217,7 +217,7 @@
     "structure": {
       "badge": "الهيكل",
       "title": "كيف نعمل",
-      "p1": "تعمل Wadera Associates كرأس عمودي لذكاء البيانات تحت شركتها الأم. تُتخذ جميع القرارات الاستراتيجية — بما فيها التسعير والشراكات والتوجه التكنولوجي — بالتوافق بين الشركاء المؤسسين، مما يضمن المساءلة على كل مستوى.",
+      "p1": "تعمل ARW Analytics كرأس عمودي لذكاء البيانات تحت شركتها الأم. تُتخذ جميع القرارات الاستراتيجية — بما فيها التسعير والشراكات والتوجه التكنولوجي — بالتوافق بين الشركاء المؤسسين، مما يضمن المساءلة على كل مستوى.",
       "p2": "المسؤوليات التشغيلية موزعة بوضوح: التكنولوجيا يديرها Faizan من البداية إلى النهاية، وتطوير منتجات البيانات يديره Hamid، والشؤون المالية والقانونية يديرها Rauf. هذا الهيكل يبقي دورات القرار قصيرة والتنفيذ حاداً.",
       "p3": "جميع مجموعات البيانات والتقارير وكود المنصة والملكية الفكرية المطوَّرة في إطار المشروع مملوكة مشتركاً. نأخذ حماية الملكية الفكرية على محمل الجد ونطبق شروط الترخيص لحماية عملنا وحقوق عملائنا."
     },
@@ -401,7 +401,7 @@
     "privacyPolicy": "سياسة الخصوصية",
     "termsOfService": "شروط الخدمة",
     "contactSection": "اتصل بنا",
-    "copyright": "© {{year}} Wadera Associates. جميع الحقوق محفوظة.",
+    "copyright": "© {{year}} ARW Analytics. جميع الحقوق محفوظة.",
     "sitemap": "خريطة الموقع"
   },
   "settings": {
@@ -420,11 +420,11 @@
     "close": "إغلاق المساعد",
     "title": "مساعد الأسئلة الشائعة",
     "subtitle": "اسألنا أي شيء",
-    "welcome": "مرحباً! أنا روبوت الأسئلة الشائعة من Wadera Associates. اختر سؤالاً وسأجيبك فوراً.",
+    "welcome": "مرحباً! أنا روبوت الأسئلة الشائعة من ARW Analytics. اختر سؤالاً وسأجيبك فوراً.",
     "pickQuestion": "الأسئلة الشائعة",
     "backToList": "العودة إلى الأسئلة",
     "fullscreen": "ملء الشاشة",
     "exitFullscreen": "الخروج من ملء الشاشة",
-    "footer": "مدعوم من Wadera Associates"
+    "footer": "مدعوم من ARW Analytics"
   }
 }

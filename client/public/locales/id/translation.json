@@ -1,21 +1,21 @@
 {
   "titles": {
-    "home": "Wadera Associates - Platform Intelijen Data Premium",
-    "datasets": "Jelajahi Dataset - Wadera Associates",
-    "datasetDetail": "{{name}} - Wadera Associates",
-    "about": "Tentang Kami - Wadera Associates | Intelijen Data",
-    "contact": "Hubungi Kami - Wadera Associates",
-    "freeData": "Data & Sumber Daya Gratis - Wadera Associates",
-    "freeDataDetail": "{{name}} - Data Gratis | Wadera Associates",
-    "notFound": "Halaman Tidak Ditemukan - Wadera Associates",
-    "login": "Masuk - Wadera Associates",
-    "register": "Buat Akun - Wadera Associates",
-    "otp": "Verifikasi Email - Wadera Associates",
-    "forgotPassword": "Lupa Kata Sandi - Wadera Associates",
-    "resetPassword": "Reset Kata Sandi - Wadera Associates",
-    "profile": "Profil Saya - Wadera Associates",
-    "purchases": "Pembelian Saya - Wadera Associates",
-    "download": "Unduh Dataset - Wadera Associates"
+    "home": "ARW Analytics - Platform Intelijen Data Premium",
+    "datasets": "Jelajahi Dataset - ARW Analytics",
+    "datasetDetail": "{{name}} - ARW Analytics",
+    "about": "Tentang Kami - ARW Analytics | Intelijen Data",
+    "contact": "Hubungi Kami - ARW Analytics",
+    "freeData": "Data & Sumber Daya Gratis - ARW Analytics",
+    "freeDataDetail": "{{name}} - Data Gratis | ARW Analytics",
+    "notFound": "Halaman Tidak Ditemukan - ARW Analytics",
+    "login": "Masuk - ARW Analytics",
+    "register": "Buat Akun - ARW Analytics",
+    "otp": "Verifikasi Email - ARW Analytics",
+    "forgotPassword": "Lupa Kata Sandi - ARW Analytics",
+    "resetPassword": "Reset Kata Sandi - ARW Analytics",
+    "profile": "Profil Saya - ARW Analytics",
+    "purchases": "Pembelian Saya - ARW Analytics",
+    "download": "Unduh Dataset - ARW Analytics"
   },
   "nav": {
     "home": "Beranda",
@@ -112,7 +112,7 @@
     },
     "coverage": {
       "title": "Cakupan Data di Sektor Utama",
-      "body": "Wadera Associates menerbitkan dataset deret waktu yang mencakup pasar energi, harga minyak dan gas, tarif listrik, indeks komoditas, dan indikator pasar keuangan. Dataset kami mencakup Asia, Timur Tengah, dan pasar global — tersedia dalam format XLSX, CSV, PDF, dan PNG."
+      "body": "ARW Analytics menerbitkan dataset deret waktu yang mencakup pasar energi, harga minyak dan gas, tarif listrik, indeks komoditas, dan indikator pasar keuangan. Dataset kami mencakup Asia, Timur Tengah, dan pasar global — tersedia dalam format XLSX, CSV, PDF, dan PNG."
     }
   },
   "datasets": {
@@ -163,7 +163,7 @@
   "about": {
     "heroTitle1": "Mendorong Keputusan dengan",
     "heroTitle2": "Data yang Andal",
-    "heroSubtitle": "Wadera Associates adalah platform intelijen data yang dibangun untuk memberikan dataset bisnis, sektor, dan industri berkualitas tinggi kepada para profesional, peneliti, dan perusahaan di seluruh dunia.",
+    "heroSubtitle": "ARW Analytics adalah platform intelijen data yang dibangun untuk memberikan dataset bisnis, sektor, dan industri berkualitas tinggi kepada para profesional, peneliti, dan perusahaan di seluruh dunia.",
     "mission": {
       "badge": "Misi Kami",
       "title": "Membuat data berkualitas dapat diakses oleh setiap bisnis",
@@ -191,7 +191,7 @@
         }
       ]
     },
-    "teamIllustrationAlt": "Tim Wadera Associates berkolaborasi di sekitar data",
+    "teamIllustrationAlt": "Tim ARW Analytics berkolaborasi di sekitar data",
     "team": {
       "badge": "Orang-Orang di Baliknya",
       "title": "Tim Kami",
@@ -217,7 +217,7 @@
     "structure": {
       "badge": "Struktur",
       "title": "Cara Kami Beroperasi",
-      "p1": "Wadera Associates berfungsi sebagai vertikal intelijen data di bawah perusahaan induknya. Semua keputusan strategis — termasuk penetapan harga, kemitraan, dan arah teknologi — dibuat dengan konsensus di antara mitra pendiri, memastikan akuntabilitas di setiap tingkat.",
+      "p1": "ARW Analytics berfungsi sebagai vertikal intelijen data di bawah perusahaan induknya. Semua keputusan strategis — termasuk penetapan harga, kemitraan, dan arah teknologi — dibuat dengan konsensus di antara mitra pendiri, memastikan akuntabilitas di setiap tingkat.",
       "p2": "Tanggung jawab operasional didistribusikan dengan jelas: teknologi dimiliki dari awal hingga akhir oleh Faizan, pengembangan produk data oleh Hamid, dan urusan keuangan dan hukum oleh Rauf. Struktur ini menjaga siklus pengambilan keputusan tetap singkat dan eksekusi tetap tajam.",
       "p3": "Semua dataset, laporan, kode platform, dan kekayaan intelektual yang dikembangkan di bawah usaha ini dimiliki bersama. Kami serius dalam perlindungan IP dan menegakkan ketentuan lisensi kami untuk melindungi pekerjaan kami dan hak pelanggan kami."
     },
@@ -401,7 +401,7 @@
     "privacyPolicy": "Kebijakan Privasi",
     "termsOfService": "Syarat Layanan",
     "contactSection": "Kontak",
-    "copyright": "© {{year}} Wadera Associates. Hak cipta dilindungi.",
+    "copyright": "© {{year}} ARW Analytics. Hak cipta dilindungi.",
     "sitemap": "Peta Situs"
   },
   "settings": {
@@ -420,11 +420,11 @@
     "close": "Tutup Asisten FAQ",
     "title": "Asisten FAQ",
     "subtitle": "Tanyakan apa saja",
-    "welcome": "Halo! Saya adalah bot FAQ Wadera Associates. Pilih pertanyaan di bawah.",
+    "welcome": "Halo! Saya adalah bot FAQ ARW Analytics. Pilih pertanyaan di bawah.",
     "pickQuestion": "Pertanyaan yang sering diajukan",
     "backToList": "Kembali ke pertanyaan",
     "fullscreen": "Layar penuh",
     "exitFullscreen": "Keluar dari layar penuh",
-    "footer": "Didukung oleh Wadera Associates"
+    "footer": "Didukung oleh ARW Analytics"
   }
 }

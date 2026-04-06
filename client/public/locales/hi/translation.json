@@ -1,21 +1,21 @@
 {
   "titles": {
-    "home": "Wadera Associates - प्रीमियम डेटा इंटेलिजेंस प्लेटफॉर्म",
-    "datasets": "डेटासेट ब्राउज़ करें - Wadera Associates",
-    "datasetDetail": "{{name}} - Wadera Associates",
-    "about": "हमारे बारे में - Wadera Associates | डेटा इंटेलिजेंस",
-    "contact": "संपर्क करें - Wadera Associates",
-    "freeData": "मुफ्त डेटा और संसाधन - Wadera Associates",
-    "freeDataDetail": "{{name}} - मुफ्त डेटा | Wadera Associates",
-    "notFound": "पृष्ठ नहीं मिला - Wadera Associates",
-    "login": "साइन इन - Wadera Associates",
-    "register": "अकाउंट बनाएं - Wadera Associates",
-    "otp": "ईमेल सत्यापित करें - Wadera Associates",
-    "forgotPassword": "पासवर्ड भूल गए - Wadera Associates",
-    "resetPassword": "पासवर्ड रीसेट करें - Wadera Associates",
-    "profile": "मेरी प्रोफाइल - Wadera Associates",
-    "purchases": "मेरी खरीदारी - Wadera Associates",
-    "download": "डेटासेट डाउनलोड करें - Wadera Associates"
+    "home": "ARW Analytics - प्रीमियम डेटा इंटेलिजेंस प्लेटफॉर्म",
+    "datasets": "डेटासेट ब्राउज़ करें - ARW Analytics",
+    "datasetDetail": "{{name}} - ARW Analytics",
+    "about": "हमारे बारे में - ARW Analytics | डेटा इंटेलिजेंस",
+    "contact": "संपर्क करें - ARW Analytics",
+    "freeData": "मुफ्त डेटा और संसाधन - ARW Analytics",
+    "freeDataDetail": "{{name}} - मुफ्त डेटा | ARW Analytics",
+    "notFound": "पृष्ठ नहीं मिला - ARW Analytics",
+    "login": "साइन इन - ARW Analytics",
+    "register": "अकाउंट बनाएं - ARW Analytics",
+    "otp": "ईमेल सत्यापित करें - ARW Analytics",
+    "forgotPassword": "पासवर्ड भूल गए - ARW Analytics",
+    "resetPassword": "पासवर्ड रीसेट करें - ARW Analytics",
+    "profile": "मेरी प्रोफाइल - ARW Analytics",
+    "purchases": "मेरी खरीदारी - ARW Analytics",
+    "download": "डेटासेट डाउनलोड करें - ARW Analytics"
   },
   "nav": {
     "home": "होम",
@@ -163,7 +163,7 @@
   "about": {
     "heroTitle1": "विश्वसनीय डेटा के साथ",
     "heroTitle2": "निर्णयों को सशक्त बनाना",
-    "heroSubtitle": "Wadera Associates एक डेटा इंटेलिजेंस प्लेटफॉर्म है जो दुनिया भर के पेशेवरों, शोधकर्ताओं और उद्यमों को उच्च गुणवत्ता वाले व्यापार, क्षेत्र और उद्योग डेटासेट प्रदान करने के लिए बनाया गया है।",
+    "heroSubtitle": "ARW Analytics एक डेटा इंटेलिजेंस प्लेटफॉर्म है जो दुनिया भर के पेशेवरों, शोधकर्ताओं और उद्यमों को उच्च गुणवत्ता वाले व्यापार, क्षेत्र और उद्योग डेटासेट प्रदान करने के लिए बनाया गया है।",
     "mission": {
       "badge": "हमारा मिशन",
       "title": "हर व्यवसाय के लिए गुणवत्तापूर्ण डेटा सुलभ बनाना",
@@ -191,7 +191,7 @@
         }
       ]
     },
-    "teamIllustrationAlt": "Wadera Associates टीम डेटा के इर्द-गिर्द सहयोग करती हुई",
+    "teamIllustrationAlt": "ARW Analytics टीम डेटा के इर्द-गिर्द सहयोग करती हुई",
     "team": {
       "badge": "इसके पीछे के लोग",
       "title": "हमारी टीम",
@@ -217,7 +217,7 @@
     "structure": {
       "badge": "संरचना",
       "title": "हम कैसे काम करते हैं",
-      "p1": "Wadera Associates अपनी मूल कंपनी के तहत डेटा इंटेलिजेंस वर्टिकल के रूप में कार्य करता है। सभी रणनीतिक निर्णय — मूल्य निर्धारण, साझेदारी और प्रौद्योगिकी दिशा सहित — संस्थापक भागीदारों की सहमति से लिए जाते हैं, जिससे हर स्तर पर जवाबदेही सुनिश्चित होती है।",
+      "p1": "ARW Analytics अपनी मूल कंपनी के तहत डेटा इंटेलिजेंस वर्टिकल के रूप में कार्य करता है। सभी रणनीतिक निर्णय — मूल्य निर्धारण, साझेदारी और प्रौद्योगिकी दिशा सहित — संस्थापक भागीदारों की सहमति से लिए जाते हैं, जिससे हर स्तर पर जवाबदेही सुनिश्चित होती है।",
       "p2": "परिचालन जिम्मेदारियां स्पष्ट रूप से वितरित हैं: प्रौद्योगिकी Faizan द्वारा पूरी तरह से प्रबंधित की जाती है, डेटा उत्पाद विकास Hamid द्वारा, और वित्तीय और कानूनी मामले Rauf द्वारा। यह संरचना निर्णय चक्र को छोटा और निष्पादन को तेज रखती है।",
       "p3": "उद्यम के तहत विकसित सभी डेटासेट, रिपोर्ट, प्लेटफॉर्म कोड और बौद्धिक संपदा संयुक्त स्वामित्व में है। हम IP सुरक्षा को गंभीरता से लेते हैं और अपने काम और ग्राहकों के अधिकारों की रक्षा के लिए अपने लाइसेंस शर्तों को लागू करते हैं।"
     },
@@ -401,7 +401,7 @@
     "privacyPolicy": "गोपनीयता नीति",
     "termsOfService": "सेवा की शर्तें",
     "contactSection": "संपर्क",
-    "copyright": "© {{year}} Wadera Associates. सभी अधिकार सुरक्षित।",
+    "copyright": "© {{year}} ARW Analytics. सभी अधिकार सुरक्षित।",
     "sitemap": "साइटमैप"
   },
   "settings": {
@@ -420,11 +420,11 @@
     "close": "FAQ सहायक बंद करें",
     "title": "FAQ सहायक",
     "subtitle": "कुछ भी पूछें",
-    "welcome": "नमस्ते! मैं Wadera Associates का FAQ बॉट हूँ। एक प्रश्न चुनें।",
+    "welcome": "नमस्ते! मैं ARW Analytics का FAQ बॉट हूँ। एक प्रश्न चुनें।",
     "pickQuestion": "अक्सर पूछे जाने वाले प्रश्न",
     "backToList": "प्रश्नों पर वापस जाएँ",
     "fullscreen": "फ़ुलस्क्रीन",
     "exitFullscreen": "फ़ुलस्क्रीन बंद करें",
-    "footer": "Wadera Associates द्वारा संचालित"
+    "footer": "ARW Analytics द्वारा संचालित"
   }
 }

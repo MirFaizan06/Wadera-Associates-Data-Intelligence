@@ -20,7 +20,8 @@ export interface CreateDatasetInput {
 
 export interface DataPointInput {
   date: string; // YYYY-MM
-  value: number;
+  value: number;    // LocalCurrency/Unit
+  usdValue?: number; // USD/Unit
   note?: string;
 }
 
@@ -124,7 +125,7 @@ export async function getDatasetBySlug(slug: string, includeData = false) {
       ? {
           dataPoints: {
             orderBy: { date: 'asc' },
-            select: { date: true, value: true, unitOverride: true, note: true },
+            select: { date: true, value: true, usdValue: true, unitOverride: true, note: true },
           },
         }
       : undefined,
@@ -154,8 +155,8 @@ export async function appendDataPoints(timeSeriesId: string, points: DataPointIn
     const date = new Date(point.date + '-01');
     await prisma.dataPoint.upsert({
       where: { timeSeriesId_date: { timeSeriesId, date } },
-      update: { value: point.value, note: point.note },
-      create: { timeSeriesId, date, value: point.value, note: point.note },
+      update: { value: point.value, usdValue: point.usdValue ?? null, note: point.note },
+      create: { timeSeriesId, date, value: point.value, usdValue: point.usdValue ?? null, note: point.note },
     });
   }
 
@@ -175,19 +176,26 @@ export async function importFromXLSX(timeSeriesId: string, buffer: Buffer): Prom
     if (rowNumber === 1) return; // Skip header
 
     const dateCell = row.getCell(1).value;
-    const valueCell = row.getCell(2).value;
+    const valueCell = row.getCell(2).value; // LocalCurrency/Unit
 
     if (!dateCell || !valueCell) {
-      errors.push(`Row ${rowNumber}: Missing date or value`);
+      errors.push(`Row ${rowNumber}: Missing date or LocalCurrency/Unit value`);
       return;
     }
 
-    const dateStr = String(dateCell);
     const value = Number(valueCell);
-
     if (isNaN(value)) {
-      errors.push(`Row ${rowNumber}: Invalid value "${valueCell}"`);
+      errors.push(`Row ${rowNumber}: Invalid LocalCurrency/Unit value "${valueCell}"`);
       return;
+    }
+
+    const usdCell = row.getCell(3).value; // USD/Unit (optional)
+    if (usdCell !== null && usdCell !== undefined && usdCell !== '') {
+      const usd = Number(usdCell);
+      if (isNaN(usd)) {
+        errors.push(`Row ${rowNumber}: Invalid USD/Unit value "${usdCell}"`);
+        return;
+      }
     }
   });
 
@@ -197,8 +205,10 @@ export async function importFromXLSX(timeSeriesId: string, buffer: Buffer): Prom
       if (rowNumber === 1) return;
       const dateStr = String(row.getCell(1).value);
       const value = Number(row.getCell(2).value);
-      const note = row.getCell(3).value ? String(row.getCell(3).value) : undefined;
-      points.push({ date: dateStr, value, note });
+      const usdCell = row.getCell(3).value;
+      const usdValue = (usdCell !== null && usdCell !== undefined && usdCell !== '') ? Number(usdCell) : undefined;
+      const note = row.getCell(4).value ? String(row.getCell(4).value) : undefined;
+      points.push({ date: dateStr, value, usdValue, note });
     });
 
     await appendDataPoints(timeSeriesId, points);

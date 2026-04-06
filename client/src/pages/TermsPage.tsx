@@ -6,13 +6,13 @@ export default function TermsPage() {
   return (
     <>
       <Helmet>
-        <title>Terms of Service - Wadera Associates</title>
-        <meta name="description" content="Terms of Service governing use of the Wadera Associates Data Intelligence platform." />
+        <title>Terms of Service - ARW Analytics</title>
+        <meta name="description" content="Terms of Service governing use of the ARW Analytics Data Intelligence platform." />
         <link rel="canonical" href="https://wa-data-intel.netlify.app/pages/terms-of-service" />
-        <meta property="og:title" content="Terms of Service — Wadera Associates" />
+        <meta property="og:title" content="Terms of Service — ARW Analytics" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wa-data-intel.netlify.app/pages/terms-of-service" />
-        <meta property="og:site_name" content="Wadera Associates" />
+        <meta property="og:site_name" content="ARW Analytics" />
       </Helmet>
 
       <div className="bg-gray-50 min-h-screen py-16">
@@ -28,12 +28,12 @@ export default function TermsPage() {
             <section>
               <h2 className="text-xl font-bold text-gray-900 mb-3">1. Acceptance of Terms</h2>
               <p>
-                By accessing or using the Wadera Associates Data Intelligence platform ("Platform") at{' '}
+                By accessing or using the ARW Analytics Data Intelligence platform ("Platform") at{' '}
                 <strong>waderaassociates.com</strong>, you agree to be bound by these Terms of Service ("Terms").
                 If you do not agree to all of these Terms, do not use the Platform.
               </p>
               <p className="mt-3">
-                These Terms constitute a legally binding agreement between you ("User") and Wadera Associates
+                These Terms constitute a legally binding agreement between you ("User") and ARW Analytics
                 ("we", "our", or "us"), a data intelligence venture operating under its parent entity.
               </p>
             </section>
@@ -104,13 +104,13 @@ export default function TermsPage() {
               <h2 className="text-xl font-bold text-gray-900 mb-3">6. Intellectual Property and Licensing</h2>
               <p className="mb-3">
                 All Datasets, reports, and content published on the Platform are the intellectual property of
-                Wadera Associates and are jointly owned by its founding partners. Unauthorised reproduction,
+                ARW Analytics and are jointly owned by its founding partners. Unauthorised reproduction,
                 redistribution, resale, or commercial use is strictly prohibited.
               </p>
               <p className="font-medium text-gray-800 mb-2">Upon purchasing a Dataset, you are granted a:</p>
               <ul className="list-disc pl-5 space-y-1.5 text-gray-600">
                 <li><strong>Non-exclusive, non-transferable personal or commercial use license</strong> as specified in the license type associated with your purchase.</li>
-                <li>You may use the data internally, in research, and in reports — provided you credit Wadera Associates as the source.</li>
+                <li>You may use the data internally, in research, and in reports — provided you credit ARW Analytics as the source.</li>
                 <li>You may <strong>not</strong> resell, sublicense, redistribute, or make the Dataset publicly available in whole or in part.</li>
                 <li>You may <strong>not</strong> scrape, reverse-engineer, or systematically download data from the Platform.</li>
               </ul>
@@ -149,7 +149,7 @@ export default function TermsPage() {
             <section>
               <h2 className="text-xl font-bold text-gray-900 mb-3">9. Limitation of Liability</h2>
               <p>
-                To the maximum extent permitted by applicable law, Wadera Associates and its partners shall not
+                To the maximum extent permitted by applicable law, ARW Analytics and its partners shall not
                 be liable for any indirect, incidental, special, consequential, or punitive damages arising from
                 your use of the Platform, including but not limited to loss of profits, data, or business opportunity —
                 even if advised of the possibility of such damages.

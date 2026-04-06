@@ -59,17 +59,17 @@ export default function FreeDataDetailPage() {
   return (
     <>
       <Helmet>
-        <title>{resource.title} - Free Data | Wadera Associates</title>
+        <title>{resource.title} - Free Data | ARW Analytics</title>
         {resource.summary && <meta name="description" content={resource.summary} />}
         <link rel="canonical" href={`https://wa-data-intel.netlify.app/free-data/${resource.slug}`} />
-        <meta property="og:title" content={`${resource.title} — Wadera Associates`} />
+        <meta property="og:title" content={`${resource.title} — ARW Analytics`} />
         <meta property="og:description" content={resource.summary || resource.title} />
         <meta property="og:type" content={resource.type === 'ARTICLE' ? 'article' : 'website'} />
         <meta property="og:url" content={`https://wa-data-intel.netlify.app/free-data/${resource.slug}`} />
-        <meta property="og:site_name" content="Wadera Associates" />
+        <meta property="og:site_name" content="ARW Analytics" />
         <meta property="og:image" content={resource.coverImage || 'https://wa-data-intel.netlify.app/images/logo.webp'} />
         <meta name="twitter:card" content={resource.coverImage ? 'summary_large_image' : 'summary'} />
-        <meta name="twitter:title" content={`${resource.title} — Wadera Associates`} />
+        <meta name="twitter:title" content={`${resource.title} — ARW Analytics`} />
         <meta name="twitter:description" content={resource.summary || resource.title} />
         <meta name="twitter:image" content={resource.coverImage || 'https://wa-data-intel.netlify.app/images/logo.webp'} />
         {resource.type === 'ARTICLE' && (
@@ -83,8 +83,8 @@ export default function FreeDataDetailPage() {
             dateModified: resource.updatedAt,
             author: resource.author
               ? { '@type': 'Person', name: resource.author }
-              : { '@type': 'Organization', name: 'Wadera Associates' },
-            publisher: { '@type': 'Organization', name: 'Wadera Associates', url: 'https://wa-data-intel.netlify.app' },
+              : { '@type': 'Organization', name: 'ARW Analytics' },
+            publisher: { '@type': 'Organization', name: 'ARW Analytics', url: 'https://wa-data-intel.netlify.app' },
             ...(resource.coverImage && { image: resource.coverImage }),
           })}</script>
         )}

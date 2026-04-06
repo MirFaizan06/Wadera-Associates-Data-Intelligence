@@ -100,7 +100,7 @@ export default function AdminProfilePage() {
 
   return (
     <>
-      <Helmet><title>My Profile - {roleName} | Wadera Associates</title></Helmet>
+      <Helmet><title>My Profile - {roleName} | ARW Analytics</title></Helmet>
 
       <div className="max-w-2xl mx-auto space-y-6">
         {/* Header */}

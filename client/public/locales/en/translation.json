@@ -1,21 +1,21 @@
 {
   "titles": {
-    "home": "Wadera Associates - Premium Data Intelligence Platform",
-    "datasets": "Browse Datasets - Wadera Associates",
-    "datasetDetail": "{{name}} - Wadera Associates",
-    "about": "About Us - Wadera Associates | Data Intelligence",
-    "contact": "Contact Us - Wadera Associates",
-    "freeData": "Free Data & Resources - Wadera Associates",
-    "freeDataDetail": "{{name}} - Free Data | Wadera Associates",
-    "notFound": "Page Not Found - Wadera Associates",
-    "login": "Sign In - Wadera Associates",
-    "register": "Create Account - Wadera Associates",
-    "otp": "Verify Email - Wadera Associates",
-    "forgotPassword": "Forgot Password - Wadera Associates",
-    "resetPassword": "Reset Password - Wadera Associates",
-    "profile": "My Profile - Wadera Associates",
-    "purchases": "My Purchases - Wadera Associates",
-    "download": "Download Dataset - Wadera Associates"
+    "home": "ARW Analytics - Premium Data Intelligence Platform",
+    "datasets": "Browse Datasets - ARW Analytics",
+    "datasetDetail": "{{name}} - ARW Analytics",
+    "about": "About Us - ARW Analytics | Data Intelligence",
+    "contact": "Contact Us - ARW Analytics",
+    "freeData": "Free Data & Resources - ARW Analytics",
+    "freeDataDetail": "{{name}} - Free Data | ARW Analytics",
+    "notFound": "Page Not Found - ARW Analytics",
+    "login": "Sign In - ARW Analytics",
+    "register": "Create Account - ARW Analytics",
+    "otp": "Verify Email - ARW Analytics",
+    "forgotPassword": "Forgot Password - ARW Analytics",
+    "resetPassword": "Reset Password - ARW Analytics",
+    "profile": "My Profile - ARW Analytics",
+    "purchases": "My Purchases - ARW Analytics",
+    "download": "Download Dataset - ARW Analytics"
   },
   "nav": {
     "home": "Home",
@@ -83,7 +83,7 @@
     },
     "coverage": {
       "title": "Data Coverage Across Key Sectors",
-      "body": "Wadera Associates publishes time-series datasets covering energy markets, oil and gas prices, electricity tariffs, commodity indices, and financial market indicators. Our datasets span Asia, the Middle East, and global markets — sourced, verified, and structured for immediate use in models, reports, and dashboards. Whether you are an analyst tracking crude oil prices, a consultant benchmarking electricity costs, or a researcher studying commodity trends, our platform provides the precise data you need. All datasets include monthly historical records, unit metadata, and are available for instant download in XLSX, CSV, PDF, and PNG chart formats."
+      "body": "ARW Analytics publishes time-series datasets covering energy markets, oil and gas prices, electricity tariffs, commodity indices, and financial market indicators. Our datasets span Asia, the Middle East, and global markets — sourced, verified, and structured for immediate use in models, reports, and dashboards. Whether you are an analyst tracking crude oil prices, a consultant benchmarking electricity costs, or a researcher studying commodity trends, our platform provides the precise data you need. All datasets include monthly historical records, unit metadata, and are available for instant download in XLSX, CSV, PDF, and PNG chart formats."
     },
     "featured": {
       "title": "Featured Datasets",
@@ -145,7 +145,7 @@
   "about": {
     "heroTitle1": "Powering Decisions with",
     "heroTitle2": "Reliable Data",
-    "heroSubtitle": "Wadera Associates is a data intelligence platform built to deliver high-quality business, sector, and industry datasets to professionals, researchers, and enterprises worldwide.",
+    "heroSubtitle": "ARW Analytics is a data intelligence platform built to deliver high-quality business, sector, and industry datasets to professionals, researchers, and enterprises worldwide.",
     "mission": {
       "badge": "Our Mission",
       "title": "Making quality data accessible to every business",
@@ -173,7 +173,7 @@
         }
       ]
     },
-    "teamIllustrationAlt": "The Wadera Associates team collaborating around data",
+    "teamIllustrationAlt": "The ARW Analytics team collaborating around data",
     "team": {
       "badge": "The People Behind It",
       "title": "Our Team",
@@ -199,7 +199,7 @@
     "structure": {
       "badge": "Structure",
       "title": "How We Operate",
-      "p1": "Wadera Associates functions as a data intelligence vertical under its parent company. All strategic decisions — including pricing, partnerships, and technology direction — are made by consensus among the founding partners, ensuring accountability at every level.",
+      "p1": "ARW Analytics functions as a data intelligence vertical under its parent company. All strategic decisions — including pricing, partnerships, and technology direction — are made by consensus among the founding partners, ensuring accountability at every level.",
       "p2": "Operational responsibilities are clearly distributed: technology is owned end-to-end by Faizan, data product development by Hamid, and financial and legal affairs by Rauf. This structure keeps decision cycles short and execution sharp.",
       "p3": "All datasets, reports, platform code, and intellectual property developed under the venture are jointly owned. We take IP protection seriously and enforce our licensing terms to protect both our work and our customers' rights."
     },
@@ -380,12 +380,12 @@
     "close": "Close FAQ assistant",
     "title": "FAQ Assistant",
     "subtitle": "Ask us anything",
-    "welcome": "Hi! I'm the Wadera Associates FAQ bot. Pick a question below and I'll answer right away.",
+    "welcome": "Hi! I'm the ARW Analytics FAQ bot. Pick a question below and I'll answer right away.",
     "pickQuestion": "Frequently asked questions",
     "backToList": "Back to questions",
     "fullscreen": "Fullscreen",
     "exitFullscreen": "Exit fullscreen",
-    "footer": "Powered by Wadera Associates"
+    "footer": "Powered by ARW Analytics"
   },
   "footer": {
     "tagline": "Premium time-series datasets for energy, commodities, and financial markets.",
@@ -398,6 +398,6 @@
     "termsOfService": "Terms of Service",
     "sitemap": "Sitemap",
     "contactSection": "Contact",
-    "copyright": "© {{year}} Wadera Associates. All rights reserved."
+    "copyright": "© {{year}} ARW Analytics. All rights reserved."
   }
 }

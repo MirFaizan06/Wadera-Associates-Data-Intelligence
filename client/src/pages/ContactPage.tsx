@@ -35,16 +35,16 @@ export default function ContactPage() {
     <>
       <Helmet>
         <title>{t('titles.contact')}</title>
-        <meta name="description" content="Contact Wadera Associates for dataset inquiries, custom data requests, partnership proposals, or support. We typically respond within 1–2 business days." />
+        <meta name="description" content="Contact ARW Analytics for dataset inquiries, custom data requests, partnership proposals, or support. We typically respond within 1–2 business days." />
         <link rel="canonical" href="https://wa-data-intel.netlify.app/contact" />
-        <meta property="og:title" content="Contact Wadera Associates" />
+        <meta property="og:title" content="Contact ARW Analytics" />
         <meta property="og:description" content="Get in touch for dataset inquiries, support, or partnerships." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wa-data-intel.netlify.app/contact" />
-        <meta property="og:site_name" content="Wadera Associates" />
+        <meta property="og:site_name" content="ARW Analytics" />
         <meta property="og:image" content="https://wa-data-intel.netlify.app/images/logo.webp" />
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="Contact Wadera Associates" />
+        <meta name="twitter:title" content="Contact ARW Analytics" />
         <meta name="twitter:description" content="Get in touch for dataset inquiries, support, or partnerships." />
         <meta name="twitter:image" content="https://wa-data-intel.netlify.app/images/logo.webp" />
       </Helmet>

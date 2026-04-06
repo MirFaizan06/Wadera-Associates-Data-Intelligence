@@ -54,7 +54,7 @@ export default function LoginPage() {
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
             <Link to="/" className="inline-flex items-center justify-center mb-6">
-              <img src="/images/logo.webp" alt="Wadera Associates" className="h-16 w-auto" width={160} height={64} />
+              <img src="/images/logo.webp" alt="ARW Analytics" className="h-16 w-auto" width={160} height={64} />
             </Link>
             <h1 className="text-2xl font-bold text-gray-900">{t('auth.login.title')}</h1>
             <p className="text-gray-500 mt-1">{t('auth.login.subtitle')}</p>

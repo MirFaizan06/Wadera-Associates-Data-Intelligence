@@ -28,7 +28,8 @@ export interface Dataset {
 
 export interface DataPoint {
   date: string;
-  value: number;
+  value: number;         // LocalCurrency/Unit
+  usdValue?: number | null; // USD/Unit
   unitOverride: string | null;
   note: string | null;
 }

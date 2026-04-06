@@ -138,7 +138,8 @@ model DataPoint {
   timeSeriesId String
   timeSeries   TimeSeries @relation(fields: [timeSeriesId], references: [id])
   date         DateTime
-  value        Float
+  value        Float      // LocalCurrency/Unit
+  usdValue     Float?     // USD/Unit
   unitOverride String?
   note         String?
   createdAt    DateTime   @default(now())

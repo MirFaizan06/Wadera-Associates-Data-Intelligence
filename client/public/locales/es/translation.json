@@ -1,21 +1,21 @@
 {
   "titles": {
-    "home": "Wadera Associates - Plataforma de Inteligencia de Datos Premium",
-    "datasets": "Explorar Conjuntos de Datos - Wadera Associates",
-    "datasetDetail": "{{name}} - Wadera Associates",
-    "about": "Sobre Nosotros - Wadera Associates | Inteligencia de Datos",
-    "contact": "Contáctenos - Wadera Associates",
-    "freeData": "Datos y Recursos Gratuitos - Wadera Associates",
-    "freeDataDetail": "{{name}} - Datos Gratuitos | Wadera Associates",
-    "notFound": "Página No Encontrada - Wadera Associates",
-    "login": "Iniciar Sesión - Wadera Associates",
-    "register": "Crear Cuenta - Wadera Associates",
-    "otp": "Verificar Email - Wadera Associates",
-    "forgotPassword": "Olvidé mi Contraseña - Wadera Associates",
-    "resetPassword": "Restablecer Contraseña - Wadera Associates",
-    "profile": "Mi Perfil - Wadera Associates",
-    "purchases": "Mis Compras - Wadera Associates",
-    "download": "Descargar Conjunto de Datos - Wadera Associates"
+    "home": "ARW Analytics - Plataforma de Inteligencia de Datos Premium",
+    "datasets": "Explorar Conjuntos de Datos - ARW Analytics",
+    "datasetDetail": "{{name}} - ARW Analytics",
+    "about": "Sobre Nosotros - ARW Analytics | Inteligencia de Datos",
+    "contact": "Contáctenos - ARW Analytics",
+    "freeData": "Datos y Recursos Gratuitos - ARW Analytics",
+    "freeDataDetail": "{{name}} - Datos Gratuitos | ARW Analytics",
+    "notFound": "Página No Encontrada - ARW Analytics",
+    "login": "Iniciar Sesión - ARW Analytics",
+    "register": "Crear Cuenta - ARW Analytics",
+    "otp": "Verificar Email - ARW Analytics",
+    "forgotPassword": "Olvidé mi Contraseña - ARW Analytics",
+    "resetPassword": "Restablecer Contraseña - ARW Analytics",
+    "profile": "Mi Perfil - ARW Analytics",
+    "purchases": "Mis Compras - ARW Analytics",
+    "download": "Descargar Conjunto de Datos - ARW Analytics"
   },
   "nav": {
     "home": "Inicio",
@@ -112,7 +112,7 @@
     },
     "coverage": {
       "title": "Cobertura de datos en sectores clave",
-      "body": "Wadera Associates publica series temporales de mercados energéticos, precios del petróleo y gas, tarifas eléctricas, índices de materias primas e indicadores financieros. Nuestros datos abarcan Asia, Oriente Medio y mercados globales — disponibles en XLSX, CSV, PDF y PNG."
+      "body": "ARW Analytics publica series temporales de mercados energéticos, precios del petróleo y gas, tarifas eléctricas, índices de materias primas e indicadores financieros. Nuestros datos abarcan Asia, Oriente Medio y mercados globales — disponibles en XLSX, CSV, PDF y PNG."
     }
   },
   "datasets": {
@@ -163,7 +163,7 @@
   "about": {
     "heroTitle1": "Potenciando Decisiones con",
     "heroTitle2": "Datos Confiables",
-    "heroSubtitle": "Wadera Associates es una plataforma de inteligencia de datos construida para ofrecer conjuntos de datos de alta calidad empresariales, sectoriales e industriales a profesionales, investigadores y empresas en todo el mundo.",
+    "heroSubtitle": "ARW Analytics es una plataforma de inteligencia de datos construida para ofrecer conjuntos de datos de alta calidad empresariales, sectoriales e industriales a profesionales, investigadores y empresas en todo el mundo.",
     "mission": {
       "badge": "Nuestra Misión",
       "title": "Hacer que los datos de calidad sean accesibles para cada empresa",
@@ -191,7 +191,7 @@
         }
       ]
     },
-    "teamIllustrationAlt": "El equipo de Wadera Associates colaborando con datos",
+    "teamIllustrationAlt": "El equipo de ARW Analytics colaborando con datos",
     "team": {
       "badge": "Las Personas Detrás",
       "title": "Nuestro Equipo",
@@ -217,7 +217,7 @@
     "structure": {
       "badge": "Estructura",
       "title": "Cómo Operamos",
-      "p1": "Wadera Associates funciona como una vertical de inteligencia de datos bajo su empresa matriz. Todas las decisiones estratégicas — incluyendo precios, asociaciones y dirección tecnológica — se toman por consenso entre los socios fundadores, asegurando responsabilidad en cada nivel.",
+      "p1": "ARW Analytics funciona como una vertical de inteligencia de datos bajo su empresa matriz. Todas las decisiones estratégicas — incluyendo precios, asociaciones y dirección tecnológica — se toman por consenso entre los socios fundadores, asegurando responsabilidad en cada nivel.",
       "p2": "Las responsabilidades operativas están claramente distribuidas: la tecnología es gestionada de principio a fin por Faizan, el desarrollo de productos de datos por Hamid, y los asuntos financieros y legales por Rauf. Esta estructura mantiene los ciclos de decisión cortos y la ejecución ágil.",
       "p3": "Todos los conjuntos de datos, informes, código de plataforma y propiedad intelectual desarrollados bajo la empresa son de propiedad conjunta. Tomamos en serio la protección de la PI y hacemos cumplir nuestros términos de licencia para proteger tanto nuestro trabajo como los derechos de nuestros clientes."
     },
@@ -401,7 +401,7 @@
     "privacyPolicy": "Política de Privacidad",
     "termsOfService": "Términos de Servicio",
     "contactSection": "Contacto",
-    "copyright": "© {{year}} Wadera Associates. Todos los derechos reservados.",
+    "copyright": "© {{year}} ARW Analytics. Todos los derechos reservados.",
     "sitemap": "Mapa del sitio"
   },
   "settings": {
@@ -420,11 +420,11 @@
     "close": "Cerrar asistente",
     "title": "Asistente de Preguntas",
     "subtitle": "Preguntanos lo que quieras",
-    "welcome": "Hola! Soy el bot de preguntas frecuentes de Wadera Associates. Elige una pregunta y te respondere de inmediato.",
+    "welcome": "Hola! Soy el bot de preguntas frecuentes de ARW Analytics. Elige una pregunta y te respondere de inmediato.",
     "pickQuestion": "Preguntas frecuentes",
     "backToList": "Volver a las preguntas",
     "fullscreen": "Pantalla completa",
     "exitFullscreen": "Salir de pantalla completa",
-    "footer": "Con tecnologia de Wadera Associates"
+    "footer": "Con tecnologia de ARW Analytics"
   }
 }

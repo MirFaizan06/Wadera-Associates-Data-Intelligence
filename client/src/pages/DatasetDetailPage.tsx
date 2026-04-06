@@ -56,7 +56,7 @@ export default function DatasetDetailPage() {
   return (
     <>
       <Helmet>
-        <title>{dataset.name} – Buy & Download Time-Series Data | Wadera Associates</title>
+        <title>{dataset.name} – Buy & Download Time-Series Data | ARW Analytics</title>
         <meta name="description" content={
           dataset.description
             ? `${dataset.description.slice(0, 140)} — Download as XLSX, CSV or PDF instantly.`
@@ -70,17 +70,17 @@ export default function DatasetDetailPage() {
           'time series data',
           'download dataset',
           'XLSX CSV PDF',
-          'Wadera Associates',
+          'ARW Analytics',
         ].filter(Boolean).join(', ')} />
         <link rel="canonical" href={`https://wa-data-intel.netlify.app/datasets/${dataset.slug}`} />
-        <meta property="og:title" content={`${dataset.name} — Wadera Associates`} />
+        <meta property="og:title" content={`${dataset.name} — ARW Analytics`} />
         <meta property="og:description" content={dataset.description || `Download ${dataset.name} time-series dataset in XLSX, CSV, or PDF.`} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`https://wa-data-intel.netlify.app/datasets/${dataset.slug}`} />
-        <meta property="og:site_name" content="Wadera Associates" />
+        <meta property="og:site_name" content="ARW Analytics" />
         <meta property="og:image" content={dataset.coverImage || 'https://wa-data-intel.netlify.app/images/logo.webp'} />
         <meta name="twitter:card" content={dataset.coverImage ? 'summary_large_image' : 'summary'} />
-        <meta name="twitter:title" content={`${dataset.name} — Wadera Associates`} />
+        <meta name="twitter:title" content={`${dataset.name} — ARW Analytics`} />
         <meta name="twitter:description" content={dataset.description || `Download ${dataset.name} time-series dataset.`} />
         <meta name="twitter:image" content={dataset.coverImage || 'https://wa-data-intel.netlify.app/images/logo.webp'} />
         <script type="application/ld+json">{JSON.stringify({
@@ -89,7 +89,7 @@ export default function DatasetDetailPage() {
           name: dataset.name,
           description: dataset.description,
           url: `https://wa-data-intel.netlify.app/datasets/${dataset.slug}`,
-          creator: { '@type': 'Organization', name: 'Wadera Associates', url: 'https://wa-data-intel.netlify.app' },
+          creator: { '@type': 'Organization', name: 'ARW Analytics', url: 'https://wa-data-intel.netlify.app' },
           variableMeasured: dataset.defaultUnit,
           ...(dataset.category && { keywords: [dataset.category] }),
           distribution: [
@@ -159,7 +159,8 @@ export default function DatasetDetailPage() {
                       <thead>
                         <tr className="border-b border-gray-100">
                           <th className="text-left py-2 pr-4 font-medium text-gray-600">{t('datasetDetail.preview.dateCol')}</th>
-                          <th className="text-left py-2 pr-4 font-medium text-gray-600">{t('datasetDetail.preview.valueCol')}</th>
+                          <th className="text-left py-2 pr-4 font-medium text-gray-600">LocalCurrency/Unit</th>
+                          <th className="text-left py-2 pr-4 font-medium text-gray-600">USD/Unit</th>
                           <th className="text-left py-2 font-medium text-gray-600">{t('datasetDetail.preview.unitCol')}</th>
                         </tr>
                       </thead>
@@ -168,6 +169,7 @@ export default function DatasetDetailPage() {
                           <tr key={i} className="border-b border-gray-50">
                             <td className="py-2 pr-4 text-gray-700">{dp.date.slice(0, 7)}</td>
                             <td className="py-2 pr-4 font-mono text-gray-900">{dp.value}</td>
+                            <td className="py-2 pr-4 font-mono text-gray-600">{dp.usdValue != null ? dp.usdValue : '—'}</td>
                             <td className="py-2 text-gray-500">{dp.unitOverride || dataset.defaultUnit}</td>
                           </tr>
                         ))}

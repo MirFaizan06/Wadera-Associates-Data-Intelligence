@@ -40,10 +40,10 @@ export default function Navbar() {
           <div className="flex h-[72px] items-center justify-between gap-4">
 
             {/* Logo */}
-            <Link to="/" aria-label="Wadera Associates Home" className="shrink-0">
+            <Link to="/" aria-label="ARW Analytics Home" className="shrink-0">
               <img
                 src="/images/logo.webp"
-                alt="Wadera Associates – Data Intelligence"
+                alt="ARW Analytics – Data Intelligence"
                 className="h-14 w-auto"
                 width={160}
                 height={56}

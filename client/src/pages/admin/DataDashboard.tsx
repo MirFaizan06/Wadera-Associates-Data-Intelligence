@@ -196,7 +196,7 @@ export default function DataDashboard() {
 
                         {showImport === d.id && (
                           <div className="mt-2 p-3 bg-gray-50 rounded-lg">
-                            <p className="text-xs text-gray-600 mb-2">Upload XLSX (cols: Date(YYYY-MM), Value, Notes)</p>
+                            <p className="text-xs text-gray-600 mb-2">Upload XLSX (cols: Date(YYYY-MM), LocalCurrency/Unit, USD/Unit, Notes)</p>
                             <input type="file" accept=".xlsx,.xls" ref={fileRef} className="text-xs mb-2" />
                             <Button size="sm" loading={uploading} onClick={() => onImportXLSX(d.id)}>Import</Button>
                           </div>
@@ -229,13 +229,19 @@ export default function DataDashboard() {
 function AddDataPointForm({ datasetId, onSaved }: { datasetId: string; onSaved: () => void }) {
   const [date, setDate] = useState('');
   const [value, setValue] = useState('');
+  const [usdValue, setUsdValue] = useState('');
   const [note, setNote] = useState('');
   const [saving, setSaving] = useState(false);
 
   const handleSave = async () => {
     setSaving(true);
     await api.post(`/admin/data/datasets/${datasetId}/data-points`, {
-      points: [{ date, value: parseFloat(value), note: note || undefined }],
+      points: [{
+        date,
+        value: parseFloat(value),
+        usdValue: usdValue ? parseFloat(usdValue) : undefined,
+        note: note || undefined,
+      }],
     });
     onSaved();
     setSaving(false);
@@ -243,11 +249,13 @@ function AddDataPointForm({ datasetId, onSaved }: { datasetId: string; onSaved: 
 
   return (
     <div className="mt-2 p-3 bg-blue-50 rounded-lg space-y-2">
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-4 gap-2">
         <input type="month" value={date} onChange={e => setDate(e.target.value)}
           className="text-xs border border-gray-200 rounded px-2 py-1" placeholder="YYYY-MM" aria-label="Month" />
         <input type="number" value={value} onChange={e => setValue(e.target.value)}
-          className="text-xs border border-gray-200 rounded px-2 py-1" placeholder="Value" aria-label="Value" />
+          className="text-xs border border-gray-200 rounded px-2 py-1" placeholder="LocalCurrency/Unit" aria-label="LocalCurrency/Unit" />
+        <input type="number" value={usdValue} onChange={e => setUsdValue(e.target.value)}
+          className="text-xs border border-gray-200 rounded px-2 py-1" placeholder="USD/Unit (opt)" aria-label="USD/Unit" />
         <input type="text" value={note} onChange={e => setNote(e.target.value)}
           className="text-xs border border-gray-200 rounded px-2 py-1" placeholder="Note (opt)" aria-label="Note" />
       </div>

@@ -1,21 +1,21 @@
 {
   "titles": {
-    "home": "Wadera Associates - Plateforme Premium d'Intelligence des Données",
-    "datasets": "Parcourir les Jeux de Données - Wadera Associates",
-    "datasetDetail": "{{name}} - Wadera Associates",
-    "about": "À Propos - Wadera Associates | Intelligence des Données",
-    "contact": "Contactez-nous - Wadera Associates",
-    "freeData": "Données et Ressources Gratuites - Wadera Associates",
-    "freeDataDetail": "{{name}} - Données Gratuites | Wadera Associates",
-    "notFound": "Page Non Trouvée - Wadera Associates",
-    "login": "Se Connecter - Wadera Associates",
-    "register": "Créer un Compte - Wadera Associates",
-    "otp": "Vérifier l'Email - Wadera Associates",
-    "forgotPassword": "Mot de Passe Oublié - Wadera Associates",
-    "resetPassword": "Réinitialiser le Mot de Passe - Wadera Associates",
-    "profile": "Mon Profil - Wadera Associates",
-    "purchases": "Mes Achats - Wadera Associates",
-    "download": "Télécharger le Jeu de Données - Wadera Associates"
+    "home": "ARW Analytics - Plateforme Premium d'Intelligence des Données",
+    "datasets": "Parcourir les Jeux de Données - ARW Analytics",
+    "datasetDetail": "{{name}} - ARW Analytics",
+    "about": "À Propos - ARW Analytics | Intelligence des Données",
+    "contact": "Contactez-nous - ARW Analytics",
+    "freeData": "Données et Ressources Gratuites - ARW Analytics",
+    "freeDataDetail": "{{name}} - Données Gratuites | ARW Analytics",
+    "notFound": "Page Non Trouvée - ARW Analytics",
+    "login": "Se Connecter - ARW Analytics",
+    "register": "Créer un Compte - ARW Analytics",
+    "otp": "Vérifier l'Email - ARW Analytics",
+    "forgotPassword": "Mot de Passe Oublié - ARW Analytics",
+    "resetPassword": "Réinitialiser le Mot de Passe - ARW Analytics",
+    "profile": "Mon Profil - ARW Analytics",
+    "purchases": "Mes Achats - ARW Analytics",
+    "download": "Télécharger le Jeu de Données - ARW Analytics"
   },
   "nav": {
     "home": "Accueil",
@@ -112,7 +112,7 @@
     },
     "coverage": {
       "title": "Couverture des données dans les secteurs clés",
-      "body": "Wadera Associates publie des séries temporelles couvrant les marchés de l'énergie, les prix du pétrole et du gaz, les tarifs d'électricité, les indices de matières premières et les indicateurs financiers. Nos données couvrent l'Asie, le Moyen-Orient et les marchés mondiaux — en XLSX, CSV, PDF et PNG."
+      "body": "ARW Analytics publie des séries temporelles couvrant les marchés de l'énergie, les prix du pétrole et du gaz, les tarifs d'électricité, les indices de matières premières et les indicateurs financiers. Nos données couvrent l'Asie, le Moyen-Orient et les marchés mondiaux — en XLSX, CSV, PDF et PNG."
     }
   },
   "datasets": {
@@ -163,7 +163,7 @@
   "about": {
     "heroTitle1": "Alimenter les Décisions avec",
     "heroTitle2": "des Données Fiables",
-    "heroSubtitle": "Wadera Associates est une plateforme d'intelligence des données construite pour fournir des jeux de données de haute qualité commerciaux, sectoriels et industriels aux professionnels, chercheurs et entreprises du monde entier.",
+    "heroSubtitle": "ARW Analytics est une plateforme d'intelligence des données construite pour fournir des jeux de données de haute qualité commerciaux, sectoriels et industriels aux professionnels, chercheurs et entreprises du monde entier.",
     "mission": {
       "badge": "Notre Mission",
       "title": "Rendre les données de qualité accessibles à toutes les entreprises",
@@ -191,7 +191,7 @@
         }
       ]
     },
-    "teamIllustrationAlt": "L'équipe Wadera Associates collaborant autour des données",
+    "teamIllustrationAlt": "L'équipe ARW Analytics collaborant autour des données",
     "team": {
       "badge": "Les Personnes Derrière",
       "title": "Notre Équipe",
@@ -217,7 +217,7 @@
     "structure": {
       "badge": "Structure",
       "title": "Comment Nous Opérons",
-      "p1": "Wadera Associates fonctionne comme un vertical d'intelligence des données sous sa société mère. Toutes les décisions stratégiques — y compris la tarification, les partenariats et la direction technologique — sont prises par consensus entre les associés fondateurs, assurant la responsabilité à chaque niveau.",
+      "p1": "ARW Analytics fonctionne comme un vertical d'intelligence des données sous sa société mère. Toutes les décisions stratégiques — y compris la tarification, les partenariats et la direction technologique — sont prises par consensus entre les associés fondateurs, assurant la responsabilité à chaque niveau.",
       "p2": "Les responsabilités opérationnelles sont clairement distribuées : la technologie est gérée de bout en bout par Faizan, le développement de produits de données par Hamid, et les affaires financières et juridiques par Rauf. Cette structure maintient des cycles de décision courts et une exécution précise.",
       "p3": "Tous les jeux de données, rapports, code de plateforme et propriété intellectuelle développés sous la coentreprise sont en copropriété. Nous prenons au sérieux la protection de la PI et appliquons nos conditions de licence pour protéger notre travail et les droits de nos clients."
     },
@@ -401,7 +401,7 @@
     "privacyPolicy": "Politique de Confidentialité",
     "termsOfService": "Conditions d'Utilisation",
     "contactSection": "Contact",
-    "copyright": "© {{year}} Wadera Associates. Tous droits réservés.",
+    "copyright": "© {{year}} ARW Analytics. Tous droits réservés.",
     "sitemap": "Plan du site"
   },
   "settings": {
@@ -420,11 +420,11 @@
     "close": "Fermer assistant FAQ",
     "title": "Assistant FAQ",
     "subtitle": "Posez-nous une question",
-    "welcome": "Bonjour! Je suis le bot FAQ de Wadera Associates. Choisissez une question.",
+    "welcome": "Bonjour! Je suis le bot FAQ de ARW Analytics. Choisissez une question.",
     "pickQuestion": "Questions frequentes",
     "backToList": "Retour aux questions",
     "fullscreen": "Plein ecran",
     "exitFullscreen": "Quitter le plein ecran",
-    "footer": "Fourni par Wadera Associates"
+    "footer": "Fourni par ARW Analytics"
   }
 }

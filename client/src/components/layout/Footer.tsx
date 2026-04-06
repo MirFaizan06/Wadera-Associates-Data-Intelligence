@@ -12,7 +12,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <BarChart3 className="h-6 w-6 text-blue-300" aria-hidden />
-              <span className="font-bold text-lg">Wadera Associates</span>
+              <span className="font-bold text-lg">ARW Analytics</span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
               {t('footer.tagline')}
@@ -37,7 +37,7 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold mb-4 text-blue-200">{t('footer.contactSection')}</h3>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li className="flex items-center gap-2"><Mail className="h-4 w-4" aria-hidden /><a href="mailto:info@waderaassociates.com" className="hover:text-white">info@waderaassociates.com</a></li>
+              <li className="flex items-center gap-2"><Mail className="h-4 w-4" aria-hidden /><a href="mailto:info@arwanalytics.com" className="hover:text-white">info@arwanalytics.com</a></li>
             </ul>
           </div>
         </div>

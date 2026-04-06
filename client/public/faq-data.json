@@ -32,7 +32,7 @@
   {
     "id": "subscription",
     "question": "Is this a subscription service?",
-    "answer": "**No.** Wadera Associates uses a **one-time purchase** model. Pay once, download immediately, and keep lifetime access to your data. There are no recurring fees, no annual renewals.",
+    "answer": "**No.** ARW Analytics uses a **one-time purchase** model. Pay once, download immediately, and keep lifetime access to your data. There are no recurring fees, no annual renewals.",
     "link": null
   },
   {
@@ -79,8 +79,8 @@
   },
   {
     "id": "about-us",
-    "question": "Who is Wadera Associates?",
-    "answer": "Wadera Associates is a data intelligence platform built to deliver high-quality business, sector, and industry datasets to professionals, researchers, and enterprises worldwide. Our team of three covers technology, data research, and finance.",
+    "question": "Who is ARW Analytics?",
+    "answer": "ARW Analytics is a data intelligence platform built to deliver high-quality business, sector, and industry datasets to professionals, researchers, and enterprises worldwide. Our team of three covers technology, data research, and finance.",
     "link": { "label": "Learn About Us", "href": "/about" }
   },
   {

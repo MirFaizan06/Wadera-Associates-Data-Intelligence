@@ -56,7 +56,7 @@ export default function PaymentModal({ dataset, user, onClose }: Props) {
         key: keyId,
         amount,
         currency,
-        name: 'Wadera Associates',
+        name: 'ARW Analytics',
         description: dataset.name,
         order_id: orderId,
         prefill: {

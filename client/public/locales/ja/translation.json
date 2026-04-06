@@ -1,21 +1,21 @@
 {
   "titles": {
-    "home": "Wadera Associates - プレミアムデータインテリジェンスプラットフォーム",
-    "datasets": "データセットを閲覧 - Wadera Associates",
-    "datasetDetail": "{{name}} - Wadera Associates",
-    "about": "私たちについて - Wadera Associates | データインテリジェンス",
-    "contact": "お問い合わせ - Wadera Associates",
-    "freeData": "無料データ＆リソース - Wadera Associates",
-    "freeDataDetail": "{{name}} - 無料データ | Wadera Associates",
-    "notFound": "ページが見つかりません - Wadera Associates",
-    "login": "サインイン - Wadera Associates",
-    "register": "アカウント作成 - Wadera Associates",
-    "otp": "メール認証 - Wadera Associates",
-    "forgotPassword": "パスワードをお忘れですか - Wadera Associates",
-    "resetPassword": "パスワードのリセット - Wadera Associates",
-    "profile": "マイプロフィール - Wadera Associates",
-    "purchases": "購入履歴 - Wadera Associates",
-    "download": "データセットのダウンロード - Wadera Associates"
+    "home": "ARW Analytics - プレミアムデータインテリジェンスプラットフォーム",
+    "datasets": "データセットを閲覧 - ARW Analytics",
+    "datasetDetail": "{{name}} - ARW Analytics",
+    "about": "私たちについて - ARW Analytics | データインテリジェンス",
+    "contact": "お問い合わせ - ARW Analytics",
+    "freeData": "無料データ＆リソース - ARW Analytics",
+    "freeDataDetail": "{{name}} - 無料データ | ARW Analytics",
+    "notFound": "ページが見つかりません - ARW Analytics",
+    "login": "サインイン - ARW Analytics",
+    "register": "アカウント作成 - ARW Analytics",
+    "otp": "メール認証 - ARW Analytics",
+    "forgotPassword": "パスワードをお忘れですか - ARW Analytics",
+    "resetPassword": "パスワードのリセット - ARW Analytics",
+    "profile": "マイプロフィール - ARW Analytics",
+    "purchases": "購入履歴 - ARW Analytics",
+    "download": "データセットのダウンロード - ARW Analytics"
   },
   "nav": {
     "home": "ホーム",
@@ -112,7 +112,7 @@
     },
     "coverage": {
       "title": "主要セクターのデータカバレッジ",
-      "body": "Wadera Associatesは、エネルギー市場、石油・ガス価格、電力料金、コモディティ指数、金融市場指標をカバーする時系列データセットを公開しています。アジア、中東、グローバル市場にわたるデータをXLSX、CSV、PDF、PNGで提供しています。"
+      "body": "ARW Analyticsは、エネルギー市場、石油・ガス価格、電力料金、コモディティ指数、金融市場指標をカバーする時系列データセットを公開しています。アジア、中東、グローバル市場にわたるデータをXLSX、CSV、PDF、PNGで提供しています。"
     }
   },
   "datasets": {
@@ -163,7 +163,7 @@
   "about": {
     "heroTitle1": "信頼性の高いデータで",
     "heroTitle2": "意思決定を支援",
-    "heroSubtitle": "Wadera Associatesは、世界中の専門家、研究者、企業に高品質なビジネス、セクター、産業データセットを提供するために構築されたデータインテリジェンスプラットフォームです。",
+    "heroSubtitle": "ARW Analyticsは、世界中の専門家、研究者、企業に高品質なビジネス、セクター、産業データセットを提供するために構築されたデータインテリジェンスプラットフォームです。",
     "mission": {
       "badge": "私たちのミッション",
       "title": "すべてのビジネスに高品質データを",
@@ -191,7 +191,7 @@
         }
       ]
     },
-    "teamIllustrationAlt": "Wadera Associatesチームがデータを中心に協働",
+    "teamIllustrationAlt": "ARW Analyticsチームがデータを中心に協働",
     "team": {
       "badge": "チームのご紹介",
       "title": "私たちのチーム",
@@ -217,7 +217,7 @@
     "structure": {
       "badge": "組織構造",
       "title": "私たちの運営方法",
-      "p1": "Wadera Associatesは、親会社のデータインテリジェンス部門として機能しています。すべての戦略的決定 — 価格設定、パートナーシップ、技術的方向性を含む — は創設パートナーのコンセンサスで行われ、すべてのレベルでの説明責任を確保しています。",
+      "p1": "ARW Analyticsは、親会社のデータインテリジェンス部門として機能しています。すべての戦略的決定 — 価格設定、パートナーシップ、技術的方向性を含む — は創設パートナーのコンセンサスで行われ、すべてのレベルでの説明責任を確保しています。",
       "p2": "運営責任は明確に分担されています：テクノロジーはFaizanがエンドツーエンドで担当し、データ製品開発はHamid、財務および法的事項はRaufが担当。この構造により意思決定サイクルを短く、実行を鋭くしています。",
       "p3": "合弁企業で開発されたすべてのデータセット、レポート、プラットフォームコード、知的財産は共同所有です。IP保護を真剣に捉え、私たちの仕事と顧客の権利を守るためにライセンス条件を執行します。"
     },
@@ -401,7 +401,7 @@
     "privacyPolicy": "プライバシーポリシー",
     "termsOfService": "利用規約",
     "contactSection": "お問い合わせ",
-    "copyright": "© {{year}} Wadera Associates. All rights reserved.",
+    "copyright": "© {{year}} ARW Analytics. All rights reserved.",
     "sitemap": "サイトマップ"
   },
   "settings": {
@@ -420,11 +420,11 @@
     "close": "FAQアシスタントを閉じる",
     "title": "FAQアシスタント",
     "subtitle": "何でも聞いてください",
-    "welcome": "こんにちは！Wadera AssociatesのFAQボットです。質問を選んでください。",
+    "welcome": "こんにちは！ARW AnalyticsのFAQボットです。質問を選んでください。",
     "pickQuestion": "よくある質問",
     "backToList": "質問一覧に戻る",
     "fullscreen": "全画面",
     "exitFullscreen": "全画面を終了",
-    "footer": "Wadera Associatesが提供"
+    "footer": "ARW Analyticsが提供"
   }
 }

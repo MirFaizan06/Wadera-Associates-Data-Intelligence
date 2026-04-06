@@ -125,7 +125,7 @@ async function main() {
   const emailTemplates = [
     {
       type: 'OTP',
-      subject: 'Your Verification Code - Wadera Associates',
+      subject: 'Your Verification Code - ARW Analytics',
       htmlBody: `<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px">
 <h2 style="color:#1a365d">Verify Your Email</h2>
 <p>Your verification code is:</p>
@@ -136,18 +136,18 @@ async function main() {
     },
     {
       type: 'WELCOME',
-      subject: 'Welcome to Wadera Associates Data Intelligence',
+      subject: 'Welcome to ARW Analytics Data Intelligence',
       htmlBody: `<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px">
 <h2 style="color:#1a365d">Welcome, {{name}}!</h2>
-<p>Thank you for joining Wadera Associates Data Intelligence Platform.</p>
+<p>Thank you for joining ARW Analytics Data Intelligence Platform.</p>
 <p>You now have access to our comprehensive time-series datasets. Start exploring our data catalog today.</p>
 <a href="{{frontendUrl}}/datasets" style="background:#2b6cb0;color:white;padding:12px 24px;text-decoration:none;border-radius:4px;display:inline-block;margin-top:16px">Browse Datasets</a>
-<p style="color:#718096;font-size:14px;margin-top:32px">© {{year}} Wadera Associates. All rights reserved.</p>
+<p style="color:#718096;font-size:14px;margin-top:32px">© {{year}} ARW Analytics. All rights reserved.</p>
 </body></html>`,
     },
     {
       type: 'ORDER_CONFIRMATION',
-      subject: 'Order Confirmed - {{datasetName}} | Wadera Associates',
+      subject: 'Order Confirmed - {{datasetName}} | ARW Analytics',
       htmlBody: `<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px">
 <h2 style="color:#1a365d">Order Confirmed!</h2>
 <p>Hi {{name}},</p>
@@ -163,7 +163,7 @@ async function main() {
     },
     {
       type: 'PASSWORD_RESET',
-      subject: 'Reset Your Password - Wadera Associates',
+      subject: 'Reset Your Password - ARW Analytics',
       htmlBody: `<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px">
 <h2 style="color:#1a365d">Reset Your Password</h2>
 <p>Click below to reset your password. This link expires in 1 hour.</p>
@@ -173,13 +173,13 @@ async function main() {
     },
     {
       type: 'CONTACT_AUTO_REPLY',
-      subject: 'We received your message - Wadera Associates',
+      subject: 'We received your message - ARW Analytics',
       htmlBody: `<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px">
 <h2 style="color:#1a365d">Thank you for contacting us!</h2>
 <p>Hi {{name}},</p>
 <p>We've received your message and will get back to you within 1-2 business days.</p>
 <p>Your message: <em>{{message}}</em></p>
-<p style="color:#718096;font-size:14px;margin-top:32px">© {{year}} Wadera Associates. All rights reserved.</p>
+<p style="color:#718096;font-size:14px;margin-top:32px">© {{year}} ARW Analytics. All rights reserved.</p>
 </body></html>`,
     },
   ];
@@ -197,10 +197,10 @@ async function main() {
     {
       slug: 'about',
       title: 'About Us',
-      metaTitle: 'About Wadera Associates - Data Intelligence Platform',
-      metaDesc: 'Learn about Wadera Associates, your trusted source for premium time-series datasets covering energy, commodities, and financial markets.',
-      content: `<h1>About Wadera Associates</h1>
-<p>Wadera Associates is a data intelligence platform built for professionals who need reliable, structured time-series data to power their research, models, and business decisions.</p>
+      metaTitle: 'About ARW Analytics - Data Intelligence Platform',
+      metaDesc: 'Learn about ARW Analytics, your trusted source for premium time-series datasets covering energy, commodities, and financial markets.',
+      content: `<h1>About ARW Analytics</h1>
+<p>ARW Analytics is a data intelligence platform built for professionals who need reliable, structured time-series data to power their research, models, and business decisions.</p>
 <p>We specialise in curating and delivering high-quality datasets across energy markets, commodity pricing, electricity tariffs, and macroeconomic indicators — primarily focused on South Asia, Southeast Asia, and global benchmarks.</p>
 
 <h2>What We Offer</h2>
@@ -223,11 +223,11 @@ async function main() {
     {
       slug: 'privacy-policy',
       title: 'Privacy Policy',
-      metaTitle: 'Privacy Policy - Wadera Associates',
-      metaDesc: 'Read our privacy policy to understand how Wadera Associates collects, uses, and protects your personal data.',
+      metaTitle: 'Privacy Policy - ARW Analytics',
+      metaDesc: 'Read our privacy policy to understand how ARW Analytics collects, uses, and protects your personal data.',
       content: `<h1>Privacy Policy</h1>
 <p><em>Last updated: March 2025</em></p>
-<p>This Privacy Policy explains how Wadera Associates ("we", "us", "our") collects, uses, and protects information about you when you use our platform at <strong>waderaassociates.com</strong>.</p>
+<p>This Privacy Policy explains how ARW Analytics ("we", "us", "our") collects, uses, and protects information about you when you use our platform at <strong>waderaassociates.com</strong>.</p>
 
 <h2>1. Information We Collect</h2>
 <h3>Account Information</h3>
@@ -279,14 +279,14 @@ async function main() {
     {
       slug: 'terms-of-service',
       title: 'Terms of Service',
-      metaTitle: 'Terms of Service - Wadera Associates',
-      metaDesc: 'Read the terms and conditions for using the Wadera Associates data intelligence platform.',
+      metaTitle: 'Terms of Service - ARW Analytics',
+      metaDesc: 'Read the terms and conditions for using the ARW Analytics data intelligence platform.',
       content: `<h1>Terms of Service</h1>
 <p><em>Last updated: March 2025</em></p>
-<p>These Terms of Service ("Terms") govern your use of the Wadera Associates platform at <strong>waderaassociates.com</strong>. By accessing or using the platform, you agree to be bound by these Terms.</p>
+<p>These Terms of Service ("Terms") govern your use of the ARW Analytics platform at <strong>waderaassociates.com</strong>. By accessing or using the platform, you agree to be bound by these Terms.</p>
 
 <h2>1. Platform Use</h2>
-<p>The Wadera Associates platform provides access to time-series datasets and related data intelligence resources. You may use the platform only for lawful purposes and in accordance with these Terms. You agree not to:</p>
+<p>The ARW Analytics platform provides access to time-series datasets and related data intelligence resources. You may use the platform only for lawful purposes and in accordance with these Terms. You agree not to:</p>
 <ul>
   <li>Attempt to gain unauthorised access to any part of the platform or its infrastructure.</li>
   <li>Use automated tools to scrape, crawl, or bulk-download data beyond what your licence permits.</li>
@@ -317,13 +317,13 @@ async function main() {
 <p>Free articles, reports, and sample datasets are provided for informational purposes only. They are provided "as is" without warranty of accuracy or completeness. Free resources may not be redistributed commercially without written permission.</p>
 
 <h2>7. Intellectual Property</h2>
-<p>All content on the platform — including dataset documentation, platform design, and written articles — is the intellectual property of Wadera Associates unless otherwise stated. Source data may be sourced from third-party public bodies and will be attributed accordingly in dataset metadata.</p>
+<p>All content on the platform — including dataset documentation, platform design, and written articles — is the intellectual property of ARW Analytics unless otherwise stated. Source data may be sourced from third-party public bodies and will be attributed accordingly in dataset metadata.</p>
 
 <h2>8. Disclaimers</h2>
-<p>Data on this platform is provided for informational purposes. Wadera Associates makes reasonable efforts to ensure accuracy but does not guarantee that data is complete, error-free, or current. Data should not be relied upon as the sole basis for financial, investment, or policy decisions. We accept no liability for decisions made based on platform data.</p>
+<p>Data on this platform is provided for informational purposes. ARW Analytics makes reasonable efforts to ensure accuracy but does not guarantee that data is complete, error-free, or current. Data should not be relied upon as the sole basis for financial, investment, or policy decisions. We accept no liability for decisions made based on platform data.</p>
 
 <h2>9. Limitation of Liability</h2>
-<p>To the maximum extent permitted by law, Wadera Associates shall not be liable for any indirect, incidental, consequential, or punitive damages arising from your use of the platform or data. Our total liability shall not exceed the amount paid by you in the 12 months preceding the claim.</p>
+<p>To the maximum extent permitted by law, ARW Analytics shall not be liable for any indirect, incidental, consequential, or punitive damages arising from your use of the platform or data. Our total liability shall not exceed the amount paid by you in the 12 months preceding the claim.</p>
 
 <h2>10. Governing Law</h2>
 <p>These Terms are governed by the laws of India. Any disputes shall be subject to the exclusive jurisdiction of the courts of India.</p>
@@ -337,8 +337,8 @@ async function main() {
     {
       slug: 'contact',
       title: 'Contact Us',
-      metaTitle: 'Contact Wadera Associates',
-      metaDesc: 'Contact the Wadera Associates team for dataset enquiries, technical support, or partnership opportunities.',
+      metaTitle: 'Contact ARW Analytics',
+      metaDesc: 'Contact the ARW Analytics team for dataset enquiries, technical support, or partnership opportunities.',
       content: `<h1>Contact Us</h1>
 <p>We would love to hear from you. Whether you have a question about our datasets, need technical support, or want to discuss a custom data requirement, reach out using the form on this page.</p>
 <p>We typically respond within <strong>1–2 business days</strong>.</p>

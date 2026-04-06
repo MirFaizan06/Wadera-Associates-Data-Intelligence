@@ -1,21 +1,21 @@
 {
   "titles": {
-    "home": "Wadera Associates - 高级数据智能平台",
-    "datasets": "浏览数据集 - Wadera Associates",
-    "datasetDetail": "{{name}} - Wadera Associates",
-    "about": "关于我们 - Wadera Associates | 数据智能",
-    "contact": "联系我们 - Wadera Associates",
-    "freeData": "免费数据与资源 - Wadera Associates",
-    "freeDataDetail": "{{name}} - 免费数据 | Wadera Associates",
-    "notFound": "页面未找到 - Wadera Associates",
-    "login": "登录 - Wadera Associates",
-    "register": "创建账户 - Wadera Associates",
-    "otp": "验证邮箱 - Wadera Associates",
-    "forgotPassword": "忘记密码 - Wadera Associates",
-    "resetPassword": "重置密码 - Wadera Associates",
-    "profile": "我的个人资料 - Wadera Associates",
-    "purchases": "我的购买 - Wadera Associates",
-    "download": "下载数据集 - Wadera Associates"
+    "home": "ARW Analytics - 高级数据智能平台",
+    "datasets": "浏览数据集 - ARW Analytics",
+    "datasetDetail": "{{name}} - ARW Analytics",
+    "about": "关于我们 - ARW Analytics | 数据智能",
+    "contact": "联系我们 - ARW Analytics",
+    "freeData": "免费数据与资源 - ARW Analytics",
+    "freeDataDetail": "{{name}} - 免费数据 | ARW Analytics",
+    "notFound": "页面未找到 - ARW Analytics",
+    "login": "登录 - ARW Analytics",
+    "register": "创建账户 - ARW Analytics",
+    "otp": "验证邮箱 - ARW Analytics",
+    "forgotPassword": "忘记密码 - ARW Analytics",
+    "resetPassword": "重置密码 - ARW Analytics",
+    "profile": "我的个人资料 - ARW Analytics",
+    "purchases": "我的购买 - ARW Analytics",
+    "download": "下载数据集 - ARW Analytics"
   },
   "nav": {
     "home": "首页",
@@ -112,7 +112,7 @@
     },
     "coverage": {
       "title": "覆盖主要行业的数据",
-      "body": "Wadera Associates 发布时间序列数据集，涵盖能源市场、石油和天然气价格、电费、大宗商品指数以及金融市场指标。我们的数据集跨越亚洲、中东和全球市场，支持 XLSX、CSV、PDF 和 PNG 格式下载。"
+      "body": "ARW Analytics 发布时间序列数据集，涵盖能源市场、石油和天然气价格、电费、大宗商品指数以及金融市场指标。我们的数据集跨越亚洲、中东和全球市场，支持 XLSX、CSV、PDF 和 PNG 格式下载。"
     }
   },
   "datasets": {
@@ -163,7 +163,7 @@
   "about": {
     "heroTitle1": "以可靠数据",
     "heroTitle2": "赋能决策",
-    "heroSubtitle": "Wadera Associates 是一个数据智能平台，致力于为全球专业人士、研究人员和企业提供高质量的商业、行业和产业数据集。",
+    "heroSubtitle": "ARW Analytics 是一个数据智能平台，致力于为全球专业人士、研究人员和企业提供高质量的商业、行业和产业数据集。",
     "mission": {
       "badge": "我们的使命",
       "title": "让每个企业都能获得高质量数据",
@@ -191,7 +191,7 @@
         }
       ]
     },
-    "teamIllustrationAlt": "Wadera Associates 团队围绕数据进行协作",
+    "teamIllustrationAlt": "ARW Analytics 团队围绕数据进行协作",
     "team": {
       "badge": "幕后团队",
       "title": "我们的团队",
@@ -217,7 +217,7 @@
     "structure": {
       "badge": "结构",
       "title": "我们如何运营",
-      "p1": "Wadera Associates 作为其母公司下的数据智能业务运营。所有战略决策 — 包括定价、合作伙伴关系和技术方向 — 由创始合伙人共同做出，确保各层面的问责制。",
+      "p1": "ARW Analytics 作为其母公司下的数据智能业务运营。所有战略决策 — 包括定价、合作伙伴关系和技术方向 — 由创始合伙人共同做出，确保各层面的问责制。",
       "p2": "运营职责明确分配：技术由 Faizan 端到端负责，数据产品开发由 Hamid 负责，财务和法律事务由 Rauf 负责。这种结构使决策周期短暂、执行高效。",
       "p3": "在合资企业下开发的所有数据集、报告、平台代码和知识产权均为共同所有。我们认真对待知识产权保护，并执行我们的许可条款以保护我们的工作和客户的权益。"
     },
@@ -401,7 +401,7 @@
     "privacyPolicy": "隐私政策",
     "termsOfService": "服务条款",
     "contactSection": "联系",
-    "copyright": "© {{year}} Wadera Associates. 保留所有权利。",
+    "copyright": "© {{year}} ARW Analytics. 保留所有权利。",
     "sitemap": "网站地图"
   },
   "settings": {
@@ -420,11 +420,11 @@
     "close": "关闭常见问题助手",
     "title": "常见问题助手",
     "subtitle": "随时提问",
-    "welcome": "您好！我是 Wadera Associates 的常见问题机器人。请从下方选择一个问题，我会立即为您解答。",
+    "welcome": "您好！我是 ARW Analytics 的常见问题机器人。请从下方选择一个问题，我会立即为您解答。",
     "pickQuestion": "常见问题",
     "backToList": "返回问题列表",
     "fullscreen": "全屏",
     "exitFullscreen": "退出全屏",
-    "footer": "由 Wadera Associates 提供支持"
+    "footer": "由 ARW Analytics 提供支持"
   }
 }

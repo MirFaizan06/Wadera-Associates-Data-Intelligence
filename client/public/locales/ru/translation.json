@@ -1,21 +1,21 @@
 {
   "titles": {
-    "home": "Wadera Associates - Премиальная Платформа Анализа Данных",
-    "datasets": "Просмотр Наборов Данных - Wadera Associates",
-    "datasetDetail": "{{name}} - Wadera Associates",
-    "about": "О Нас - Wadera Associates | Анализ Данных",
-    "contact": "Связаться с Нами - Wadera Associates",
-    "freeData": "Бесплатные Данные и Ресурсы - Wadera Associates",
-    "freeDataDetail": "{{name}} - Бесплатные Данные | Wadera Associates",
-    "notFound": "Страница Не Найдена - Wadera Associates",
-    "login": "Войти - Wadera Associates",
-    "register": "Создать Аккаунт - Wadera Associates",
-    "otp": "Подтвердить Email - Wadera Associates",
-    "forgotPassword": "Забыл Пароль - Wadera Associates",
-    "resetPassword": "Сбросить Пароль - Wadera Associates",
-    "profile": "Мой Профиль - Wadera Associates",
-    "purchases": "Мои Покупки - Wadera Associates",
-    "download": "Скачать Набор Данных - Wadera Associates"
+    "home": "ARW Analytics - Премиальная Платформа Анализа Данных",
+    "datasets": "Просмотр Наборов Данных - ARW Analytics",
+    "datasetDetail": "{{name}} - ARW Analytics",
+    "about": "О Нас - ARW Analytics | Анализ Данных",
+    "contact": "Связаться с Нами - ARW Analytics",
+    "freeData": "Бесплатные Данные и Ресурсы - ARW Analytics",
+    "freeDataDetail": "{{name}} - Бесплатные Данные | ARW Analytics",
+    "notFound": "Страница Не Найдена - ARW Analytics",
+    "login": "Войти - ARW Analytics",
+    "register": "Создать Аккаунт - ARW Analytics",
+    "otp": "Подтвердить Email - ARW Analytics",
+    "forgotPassword": "Забыл Пароль - ARW Analytics",
+    "resetPassword": "Сбросить Пароль - ARW Analytics",
+    "profile": "Мой Профиль - ARW Analytics",
+    "purchases": "Мои Покупки - ARW Analytics",
+    "download": "Скачать Набор Данных - ARW Analytics"
   },
   "nav": {
     "home": "Главная",
@@ -112,7 +112,7 @@
     },
     "coverage": {
       "title": "Охват данных по ключевым секторам",
-      "body": "Wadera Associates публикует временные ряды, охватывающие энергетические рынки, цены на нефть и газ, электрические тарифы, товарные индексы и финансовые показатели. Данные охватывают Азию, Ближний Восток и мировые рынки — в форматах XLSX, CSV, PDF и PNG."
+      "body": "ARW Analytics публикует временные ряды, охватывающие энергетические рынки, цены на нефть и газ, электрические тарифы, товарные индексы и финансовые показатели. Данные охватывают Азию, Ближний Восток и мировые рынки — в форматах XLSX, CSV, PDF и PNG."
     }
   },
   "datasets": {
@@ -163,7 +163,7 @@
   "about": {
     "heroTitle1": "Обеспечение Решений",
     "heroTitle2": "Надёжными Данными",
-    "heroSubtitle": "Wadera Associates — платформа анализа данных, созданная для предоставления высококачественных бизнесовых, отраслевых и промышленных наборов данных профессионалам, исследователям и предприятиям по всему миру.",
+    "heroSubtitle": "ARW Analytics — платформа анализа данных, созданная для предоставления высококачественных бизнесовых, отраслевых и промышленных наборов данных профессионалам, исследователям и предприятиям по всему миру.",
     "mission": {
       "badge": "Наша Миссия",
       "title": "Делаем качественные данные доступными для каждого бизнеса",
@@ -191,7 +191,7 @@
         }
       ]
     },
-    "teamIllustrationAlt": "Команда Wadera Associates работает с данными",
+    "teamIllustrationAlt": "Команда ARW Analytics работает с данными",
     "team": {
       "badge": "Люди За Этим",
       "title": "Наша Команда",
@@ -217,7 +217,7 @@
     "structure": {
       "badge": "Структура",
       "title": "Как Мы Работаем",
-      "p1": "Wadera Associates функционирует как вертикаль анализа данных под своей материнской компанией. Все стратегические решения — включая ценообразование, партнёрства и технологическое направление — принимаются консенсусом учредителей, обеспечивая ответственность на каждом уровне.",
+      "p1": "ARW Analytics функционирует как вертикаль анализа данных под своей материнской компанией. Все стратегические решения — включая ценообразование, партнёрства и технологическое направление — принимаются консенсусом учредителей, обеспечивая ответственность на каждом уровне.",
       "p2": "Операционные обязанности чётко распределены: технологии полностью управляются Faizan, разработка продуктов данных — Hamid, финансовые и правовые вопросы — Rauf. Эта структура поддерживает короткие циклы принятия решений и точное исполнение.",
       "p3": "Все наборы данных, отчёты, код платформы и интеллектуальная собственность, разработанные в рамках предприятия, находятся в совместной собственности. Мы серьёзно относимся к защите ИС и применяем наши лицензионные условия для защиты как нашей работы, так и прав наших клиентов."
     },
@@ -401,7 +401,7 @@
     "privacyPolicy": "Политика Конфиденциальности",
     "termsOfService": "Условия Использования",
     "contactSection": "Контакты",
-    "copyright": "© {{year}} Wadera Associates. Все права защищены.",
+    "copyright": "© {{year}} ARW Analytics. Все права защищены.",
     "sitemap": "Карта сайта"
   },
   "settings": {
@@ -420,11 +420,11 @@
     "close": "Zakryt pomoshchnik FAQ",
     "title": "Pomoshchnik FAQ",
     "subtitle": "Zadajte nam vopros",
-    "welcome": "Privet! Ya FAQ-bot Wadera Associates. Vyberte vopros i ya otvetu nemedlenno.",
+    "welcome": "Privet! Ya FAQ-bot ARW Analytics. Vyberte vopros i ya otvetu nemedlenno.",
     "pickQuestion": "Chasto zadavaemye voprosy",
     "backToList": "Vernutsya k voprosam",
     "fullscreen": "Na ves ekran",
     "exitFullscreen": "Vyjti iz polnogo ekrana",
-    "footer": "Rabotaet na Wadera Associates"
+    "footer": "Rabotaet na ARW Analytics"
   }
 }

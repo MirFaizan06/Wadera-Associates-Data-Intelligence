@@ -90,7 +90,8 @@ export const adminAppendData = async (req: Request, res: Response, next: NextFun
     const schema = z.object({
       points: z.array(z.object({
         date: z.string().regex(/^\d{4}-\d{2}$/, 'Date must be YYYY-MM format'),
-        value: z.number(),
+        value: z.number(),        // LocalCurrency/Unit
+        usdValue: z.number().optional(), // USD/Unit
         note: z.string().optional(),
       })).min(1),
     });

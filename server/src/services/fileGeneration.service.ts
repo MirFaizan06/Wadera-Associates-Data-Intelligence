@@ -10,7 +10,8 @@ import { env } from '../config/env';
 
 interface DataRow {
   date: string;
-  value: number;
+  value: number;        // LocalCurrency/Unit
+  usdValue: number | null; // USD/Unit
   unit: string;
   note?: string;
 }
@@ -29,6 +30,7 @@ async function getDatasetWithPoints(timeSeriesId: string): Promise<{
   const rows: DataRow[] = dataset.dataPoints.map(dp => ({
     date: dp.date.toISOString().slice(0, 7), // YYYY-MM
     value: dp.value,
+    usdValue: dp.usdValue,
     unit: dp.unitOverride || dataset.defaultUnit,
     note: dp.note || undefined,
   }));
@@ -40,13 +42,14 @@ export async function generateXLSX(timeSeriesId: string): Promise<string> {
   const { name, rows } = await getDatasetWithPoints(timeSeriesId);
 
   const workbook = new XLSX.Workbook();
-  workbook.creator = 'Wadera Associates';
+  workbook.creator = 'ARW Analytics';
   workbook.created = new Date();
 
   const sheet = workbook.addWorksheet(name.slice(0, 31));
   sheet.columns = [
     { header: 'Date (YYYY-MM)', key: 'date', width: 15 },
-    { header: 'Value', key: 'value', width: 15 },
+    { header: 'LocalCurrency/Unit', key: 'value', width: 20 },
+    { header: 'USD/Unit', key: 'usdValue', width: 15 },
     { header: 'Unit', key: 'unit', width: 12 },
     { header: 'Notes', key: 'note', width: 30 },
   ];
@@ -63,7 +66,7 @@ export async function generateXLSX(timeSeriesId: string): Promise<string> {
   const lastRow = sheet.lastRow;
   if (lastRow) {
     sheet.addRow({});
-    sheet.addRow({ date: '© Wadera Associates Data Intelligence Platform. Licensed use only.' });
+    sheet.addRow({ date: '© ARW Analytics Data Intelligence Platform. Licensed use only.' });
   }
 
   const tmpPath = path.join(os.tmpdir(), `wa_${timeSeriesId}_${Date.now()}.xlsx`);
@@ -79,9 +82,9 @@ export async function generateXLSX(timeSeriesId: string): Promise<string> {
 export async function generateCSV(timeSeriesId: string): Promise<string> {
   const { name, rows } = await getDatasetWithPoints(timeSeriesId);
 
-  const header = 'Date (YYYY-MM),Value,Unit,Notes';
-  const csvRows = rows.map(r => `${r.date},${r.value},${r.unit},"${r.note || ''}"`);
-  const content = [header, ...csvRows, '', '# © Wadera Associates Data Intelligence Platform'].join('\n');
+  const header = 'Date (YYYY-MM),LocalCurrency/Unit,USD/Unit,Unit,Notes';
+  const csvRows = rows.map(r => `${r.date},${r.value},${r.usdValue ?? ''},${r.unit},"${r.note || ''}"`);
+  const content = [header, ...csvRows, '', '# © ARW Analytics Data Intelligence Platform'].join('\n');
 
   const tmpPath = path.join(os.tmpdir(), `wa_${timeSeriesId}_${Date.now()}.csv`);
   await fs.writeFile(tmpPath, content, 'utf-8');
@@ -106,7 +109,7 @@ export async function generatePDF(timeSeriesId: string): Promise<string> {
     doc.pipe(stream);
 
     // Header
-    doc.fontSize(20).fillColor('#1A365D').text('Wadera Associates', { align: 'center' });
+    doc.fontSize(20).fillColor('#1A365D').text('ARW Analytics', { align: 'center' });
     doc.fontSize(14).fillColor('#2B6CB0').text('Data Intelligence Platform', { align: 'center' });
     doc.moveDown();
     doc.fontSize(16).fillColor('#1A365D').text(name, { align: 'center' });
@@ -117,8 +120,9 @@ export async function generatePDF(timeSeriesId: string): Promise<string> {
     doc.fontSize(10).fillColor('#FFFFFF');
     doc.rect(50, doc.y, 495, 20).fill('#1A365D');
     doc.fillColor('#FFFFFF').text('Date', 55, doc.y - 15);
-    doc.text('Value', 200, doc.y - 15);
-    doc.text('Unit', 350, doc.y - 15);
+    doc.text('LocalCurrency/Unit', 160, doc.y - 15);
+    doc.text('USD/Unit', 310, doc.y - 15);
+    doc.text('Unit', 410, doc.y - 15);
     doc.moveDown(0.5);
 
     // Data rows (first 100 only)
@@ -132,8 +136,9 @@ export async function generatePDF(timeSeriesId: string): Promise<string> {
       if (isAlt) doc.rect(50, yPos - 3, 495, 16).fill('#F7FAFC');
       doc.fillColor('#2D3748').fontSize(9);
       doc.text(row.date, 55, yPos);
-      doc.text(String(row.value), 200, yPos);
-      doc.text(row.unit, 350, yPos);
+      doc.text(String(row.value), 160, yPos);
+      doc.text(row.usdValue != null ? String(row.usdValue) : '—', 310, yPos);
+      doc.text(row.unit, 410, yPos);
       yPos += 16;
       isAlt = !isAlt;
     }
@@ -144,7 +149,7 @@ export async function generatePDF(timeSeriesId: string): Promise<string> {
     }
 
     doc.moveDown(2).fontSize(8).fillColor('#A0AEC0')
-      .text('© Wadera Associates Data Intelligence Platform. Licensed use only. Redistribution prohibited.', { align: 'center' });
+      .text('© ARW Analytics Data Intelligence Platform. Licensed use only. Redistribution prohibited.', { align: 'center' });
 
     doc.end();
     stream.on('finish', resolve);

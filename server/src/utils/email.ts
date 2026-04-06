@@ -48,7 +48,7 @@ export async function sendEmail(options: EmailOptions): Promise<void> {
 
   try {
     await transporter.sendMail({
-      from: `Wadera Associates <${env.EMAIL_FROM}>`,
+      from: `ARW Analytics <${env.EMAIL_FROM}>`,
       to,
       subject,
       html,

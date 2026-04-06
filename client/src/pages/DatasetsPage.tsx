@@ -72,14 +72,14 @@ export default function DatasetsPage() {
         <title>{t('titles.datasets')}</title>
         <meta name="description" content="Browse and buy premium time-series datasets for energy markets, oil prices, electricity rates, commodity indices, and financial indicators. Filter by category, instant download in XLSX, CSV, PDF." />
         <link rel="canonical" href="https://wa-data-intel.netlify.app/datasets" />
-        <meta property="og:title" content="Browse Datasets — Wadera Associates" />
+        <meta property="og:title" content="Browse Datasets — ARW Analytics" />
         <meta property="og:description" content="Premium time-series datasets for energy, commodities, and financial markets." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wa-data-intel.netlify.app/datasets" />
-        <meta property="og:site_name" content="Wadera Associates" />
+        <meta property="og:site_name" content="ARW Analytics" />
         <meta property="og:image" content="https://wa-data-intel.netlify.app/images/logo.webp" />
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="Browse Datasets — Wadera Associates" />
+        <meta name="twitter:title" content="Browse Datasets — ARW Analytics" />
         <meta name="twitter:description" content="Premium time-series datasets for energy, commodities, and financial markets." />
         <meta name="twitter:image" content="https://wa-data-intel.netlify.app/images/logo.webp" />
       </Helmet>

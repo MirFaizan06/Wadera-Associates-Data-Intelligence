@@ -63,16 +63,16 @@ export default function FreeDataPage() {
     <>
       <Helmet>
         <title>{t('titles.freeData')}</title>
-        <meta name="description" content="Free articles, reports and downloadable data from Wadera Associates covering energy, commodities and financial markets." />
+        <meta name="description" content="Free articles, reports and downloadable data from ARW Analytics covering energy, commodities and financial markets." />
         <link rel="canonical" href="https://wa-data-intel.netlify.app/free-data" />
-        <meta property="og:title" content="Free Data &amp; Resources — Wadera Associates" />
+        <meta property="og:title" content="Free Data &amp; Resources — ARW Analytics" />
         <meta property="og:description" content="Free articles, reports and downloadable PDFs on energy, commodities and financial markets." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wa-data-intel.netlify.app/free-data" />
-        <meta property="og:site_name" content="Wadera Associates" />
+        <meta property="og:site_name" content="ARW Analytics" />
         <meta property="og:image" content="https://wa-data-intel.netlify.app/images/logo.webp" />
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="Free Data &amp; Resources — Wadera Associates" />
+        <meta name="twitter:title" content="Free Data &amp; Resources — ARW Analytics" />
         <meta name="twitter:description" content="Free articles, reports and downloadable PDFs on energy, commodities and financial markets." />
         <meta name="twitter:image" content="https://wa-data-intel.netlify.app/images/logo.webp" />
       </Helmet>

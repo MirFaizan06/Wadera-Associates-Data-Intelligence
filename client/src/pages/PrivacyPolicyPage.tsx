@@ -6,13 +6,13 @@ export default function PrivacyPolicyPage() {
   return (
     <>
       <Helmet>
-        <title>Privacy Policy - Wadera Associates</title>
-        <meta name="description" content="Privacy Policy for Wadera Associates Data Intelligence platform." />
+        <title>Privacy Policy - ARW Analytics</title>
+        <meta name="description" content="Privacy Policy for ARW Analytics Data Intelligence platform." />
         <link rel="canonical" href="https://wa-data-intel.netlify.app/pages/privacy-policy" />
-        <meta property="og:title" content="Privacy Policy — Wadera Associates" />
+        <meta property="og:title" content="Privacy Policy — ARW Analytics" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://wa-data-intel.netlify.app/pages/privacy-policy" />
-        <meta property="og:site_name" content="Wadera Associates" />
+        <meta property="og:site_name" content="ARW Analytics" />
       </Helmet>
 
       <div className="bg-gray-50 min-h-screen py-16">
@@ -28,7 +28,7 @@ export default function PrivacyPolicyPage() {
             <section>
               <h2 className="text-xl font-bold text-gray-900 mb-3">1. Introduction</h2>
               <p>
-                Wadera Associates ("we", "our", or "us") operates the Wadera Associates Data Intelligence platform
+                ARW Analytics ("we", "our", or "us") operates the ARW Analytics Data Intelligence platform
                 accessible at <strong>waderaassociates.com</strong> (the "Platform"). This Privacy Policy explains how we
                 collect, use, disclose, and safeguard your personal information when you visit or make a purchase on our Platform.
               </p>
