@@ -163,6 +163,20 @@ export async function appendDataPoints(timeSeriesId: string, points: DataPointIn
   logger.info('Data points appended', { timeSeriesId, count: points.length });
 }
 
+function cellToYearMonth(cellValue: unknown): string | null {
+  if (!cellValue) return null;
+  // ExcelJS returns date-formatted cells as JS Date objects
+  if (cellValue instanceof Date) {
+    const y = cellValue.getFullYear();
+    const m = String(cellValue.getMonth() + 1).padStart(2, '0');
+    return `${y}-${m}`;
+  }
+  const s = String(cellValue).trim();
+  // Accept YYYY-MM or YYYY-MM-DD (truncate to month)
+  if (/^\d{4}-\d{2}(-\d{2})?/.test(s)) return s.slice(0, 7);
+  return null;
+}
+
 export async function importFromXLSX(timeSeriesId: string, buffer: Buffer): Promise<{ imported: number; errors: string[] }> {
   const workbook = new XLSX.Workbook();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -175,11 +189,11 @@ export async function importFromXLSX(timeSeriesId: string, buffer: Buffer): Prom
   sheet.eachRow((row, rowNumber) => {
     if (rowNumber === 1) return; // Skip header
 
-    const dateCell = row.getCell(1).value;
+    const dateStr = cellToYearMonth(row.getCell(1).value);
     const valueCell = row.getCell(2).value; // LocalCurrency/Unit
 
-    if (!dateCell || !valueCell) {
-      errors.push(`Row ${rowNumber}: Missing date or LocalCurrency/Unit value`);
+    if (!dateStr || !valueCell) {
+      errors.push(`Row ${rowNumber}: Missing date (YYYY-MM) or LocalCurrency/Unit value`);
       return;
     }
 
@@ -203,7 +217,7 @@ export async function importFromXLSX(timeSeriesId: string, buffer: Buffer): Prom
     const points: DataPointInput[] = [];
     sheet.eachRow((row, rowNumber) => {
       if (rowNumber === 1) return;
-      const dateStr = String(row.getCell(1).value);
+      const dateStr = cellToYearMonth(row.getCell(1).value)!;
       const value = Number(row.getCell(2).value);
       const usdCell = row.getCell(3).value;
       const usdValue = (usdCell !== null && usdCell !== undefined && usdCell !== '') ? Number(usdCell) : undefined;

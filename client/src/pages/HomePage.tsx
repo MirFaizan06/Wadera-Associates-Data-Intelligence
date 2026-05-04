@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import {
   Search, ArrowRight, TrendingUp, Zap, Globe, ShieldCheck,
   BarChart2, Database, Layers, ChevronRight, Flame,
+  Download, BookOpen, MessageSquare,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
@@ -24,25 +25,44 @@ const CATEGORIES = [
 
 // ── Platform stats ─────────────────────────────────────────────────────────────
 const PLATFORM_STATS = [
-  { value: 'XLSX · CSV · PDF · PNG', label: 'Download Formats' },
+  { value: 'XLSX · CSV · PDF', label: 'Download Formats' },
   { value: '8+', label: 'Sectors Covered' },
   { value: '8', label: 'Currencies Supported' },
   { value: '100%', label: 'Instant Access' },
 ];
 
-// ── Feature cards ─────────────────────────────────────────────────────────────
-const FEATURE_CARDS = [
-  { icon: ShieldCheck, title: 'Verified Data', desc: 'Sourced and cross-checked before publication' },
-  { icon: Zap, title: 'Instant Access', desc: 'Download in XLSX, CSV, PDF or PNG immediately' },
-  { icon: Globe, title: 'Global Reach', desc: 'Asia, Middle East, and global market coverage' },
-  { icon: TrendingUp, title: 'Monthly Updates', desc: 'Datasets refreshed regularly with new data' },
-];
+// ── Service pillars (Our Service section) ─────────────────────────────────────
+const SERVICE_PILLARS = [
+  {
+    icon: ShieldCheck,
+    title: 'Verified Sources',
+    desc: 'Every dataset is sourced from credible primary sources and cross-checked before publication. No estimates, no guesswork.',
+    link: '/about',
+    linkLabel: 'About our process',
+  },
+  {
+    icon: Download,
+    title: 'Instant Download',
+    desc: 'Purchase once, download immediately. Files are ready in XLSX, CSV, or PDF — no waiting, no queues, no subscriptions.',
+    link: '/datasets',
+    linkLabel: 'Browse datasets',
+  },
+  {
+    icon: BookOpen,
+    title: 'Free Resources',
+    desc: 'Access a growing library of market articles and PDF reports at no cost — no account required.',
+    link: '/free-data',
+    linkLabel: 'Explore free data',
+  },
+] as const;
 
 const HOW_IT_WORKS_IMAGES = [
   '/images/Browse_and_Discover.webp',
   '/images/Purchase_Securely.webp',
   '/images/Download_and_Use.webp',
 ];
+
+const QUICK_SEARCHES = ['Oil Prices', 'Electricity Rates', 'Commodity Index', 'Natural Gas'];
 
 export default function HomePage() {
   const { t } = useTranslation();
@@ -60,7 +80,7 @@ export default function HomePage() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate(`/datasets${query.trim() ? `?q=${encodeURIComponent(query.trim())}` : ''}`);
+    navigate(`/datasets${query.trim() ? `?search=${encodeURIComponent(query.trim())}` : ''}`);
   };
 
   const howItWorksSteps = t('home.howItWorks.steps', { returnObjects: true }) as { title: string; desc: string }[];
@@ -88,7 +108,7 @@ export default function HomePage() {
             {
               '@type': 'Question',
               name: 'What types of datasets does ARW Analytics sell?',
-              acceptedAnswer: { '@type': 'Answer', text: 'We offer time-series datasets for energy markets (oil, gas, electricity), commodity prices, and financial market indicators. Data is available for instant download in XLSX, CSV, PDF, and PNG formats.' },
+              acceptedAnswer: { '@type': 'Answer', text: 'We offer time-series datasets for energy markets (oil, gas, electricity), commodity prices, and financial market indicators. Data is available for instant download in XLSX, CSV, and PDF formats.' },
             },
             {
               '@type': 'Question',
@@ -98,7 +118,7 @@ export default function HomePage() {
             {
               '@type': 'Question',
               name: 'What currencies are supported for payment?',
-              acceptedAnswer: { '@type': 'Answer', text: 'Prices are displayed in 8 currencies including USD, EUR, GBP, INR, PKR, SAR, AED, and JPY. Payments are processed securely through Razorpay.' },
+              acceptedAnswer: { '@type': 'Answer', text: 'Prices are displayed in 8 currencies including USD, EUR, GBP, INR, AED, SGD, JPY, and CAD. Payments are processed securely through Razorpay.' },
             },
             {
               '@type': 'Question',
@@ -111,7 +131,7 @@ export default function HomePage() {
 
       {/* ── HERO ──────────────────────────────────────────────────────────────── */}
       <section className="bg-white border-b border-gray-100">
-        <div className="container py-16 md:py-20 lg:py-24">
+        <div className="container py-16 md:py-20 lg:py-28">
           <div className="max-w-3xl mx-auto text-center">
             {/* Badge */}
             <span className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-widest text-brand-blue uppercase bg-blue-50 border border-blue-100 px-4 py-1.5 rounded-full mb-6">
@@ -119,13 +139,13 @@ export default function HomePage() {
             </span>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-navy leading-[1.1] tracking-tight mb-5">
-              The Data Platform<br />
-              <span className="text-brand-blue">for Smart Decisions</span>
+              {t('home.hero.headline') || (
+                <>Empowering Decisions<br /><span className="text-brand-blue">with Reliable Data</span></>
+              )}
             </h1>
 
             <p className="text-lg text-gray-500 max-w-xl mx-auto mb-8 leading-relaxed">
-              Time-series datasets for energy, commodities, and financial markets.
-              Browse, purchase, and download instantly — no subscription needed.
+              {t('home.hero.subtext') || 'Time-series datasets for energy, commodities, and financial markets. Browse, purchase, and download instantly — no subscription needed.'}
             </p>
 
             {/* Search bar */}
@@ -136,7 +156,7 @@ export default function HomePage() {
                   type="text"
                   value={query}
                   onChange={e => setQuery(e.target.value)}
-                  placeholder="Search datasets — oil prices, electricity, commodities…"
+                  placeholder={t('home.hero.searchPlaceholder') || 'Search datasets — oil prices, electricity, commodities…'}
                   className="flex-1 px-3 py-4 text-sm text-gray-800 placeholder-gray-400 bg-transparent focus:outline-none"
                   aria-label="Search datasets"
                 />
@@ -144,18 +164,19 @@ export default function HomePage() {
                   type="submit"
                   className="m-1.5 px-5 py-2.5 bg-brand-blue hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition-colors"
                 >
-                  Search
+                  {t('home.hero.searchBtn') || 'Search'}
                 </button>
               </div>
             </form>
 
             {/* Quick-browse pills */}
             <div className="flex flex-wrap justify-center gap-2">
-              {['Oil Prices', 'Electricity Rates', 'Commodity Index', 'Natural Gas'].map(term => (
+              <span className="text-xs text-gray-400 self-center pr-1">{t('home.hero.popularLabel') || 'Popular:'}</span>
+              {QUICK_SEARCHES.map(term => (
                 <button
                   key={term}
                   type="button"
-                  onClick={() => navigate(`/datasets?q=${encodeURIComponent(term)}`)}
+                  onClick={() => navigate(`/datasets?search=${encodeURIComponent(term)}`)}
                   className="px-3 py-1 text-xs text-gray-500 bg-gray-50 hover:bg-blue-50 hover:text-brand-blue border border-gray-200 hover:border-blue-200 rounded-full transition-colors"
                 >
                   {term}
@@ -180,7 +201,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* ── BROWSE BY CATEGORY ──────────────────────────────────────────────── */}
+      {/* ── BROWSE BY SECTOR ────────────────────────────────────────────────── */}
       <section className="py-14 bg-gray-50 border-b border-gray-100" aria-labelledby="categories-heading">
         <div className="container">
           <div className="flex items-center justify-between mb-8">
@@ -241,32 +262,33 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── DATA COVERAGE + FEATURES STRIP ─────────────────────────────────── */}
-      <section className="py-14 bg-blue-50 border-y border-blue-100">
+      {/* ── OUR SERVICE (3 PILLARS) ─────────────────────────────────────────── */}
+      <section className="py-16 bg-gray-50 border-y border-gray-100" aria-labelledby="service-heading">
         <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-            <div>
-              <p className="text-xs font-semibold tracking-widest text-brand-blue uppercase mb-2">Coverage</p>
-              <h2 className="text-2xl font-bold text-brand-navy mb-3">Data Across Key Sectors</h2>
-              <p className="text-gray-600 text-sm leading-relaxed mb-5">
-                ARW Analytics publishes time-series datasets covering energy markets, oil and gas prices, electricity tariffs, commodity indices, and financial market indicators — spanning Asia, the Middle East, and global markets. All datasets are structured for immediate use in models, reports, and dashboards.
-              </p>
-              <Button asChild className="bg-brand-navy hover:bg-blue-900 text-white">
-                <Link to="/datasets">Explore Full Catalog <ArrowRight className="h-4 w-4 ml-2" aria-hidden /></Link>
-              </Button>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              {FEATURE_CARDS.map((f, i) => {
-                const Icon = f.icon;
-                return (
-                  <div key={i} className="bg-white rounded-xl p-4 border border-blue-100 shadow-sm hover:shadow-md transition-shadow">
-                    <Icon className="h-5 w-5 text-brand-blue mb-3" aria-hidden />
-                    <p className="font-semibold text-gray-900 text-sm mb-1">{f.title}</p>
-                    <p className="text-xs text-gray-500 leading-snug">{f.desc}</p>
+          <div className="text-center mb-12">
+            <p className="text-xs font-semibold tracking-widest text-brand-blue uppercase mb-2">Our Service</p>
+            <h2 id="service-heading" className="text-2xl font-bold text-brand-navy">Save Time &amp; Make Better Decisions</h2>
+            <p className="text-gray-400 mt-3 max-w-lg mx-auto text-sm">
+              Structured, download-ready data for analysts, researchers, and decision-makers.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {SERVICE_PILLARS.map((p) => {
+              const Icon = p.icon;
+              return (
+                <div key={p.title} className="bg-white rounded-2xl border border-gray-200 p-7 hover:shadow-md transition-shadow">
+                  <div className="h-11 w-11 rounded-xl bg-blue-50 flex items-center justify-center mb-5">
+                    <Icon className="h-5 w-5 text-brand-blue" aria-hidden />
                   </div>
-                );
-              })}
-            </div>
+                  <h3 className="text-base font-bold text-gray-900 mb-2">{p.title}</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed mb-4">{p.desc}</p>
+                  <Link to={p.link} className="text-sm font-medium text-brand-blue hover:underline inline-flex items-center gap-1">
+                    {p.linkLabel} <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+                  </Link>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -303,13 +325,41 @@ export default function HomePage() {
       <section className="py-10 bg-gray-50 border-t border-gray-100">
         <div className="container">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 bg-white border border-gray-200 rounded-2xl px-8 py-7 shadow-sm">
-            <div>
-              <p className="text-xs font-semibold text-green-600 uppercase tracking-widest mb-1">No Account Required</p>
-              <h3 className="text-xl font-bold text-brand-navy">Explore Free Data &amp; Resources</h3>
-              <p className="text-gray-400 text-sm mt-1">Articles, reports, and PDF downloads on energy markets — completely free.</p>
+            <div className="flex items-start gap-4">
+              <div className="h-10 w-10 rounded-xl bg-green-50 flex items-center justify-center shrink-0 mt-0.5">
+                <BookOpen className="h-5 w-5 text-green-600" aria-hidden />
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-green-600 uppercase tracking-widest mb-1">No Account Required</p>
+                <h3 className="text-xl font-bold text-brand-navy">Explore Free Data &amp; Resources</h3>
+                <p className="text-gray-400 text-sm mt-1">Articles, reports, and PDF downloads on energy markets — completely free.</p>
+              </div>
             </div>
             <Button variant="outline" asChild className="shrink-0 border-brand-navy text-brand-navy hover:bg-brand-navy hover:text-white transition-colors">
               <Link to="/free-data">{t('home.hero.freeDataBtn')} <ArrowRight className="h-4 w-4 ml-2" aria-hidden /></Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* ── GET IN TOUCH BANNER ─────────────────────────────────────────────── */}
+      <section className="py-12 bg-blue-50 border-y border-blue-100">
+        <div className="container">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4">
+              <div className="h-12 w-12 rounded-xl bg-brand-blue/10 flex items-center justify-center shrink-0">
+                <MessageSquare className="h-6 w-6 text-brand-blue" aria-hidden />
+              </div>
+              <div>
+                <p className="text-xs font-semibold tracking-widest text-brand-blue uppercase mb-0.5">We're happy to help</p>
+                <h3 className="text-xl font-bold text-brand-navy">Get in touch for additional information</h3>
+                <p className="text-gray-500 text-sm mt-0.5">Questions about datasets, licensing, or custom data needs? We respond quickly.</p>
+              </div>
+            </div>
+            <Button asChild className="shrink-0 bg-brand-navy hover:bg-blue-900 text-white">
+              <Link to="/contact">
+                Get in Touch <ArrowRight className="h-4 w-4 ml-2" aria-hidden />
+              </Link>
             </Button>
           </div>
         </div>

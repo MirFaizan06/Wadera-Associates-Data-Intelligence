@@ -57,3 +57,42 @@ export const download = async (req: Request, res: Response, next: NextFunction):
     res.json({ success: true, data: { url: fileUrl } });
   } catch (err) { next(err); }
 };
+
+// Public endpoint — validates the download token itself (no auth cookie required).
+// Used by DownloadPage for both guests and logged-in users arriving from a purchase link.
+export const downloadByToken = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const formatSchema = z.enum(['XLSX', 'CSV', 'PDF']);
+    const format = formatSchema.parse(req.params.format.toUpperCase()) as DownloadFormat;
+    const token = req.params.token;
+
+    // Verify the download token (throws LicenseError if invalid/expired)
+    let decoded: { timeSeriesId: string; guestEmail?: string; purchaseId: string };
+    try {
+      decoded = verifyDownloadToken(token);
+    } catch {
+      throw new LicenseError('Invalid or expired download link');
+    }
+
+    const { timeSeriesId, guestEmail } = decoded;
+
+    let fileUrl: string;
+    switch (format) {
+      case 'XLSX': fileUrl = await generateXLSX(timeSeriesId); break;
+      case 'CSV': fileUrl = await generateCSV(timeSeriesId); break;
+      case 'PDF': fileUrl = await generatePDF(timeSeriesId); break;
+    }
+
+    await prisma.downloadLog.create({
+      data: {
+        guestEmail: guestEmail || undefined,
+        timeSeriesId,
+        format,
+        ipAddress: req.ip,
+      },
+    });
+
+    logger.info('Token-based file downloaded', { timeSeriesId, format, guestEmail });
+    res.json({ success: true, data: { url: fileUrl } });
+  } catch (err) { next(err); }
+};

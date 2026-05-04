@@ -43,6 +43,24 @@ export default function OtpPage() {
     try {
       await api.post('/auth/verify-otp', { email, otp: code, type });
       await refreshUser();
+
+      // Upload pending avatar selected during registration
+      const pendingData = sessionStorage.getItem('pendingAvatarData');
+      const pendingMime = sessionStorage.getItem('pendingAvatarMime') || 'image/jpeg';
+      if (pendingData && type === 'REGISTER') {
+        try {
+          const res = await fetch(pendingData);
+          const blob = await res.blob();
+          const ext = pendingMime.split('/')[1] || 'jpg';
+          const file = new File([blob], `avatar.${ext}`, { type: pendingMime });
+          const form = new FormData();
+          form.append('avatar', file);
+          await api.post('/auth/profile/picture', form, { headers: { 'Content-Type': 'multipart/form-data' } });
+        } catch { /* avatar upload failure is non-fatal */ }
+        sessionStorage.removeItem('pendingAvatarData');
+        sessionStorage.removeItem('pendingAvatarMime');
+      }
+
       navigate('/');
     } catch (err: unknown) {
       setError((err as { response?: { data?: { error?: { message?: string } } } })?.response?.data?.error?.message || t('auth.otp.invalidOtp'));

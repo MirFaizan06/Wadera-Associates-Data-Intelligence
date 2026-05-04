@@ -45,10 +45,15 @@ export default function RegisterPage() {
     setApiError('');
     try {
       await api.post('/auth/register', { email: data.email, password: data.password, fullName: data.fullName });
-      if (avatarFile) {
-        sessionStorage.setItem('pendingAvatarUpload', 'true');
+      // Persist avatar data URL so OtpPage can upload it after successful verification
+      if (avatarFile && avatarPreview) {
+        sessionStorage.setItem('pendingAvatarData', avatarPreview);
+        sessionStorage.setItem('pendingAvatarMime', avatarFile.type);
+      } else {
+        sessionStorage.removeItem('pendingAvatarData');
+        sessionStorage.removeItem('pendingAvatarMime');
       }
-      navigate('/auth/verify-otp', { state: { email: data.email, type: 'REGISTER', hasAvatar: !!avatarFile } });
+      navigate('/auth/verify-otp', { state: { email: data.email, type: 'REGISTER' } });
     } catch (err: unknown) {
       const msg = (err as { response?: { data?: { error?: { message?: string } } } })?.response?.data?.error?.message || t('auth.register.failed');
       setApiError(msg);

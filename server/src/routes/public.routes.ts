@@ -4,6 +4,7 @@ import * as freeResourceController from '../controllers/freeResource.controller'
 import { contactController } from '../controllers/contact.controller';
 import { getExchangeRates } from '../controllers/exchangeRate.controller';
 import { getStaticPage, getSitemap } from '../controllers/cms.controller';
+import { downloadByToken } from '../controllers/download.controller';
 import { contactLimiter } from '../middleware/rateLimiter.middleware';
 
 const router = Router();
@@ -29,6 +30,9 @@ router.get('/robots.txt', (_req, res) => {
   res.type('text/plain');
   res.send(`User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api\nSitemap: ${process.env.FRONTEND_URL}/sitemap.xml`);
 });
+
+// Token-based file download (no auth required — token is self-contained proof of purchase)
+router.get('/download/:token/:format', downloadByToken);
 
 // Contact
 router.post('/contact', contactLimiter, contactController.submit);

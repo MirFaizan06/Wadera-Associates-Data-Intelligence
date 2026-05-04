@@ -1,17 +1,14 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Download, FileSpreadsheet, FileText } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent } from '@/components/ui/Card';
 import api from '@/lib/api';
-import { useAuth } from '@/contexts/AuthContext';
 
 export default function DownloadPage() {
   const { t } = useTranslation();
   const { token } = useParams<{ token: string }>();
-  const { user } = useAuth();
-  const [timeSeriesId, setTimeSeriesId] = useState<string | null>(null);
   const [downloading, setDownloading] = useState<string | null>(null);
   const [error, setError] = useState('');
 
@@ -21,18 +18,18 @@ export default function DownloadPage() {
     { key: 'PDF', label: t('download.formats.pdf.label'), icon: FileText, desc: t('download.formats.pdf.desc') },
   ] as const;
 
-  useEffect(() => {
-    if (token) setTimeSeriesId('from-token');
-  }, [token]);
-
   const handleDownload = async (format: string) => {
+    if (!token) {
+      setError(t('download.failed'));
+      return;
+    }
     setDownloading(format);
     setError('');
     try {
-      const endpoint = user
-        ? `/user/datasets/${timeSeriesId}/download/${format}`
-        : `/user/datasets/${timeSeriesId}/download/${format}?token=${token}`;
-      const res = await api.get<{ success: boolean; data: { url: string } }>(endpoint);
+      // Public endpoint: server verifies token internally, no auth cookie needed
+      const res = await api.get<{ success: boolean; data: { url: string } }>(
+        `/public/download/${token}/${format}`
+      );
       window.open(res.data.data.url, '_blank');
     } catch {
       setError(t('download.failed'));
@@ -40,6 +37,17 @@ export default function DownloadPage() {
       setDownloading(null);
     }
   };
+
+  if (!token) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <div className="text-center">
+          <p className="text-gray-600 mb-4">{t('download.failed')}</p>
+          <Link to="/" className="text-brand-blue hover:underline">{t('nav.home')}</Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>

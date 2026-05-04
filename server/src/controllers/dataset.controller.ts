@@ -6,7 +6,7 @@ import * as datasetService from '../services/dataset.service';
 import { getAllRates } from '../utils/currency';
 import { getAvailableConversions } from '../utils/uom';
 import { env } from '../config/env';
-import { uploadToS3 } from '../utils/storage';
+import { uploadToR2 } from '../utils/storage';
 
 const createDatasetSchema = z.object({
   name: z.string().min(2).max(200),
@@ -123,10 +123,10 @@ export const adminUploadCoverImage = async (req: Request, res: Response, next: N
     const ext = req.file.mimetype === 'image/png' ? 'png' : req.file.mimetype === 'image/webp' ? 'webp' : 'jpg';
     let imageUrl: string;
 
-    if (env.AWS_BUCKET_NAME) {
+    if (env.R2_BUCKET_NAME) {
       const key = `datasets/covers/${id}.${ext}`;
-      await uploadToS3(key, req.file.buffer, req.file.mimetype);
-      imageUrl = `https://${env.AWS_BUCKET_NAME}.s3.${env.AWS_REGION}.amazonaws.com/${key}`;
+      await uploadToR2(key, req.file.buffer, req.file.mimetype);
+      imageUrl = `${env.R2_PUBLIC_URL}/${key}`;
     } else {
       // Local dev: save to public/uploads/datasets/
       const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'datasets');

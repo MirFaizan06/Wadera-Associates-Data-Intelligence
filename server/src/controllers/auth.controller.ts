@@ -4,7 +4,7 @@ import * as authService from '../services/auth.service';
 import { env } from '../config/env';
 import path from 'path';
 import fs from 'fs';
-import { uploadToS3 } from '../utils/storage';
+import { uploadToR2 } from '../utils/storage';
 import { prisma } from '../utils/prisma';
 
 const registerSchema = z.object({
@@ -156,11 +156,11 @@ export const uploadProfilePicture = async (req: Request, res: Response, next: Ne
     const ext = mimeToExt[file.mimetype] ?? '.jpg';
     let profilePicture: string;
 
-    if (env.NODE_ENV === 'production' || (env.AWS_BUCKET_NAME && env.AWS_ACCESS_KEY_ID !== 'dev')) {
-      // Upload to S3
+    if (env.NODE_ENV === 'production' || (env.R2_BUCKET_NAME && env.R2_ACCESS_KEY_ID !== 'dev')) {
+      // Upload to Cloudflare R2
       const key = `profile-pictures/${userId}${ext}`;
-      await uploadToS3(key, file.buffer, file.mimetype);
-      profilePicture = `https://${env.AWS_BUCKET_NAME}.s3.${env.AWS_REGION}.amazonaws.com/${key}`;
+      await uploadToR2(key, file.buffer, file.mimetype);
+      profilePicture = `${env.R2_PUBLIC_URL}/${key}`;
     } else {
       // Save locally
       const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'avatars');

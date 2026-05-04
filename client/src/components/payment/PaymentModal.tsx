@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { X } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { X, LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
 import api from '@/lib/api';
 import type { Dataset, User } from '@/types';
 import { useCurrency } from '@/contexts/CurrencyContext';
@@ -20,21 +19,15 @@ declare global {
 }
 
 export default function PaymentModal({ dataset, user, onClose }: Props) {
-  const [guestEmail, setGuestEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const { formatAmount } = useCurrency();
   const navigate = useNavigate();
 
   const handlePay = async () => {
-    if (!user && !guestEmail) {
-      setError('Please enter your email to continue');
-      return;
-    }
     setLoading(true);
     setError('');
     try {
-      // Load Razorpay script
       if (!window.Razorpay) {
         await new Promise<void>((resolve, reject) => {
           const s = document.createElement('script');
@@ -47,7 +40,7 @@ export default function PaymentModal({ dataset, user, onClose }: Props) {
 
       const res = await api.post<{ success: boolean; data: { orderId: string; amount: number; currency: string; keyId: string; datasetName: string } }>(
         '/user/payments/order',
-        { timeSeriesId: dataset.id, guestEmail: guestEmail || undefined }
+        { timeSeriesId: dataset.id }
       );
 
       const { orderId, amount, currency, keyId } = res.data.data;
@@ -60,8 +53,8 @@ export default function PaymentModal({ dataset, user, onClose }: Props) {
         description: dataset.name,
         order_id: orderId,
         prefill: {
-          email: user?.email || guestEmail,
-          name: user?.fullName || undefined,
+          email: user!.email,
+          name: user!.fullName || undefined,
         },
         theme: { color: '#2B6CB0' },
         handler: async (response: { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string }) => {
@@ -77,12 +70,12 @@ export default function PaymentModal({ dataset, user, onClose }: Props) {
             onClose();
             navigate(`/download/${verifyRes.data.data.downloadUrl.split('/').pop()}`);
           } catch {
-            setError('Payment verified but download setup failed. Check your email.');
+            setError('Payment verified but download setup failed. Please check your email.');
           }
         },
       });
       rz.open();
-    } catch (err) {
+    } catch {
       setError('Failed to initiate payment. Please try again.');
     } finally {
       setLoading(false);
@@ -113,28 +106,33 @@ export default function PaymentModal({ dataset, user, onClose }: Props) {
           </div>
         </div>
 
-        {!user && (
-          <div className="mb-4">
-            <Input
-              id="guest-email"
-              type="email"
-              label="Email (download link will be sent here)"
-              placeholder="your@email.com"
-              value={guestEmail}
-              onChange={e => setGuestEmail(e.target.value)}
-              error={error && !guestEmail ? error : undefined}
-            />
+        {!user ? (
+          <div className="text-center py-2">
+            <p className="text-gray-600 mb-4">Sign in to complete your purchase.</p>
+            <Button asChild className="w-full" size="lg">
+              <Link to="/auth/login" onClick={onClose}>
+                <LogIn className="h-4 w-4 mr-2" aria-hidden />
+                Sign In to Purchase
+              </Link>
+            </Button>
+            <p className="text-sm text-gray-500 mt-3">
+              No account?{' '}
+              <Link to="/auth/register" onClick={onClose} className="text-brand-blue hover:underline">
+                Create one for free
+              </Link>
+            </p>
           </div>
+        ) : (
+          <>
+            {error && <p className="text-sm text-red-600 mb-4" role="alert">{error}</p>}
+            <Button className="w-full" size="lg" onClick={handlePay} loading={loading}>
+              Pay {formatAmount(dataset.priceINR)} Securely
+            </Button>
+            <p className="text-xs text-gray-400 text-center mt-3">
+              256-bit SSL encryption &middot; Powered by Razorpay
+            </p>
+          </>
         )}
-
-        {error && <p className="text-sm text-red-600 mb-4" role="alert">{error}</p>}
-
-        <Button className="w-full" size="lg" onClick={handlePay} loading={loading}>
-          Pay {formatAmount(dataset.priceINR)} Securely
-        </Button>
-        <p className="text-xs text-gray-400 text-center mt-3">
-          256-bit SSL encryption &middot; Powered by Razorpay
-        </p>
       </div>
     </div>
   );

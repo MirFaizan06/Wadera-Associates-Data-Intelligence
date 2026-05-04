@@ -5,7 +5,7 @@ import { logger } from '../utils/logger';
 import path from 'path';
 import fs from 'fs/promises';
 import os from 'os';
-import { uploadToS3, getSignedUrl } from '../utils/storage';
+import { uploadToR2, getSignedUrl } from '../utils/storage';
 import { env } from '../config/env';
 
 interface DataRow {
@@ -164,10 +164,10 @@ export async function generatePDF(timeSeriesId: string): Promise<string> {
 }
 
 async function uploadAndGetUrl(filePath: string, key: string, contentType: string): Promise<string> {
-  if (env.AWS_BUCKET_NAME) {
+  if (env.R2_BUCKET_NAME) {
     const buffer = await fs.readFile(filePath);
-    await uploadToS3(key, buffer, contentType);
-    return await getSignedUrl(key, 300); // 5-minute signed URL
+    await uploadToR2(key, buffer, contentType);
+    return await getSignedUrl(key, 300); // 5-minute pre-signed URL via R2
   } else {
     // Local dev: serve static
     const localDir = path.join(process.cwd(), 'public', 'downloads');

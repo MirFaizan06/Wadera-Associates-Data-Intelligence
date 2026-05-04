@@ -28,7 +28,7 @@ A full-stack **B2B data marketplace** where businesses can buy structured time-s
 | Backend | Node.js, Express, TypeScript |
 | ORM | Prisma v5, MySQL |
 | Payments | Razorpay (**currently disabled** — keys set to empty strings) |
-| Storage | AWS S3 (prod) / local `public/uploads/` (dev) |
+| Storage | Cloudflare R2 (prod) / local `public/uploads/` (dev) |
 | Email | Nodemailer (Gmail SMTP via App Password) |
 | Auth | JWT (httpOnly) + OTP email verification |
 | Testing | Jest (server only) |
@@ -81,7 +81,7 @@ A full-stack **B2B data marketplace** where businesses can buy structured time-s
 │       └── utils/
 │
 ├── docs/CLAUDE.md          ← Old/legacy context (superseded by this file)
-├── BACKEND_DEPLOYMENT_GUIDE.md  ← Railway + Gmail SMTP + AWS S3 deploy steps
+├── BACKEND_DEPLOYMENT_GUIDE.md  ← Railway + Gmail SMTP + Cloudflare R2 deploy steps
 ├── SETUP.md                ← Full local developer setup guide
 ├── TESTING.md              ← Testing strategy and test commands
 ├── SAMPLE_CORRECT_FORMAT.xlsx   ← Correct XLSX format for dataset import
@@ -318,10 +318,11 @@ SMTP_PORT=465
 SMTP_USER=youraddress@gmail.com
 SMTP_PASS=<16-char App Password>
 EMAIL_FROM=noreply@waderaassociates.com
-AWS_ACCESS_KEY_ID=...
-AWS_SECRET_ACCESS_KEY=...
-AWS_REGION=ap-south-1
-AWS_BUCKET_NAME=wadera-associates-uploads
+R2_ACCOUNT_ID=...
+R2_ACCESS_KEY_ID=...
+R2_SECRET_ACCESS_KEY=...
+R2_BUCKET_NAME=wadera-associates-uploads
+R2_PUBLIC_URL=https://pub-xxx.r2.dev          # or your custom R2 domain
 EXCHANGE_RATE_API_KEY=...
 EXCHANGE_RATE_API_URL=https://api.exchangerate-api.com/v4/latest/INR
 GEOLOCATION_API_KEY=...
@@ -431,7 +432,7 @@ Creates:
 
 ### Backend — Railway (not yet deployed, guide written)
 - See `BACKEND_DEPLOYMENT_GUIDE.md` for full steps
-- MySQL add-on via Railway, Gmail SMTP via App Password, AWS S3
+- MySQL add-on via Railway, Gmail SMTP via App Password, Cloudflare R2
 - All deploy-required code changes are **already done**: PORT binding to `0.0.0.0`, Prisma `binaryTargets`, `nixpacks.toml` for Puppeteer, Razorpay null-guard
 - Run `railway run npx prisma migrate deploy` after first deploy
 
@@ -471,7 +472,7 @@ All of these are in place as of 2026-03-27:
 | File | Purpose |
 |---|---|
 | `CLAUDE_CONTEXT.md` | This file — full session context |
-| `BACKEND_DEPLOYMENT_GUIDE.md` | Railway + Gmail SMTP + AWS S3 deployment steps |
+| `BACKEND_DEPLOYMENT_GUIDE.md` | Railway + Gmail SMTP + Cloudflare R2 deployment steps |
 | `SETUP.md` | Local developer setup guide |
 | `TESTING.md` | Testing strategy and commands |
 | `SAMPLE_CORRECT_FORMAT.xlsx` | Correct XLSX format for dataset import |

@@ -604,3 +604,7 @@ EXCHANGE_RATE_API_KEY="<api-key>"
 ```
 
 Everything else uses the defaults listed above and works out of the box.
+
+
+cd server && npx prisma migrate dev --name init
+cd server && npm run seed

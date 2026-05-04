@@ -263,7 +263,7 @@ async function main() {
 <p>We use the following third-party services which have their own privacy policies:</p>
 <ul>
   <li><strong>Razorpay</strong> — Payment processing</li>
-  <li><strong>Amazon Web Services (S3)</strong> — File storage</li>
+  <li><strong>Cloudflare R2</strong> — File storage</li>
   <li><strong>SMTP Provider</strong> — Transactional email delivery</li>
 </ul>
 

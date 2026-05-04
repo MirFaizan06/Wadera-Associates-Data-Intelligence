@@ -30,7 +30,10 @@ app.use(helmet({
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
-      imgSrc: ["'self'", 'data:', 'https://flagcdn.com', 'https://fonts.gstatic.com', `https://${env.AWS_BUCKET_NAME}.s3.${env.AWS_REGION}.amazonaws.com`],
+      imgSrc: ["'self'", 'data:', 'https://flagcdn.com', 'https://fonts.gstatic.com',
+        // Cloudflare R2 public URL (empty string is safely ignored by browsers)
+        ...(env.R2_PUBLIC_URL ? [new URL(env.R2_PUBLIC_URL).origin] : []),
+      ],
       connectSrc: ["'self'", env.FRONTEND_URL],
       frameSrc: ["'none'"],
     },
