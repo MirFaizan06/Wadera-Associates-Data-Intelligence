@@ -4,7 +4,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -110,7 +110,7 @@ model TimeSeries {
   id          String      @id @default(cuid())
   slug        String      @unique
   name        String
-  description String?     @db.Text
+  description String?
   defaultUnit String
   priceINR    Float
   isVisible   Boolean     @default(true)
@@ -197,7 +197,7 @@ model EmailLog {
   recipient String
   subject   String
   status    String   // "SENT", "FAILED"
-  error     String?  @db.Text
+  error     String?
   sentAt    DateTime @default(now())
 
   @@index([recipient])
@@ -210,9 +210,9 @@ model ContactMessage {
   name       String
   email      String
   subject    String?
-  message    String   @db.Text
+  message    String
   status     String   @default("NEW") // "NEW", "IN_PROGRESS", "RESOLVED"
-  adminNotes String?  @db.Text
+  adminNotes String?
   ipAddress  String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -257,7 +257,7 @@ model EmailTemplate {
   id        String   @id @default(cuid())
   type      String   @unique // "OTP", "WELCOME", "ORDER_CONFIRMATION", etc.
   subject   String
-  htmlBody  String   @db.LongText
+  htmlBody  String
   isActive  Boolean  @default(true)
   updatedBy String?
   createdAt DateTime @default(now())
@@ -268,7 +268,7 @@ model StaticPage {
   id        String   @id @default(cuid())
   slug      String   @unique // "about", "privacy-policy", "terms", "contact"
   title     String
-  content   String   @db.LongText
+  content   String
   metaTitle String?
   metaDesc  String?
   updatedBy String?
@@ -280,9 +280,9 @@ model FreeResource {
   id          String   @id @default(cuid())
   slug        String   @unique
   title       String
-  summary     String?  @db.Text
+  summary     String?
   type        String   // "ARTICLE" | "PDF"
-  content     String?  @db.LongText // Markdown for ARTICLE type
+  content     String?  // Markdown for ARTICLE type
   pdfUrl      String?  // URL or path for PDF type
   category    String?
   tags        Json?

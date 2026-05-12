@@ -76,8 +76,8 @@ export async function getPublicDatasets(params: {
     ...(category && { category }),
     ...(search && {
       OR: [
-        { name: { contains: search } },
-        { description: { contains: search } },
+        { name: { contains: search, mode: 'insensitive' as const } },
+        { description: { contains: search, mode: 'insensitive' as const } },
         { tags: { array_contains: search } },
       ],
     }),

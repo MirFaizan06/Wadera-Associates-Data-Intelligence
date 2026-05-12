@@ -16,8 +16,8 @@ router.get('/users', async (req, res, next) => {
     const skip = (page - 1) * limit;
     const where = search ? {
       OR: [
-        { email: { contains: search } },
-        { fullName: { contains: search } },
+        { email: { contains: search, mode: 'insensitive' as const } },
+        { fullName: { contains: search, mode: 'insensitive' as const } },
       ],
       deletedAt: null,
     } : { deletedAt: null };

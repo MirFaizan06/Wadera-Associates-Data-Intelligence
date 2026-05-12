@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: wadera-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB:       wadera_db
+      POSTGRES_USER:     wadera_user
+      POSTGRES_PASSWORD: wadera_pass
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U wadera_user -d wadera_db']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
